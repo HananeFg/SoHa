@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('details', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("facture_id");
+            $table->bigInteger("produit_id");
+            $table->integer("quantity");
+            $table->decimal("montant");
             $table->timestamps();
+            $table->foreign('facture_id')->references("id")
+            ->on("factures")->onDelete("cascade");
+            $table->foreign('produit_id')->references("id")
+            ->on("menus")->onDelete("cascade");
         });
     }
 

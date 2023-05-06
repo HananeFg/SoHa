@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("serveur_id")->unsigned();
+            $table->bigInteger("client_id")->unsigned();
+            $table->decimal("total_price")->default(0);
+            $table->decimal("total_recieved")->default(0);
+            $table->decimal("change")->default(0);
+            $table->decimal("payment_type")->default("cash");
+            $table->decimal("payment_status")->default("paid");
             $table->timestamps();
+            $table->foreign('serveur_id')->references("id")
+            ->on("serveurs")->onDelete("cascade");
+            $table->foreign('client_id')->references("id")
+            ->on("clients")->onDelete("cascade");
         });
     }
 
