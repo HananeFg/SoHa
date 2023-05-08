@@ -15,16 +15,20 @@ return new class extends Migration
             $table->id();
             $table->bigInteger("serveur_id")->unsigned();
             $table->bigInteger("client_id")->unsigned();
+            $table->bigInteger("table_id")->unsigned();
             $table->decimal("total_price")->default(0);
             $table->decimal("total_recieved")->default(0);
             $table->decimal("change")->default(0);
             $table->decimal("payment_type")->default("cash");
             $table->decimal("payment_status")->default("paid");
+            $table->dateTime('datetime_facture');
             $table->timestamps();
             $table->foreign('serveur_id')->references("id")
             ->on("serveurs")->onDelete("cascade");
             $table->foreign('client_id')->references("id")
             ->on("clients")->onDelete("cascade");
+            $table->foreign('table_id')->references("id")
+            ->on("tables")->onDelete("cascade");
         });
     }
 

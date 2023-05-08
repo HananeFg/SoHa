@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("facture_id");
-            $table->bigInteger("produit_id");
+            $table->bigInteger("facture_id")->unsigned();
+            $table->bigInteger("produit_id")->unsigned();
             $table->integer("quantity");
+            $table->decimal("unit_price");
             $table->decimal("montant");
             $table->timestamps();
             $table->foreign('facture_id')->references("id")

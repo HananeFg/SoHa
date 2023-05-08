@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->string("slug");
-            $table->decimal("price", 8, 2);
+            $table->decimal("unit_price", 8, 2);
+            $table->decimal("TTC_price", 8, 2);
+            $table->decimal("TVA", 8, 2);
             $table->string("image");
             $table->bigInteger("category_id")->unsigned();
             $table->timestamps();
