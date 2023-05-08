@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('login');
             $table->string('password');
             $table->string('role');
-            $table->string('address');
-            $table->integer('tel');
             $table->rememberToken();
             $table->timestamps();
         });
