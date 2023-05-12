@@ -19,8 +19,8 @@ return new class extends Migration
             $table->decimal("total_price")->default(0);
             $table->decimal("total_recieved")->default(0);
             $table->decimal("change")->default(0);
-            $table->decimal("payment_type")->default("cash");
-            $table->decimal("payment_status")->default("paid");
+            $table->string("payment_type")->default("cash");
+            $table->string("payment_status")->default("paid");
             $table->dateTime('datetime_facture');
             $table->timestamps();
             $table->foreign('serveur_id')->references("id")
@@ -29,7 +29,7 @@ return new class extends Migration
             ->on("clients")->onDelete("cascade");
             $table->foreign('table_id')->references("id")
             ->on("tables")->onDelete("cascade");
-        });
+});
     }
 
     /**

@@ -1,7 +1,17 @@
 @extends('layout')
 
-@section('name')
-    <h1>About page</h1>
-    <p>About laravel course</p>
+@section('content')
+<img src="{{ asset('upload\2.png') }}" Class="LOGO">
+<div class="role">
+ <div class="rectangle">
+     <h1>A</h1>
+ </div>
+ <div class="rectangle">
+     <h1>Caissier</h1>
+ </div>
+ <div class="rectangle">
+     <h1>Servant</h1>
+ </div>
+ </div>
 @endsection
     

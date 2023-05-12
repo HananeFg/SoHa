@@ -1,9 +1,30 @@
+
 @extends('layout')
 
 @section('content')
-    <h1>Home page</h1>
-    <p>Learn Laravel 6</p>
-    <p>hello from soha</p>   
-    <h1>helllllo again</h1> 
+<img src="{{ asset('upload\2.png') }}" Class="LOGO">
+<div class="role">
+
+ <div class="rectangle">
+    <a href="{{ route('users.index', ['role' => 'admin']) }}">
+         <h1>Admin</h1>
+     </a>
+</div>
+
+
+ <div class="rectangle">
+    <a href="{{ route('users.index', ['role' => 'caissier']) }}">
+         <h1>Caissier</h1>
+     </a>
+ 
+ </div>
+
+ <div class="rectangle">
+    <a href="{{ route('users.index', ['role' => 'serveur']) }}">
+         <h1>Servant</h1>
+      </a>
+ </div>
+
+ </div>
 @endsection
 
