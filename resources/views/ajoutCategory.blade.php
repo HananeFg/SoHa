@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Article</title>
+  <title>Add Category</title>
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
 </head>
 <body>
@@ -21,35 +21,18 @@
   <br>
   <hr>
   <div class="container">
-    <form  method="POST" action="{{ route('ajoutArticle.store') }}" enctype="multipart/form-data">
+    <form  method="POST" action="{{ route('ajoutCategory.store') }}" enctype="multipart/form-data">
       @csrf
       <div class="form-group inline">
         <div class="form-element">
           <label for="name">Name:</label>
           <input type="text" id="name" name="title" required>
         </div>
-        <div class="form-element">
-          <label for="category">Category:</label>
-          <select id="category" name="category_id" required>
-            <option value="">Select a category</option>
-        @foreach ($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->title }}</option>
-        @endforeach
-          </select>
-        </div>
       </div>
       <div class="form-group description">
         <textarea id="description" name="slug" placeholder="Description" required></textarea>
       </div>
       <div class="form-group inline">
-        <div class="form-element">
-          <label for="price">Price:</label>
-          <input type="text" id="price" name="unit_price" required value="00.00">
-        </div>
-        <div class="form-element">
-          <label for="TVA">TVA:</label>
-          <input type="text" id="price" name="TVA" required value="00.00">
-        </div>
         <div class="form-element">
           <label for="image">Upload Image:</label>
           <div class="upload-btn">
@@ -58,11 +41,11 @@
           </div>
         </div>
       </div>
-    
+      
       <div class="form-group fix" >
         <input type="submit" value="Save">
       </div>
-    
+      
     </form>
     @if (session('success'))
     <div class="alert alert-success">

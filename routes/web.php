@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,8 +21,18 @@ Route::get('/', function () {
 Route::get('/home','App\Http\Controllers\HomeController@home')->name('home'); // ila declanchat had lview khod la methode li hhayna f homeController
 Route::get('/about','App\Http\Controllers\HomeController@about')->name('about');
 Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')->name('ajoutArticle');
+Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
+Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
+Route::get('/commandList', 'App\Http\Controllers\CommandListController@command')->name('commandList');
+
 Route::get('/users','App\Http\Controllers\usersController@index')->name('users.index');
 Route::get('/login','App\Http\Controllers\usersController@login')->name('users.login');
 Route::post('/login', 'App\Http\Controllers\usersController@authenticate')->name('users.submit');
+Route::post('/ajoutArticle', 'App\Http\Controllers\AjoutArticleController@store')->name('ajoutArticle.store');
+Route::post('/ajoutCategory', 'App\Http\Controllers\AjoutCategoryController@store')->name('ajoutCategory.store');
+Route::get('/menu/{id}/details', 'App\Http\Controllers\CommandListController@menuDetails')->name('menu.details');
+Route::get('/add-sale', 'App\Http\Controllers\CommandListController@addSale')->name('add.sale');
+
+
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

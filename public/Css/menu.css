@@ -1,0 +1,112 @@
+
+    .category-list {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+
+    .category-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #ffffff;
+        cursor: pointer;
+        margin-bottom: 10px;
+        flex-direction: column;
+
+    }
+    .category-image {
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+      
+    }
+    
+    .category-title {
+        
+        align-items: center;
+        font-weight: bold;
+    }
+.category-item.active {
+    background-color: #ccc;
+}
+
+.menu-container {
+    display: flex;
+}
+
+.menu-items {
+    flex-grow: 1;
+    padding-right: 20px;
+}
+
+.menu-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.menu-item.active {
+    background-color: #ccc;
+}
+
+.ticket-container {
+    flex-shrink: 0;
+    width: 200px;
+    padding: 10px;
+    background-color: #f2f2f2;
+}
+
+.ticket-item {
+    margin-bottom: 10px;
+}
+
+.navbar {
+       
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000066;
+    color: #fff;
+   
+    width: 100%;
+    z-index: 999; /* Add a higher z-index to ensure the navbar appears on top of other elements */
+  
+}
+.navbar::after {
+content: "";
+display: table;
+clear: both;
+}
+.navbar .logo {
+font-size: 24px;
+font-weight: bold;
+float: right;
+}
+.navbar .back-button {
+font-size: 18px;
+float: left;
+}
+
+.category-sidebar {
+    width: 200px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    float: left;
+    }
+    
+    .more-categories-button {
+    text-align: center;
+    margin-top: 10px;
+    }
+    
+    .more-categories-button button {
+    background-color: #ffff;
+    border: none;
+    cursor: pointer;
+    }
+    
+    .more-categories-button button:hover {
+    background-color: #ffffff;
+    }

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string("title");
-            $table->string("slug");
-            $table->decimal("unit_price", 8, 2);
-            $table->decimal("TTC_price", 8, 2);
-            $table->decimal("TVA", 8, 2);
+            $table->text("description");
+            $table->decimal("unit_price", 8, 2)->default(00.00);
+            $table->decimal("TTC_price", 8, 2)->default(00.00);
+            $table->decimal("TVA", 8, 2)->default(0.2);
             $table->string("image");
             $table->bigInteger("category_id")->unsigned();
             $table->timestamps();
