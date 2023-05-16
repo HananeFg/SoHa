@@ -35,7 +35,7 @@
 <table>
     <tr>
         <th>N°Ticket</th>
-        <th>Product</th>
+        {{-- <th>Product</th> --}}
         {{-- <th>Description</th> 
         <th>Unit Price</th>
         <th>TTC Price</th>
@@ -51,7 +51,7 @@
     @foreach ($menus as $menu)
         <tr>
             <td>{{ $menu->id }}</td>
-            <td>{{ $menu->title }}</td>
+            {{-- <td>{{ $menu->title }}</td> --}}
             {{-- <td>{{ $menu->description }}</td>
             <td>{{ $menu->unit_price }}</td>
             <td>{{ $menu->TTC_price }}</td>

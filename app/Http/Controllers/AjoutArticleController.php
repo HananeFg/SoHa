@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Menu;
 use DB;
+use Illuminate\Support\Facades\Storage;
 
 class AjoutArticleController extends Controller
 {
@@ -29,7 +30,11 @@ class AjoutArticleController extends Controller
         ]);
         
         // Upload the image file
-        $imagePath = $request->file('image')->store('images');
+      
+      
+        $imagePath = Storage::disk('public')->put('articleImage', $request->file('image'));
+        $imageUrl = asset('articleImage/' . $imagePath);
+        $TTC_price = $validatedData['unit_price'] + $validatedData['TVA'];
         
         // Create a new Article instance
         $article = new Menu();
@@ -37,7 +42,7 @@ class AjoutArticleController extends Controller
         $article->slug = $validatedData['slug'];
         $article->unit_price = $validatedData['unit_price'];
         $article->TVA = $validatedData['TVA'];
-        $article->TTC_price = $validatedData['unit_price']+$validatedData['TVA'];
+        $article->TTC_price = $TTC_price;
         $article->image = $imagePath;
         $article->category_id = $validatedData['category_id'];
         
