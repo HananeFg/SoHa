@@ -29,7 +29,7 @@ return new class extends Migration
             ->on("clients")->onDelete("cascade");
             $table->foreign('table_id')->references("id")
             ->on("tables")->onDelete("cascade");
-});
+        });
     }
 
     /**

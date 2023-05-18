@@ -7,6 +7,10 @@ use App\Models\Menu;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Category;
+use App\Models\Tables;
+use App\Models\User;
+
+
 
 class MenuController extends Controller
 {
@@ -78,14 +82,23 @@ class MenuController extends Controller
     public function menu(Request $request)
     {
         $categories = Category::all();
+        $tables = Tables::all();
+        $users = User::where('role', '=', 'serveur')->get();
+
         $selectedCategory = $request->input('category_id');
         $menus = Menu::when($selectedCategory, function ($query) use ($selectedCategory) {
             return $query->where('category_id', $selectedCategory);
         })->get();
     
         // dd($categories, $menus);
-        return view('menu', compact('categories', 'menus', 'selectedCategory'));
+        return view('menu', compact('categories','users', 'menus','tables', 'selectedCategory'));
     }
+
+    public function printOrder()
+    {
+    return view('printTicket');
+    }
+
     
 
 }

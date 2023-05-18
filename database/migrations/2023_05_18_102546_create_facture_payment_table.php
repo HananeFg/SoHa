@@ -11,18 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('facture_payment', function (Blueprint $table) {
-            //
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('facture_payment', function (Blueprint $table) {
-            //
+        Schema::create('facture_payment', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("facture_id")->unsigned();
             $table->bigInteger("payment_id")->unsigned();
@@ -35,5 +24,13 @@ return new class extends Migration
             ->on("payments")->onDelete("cascade");
             $table->timestamps();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('facture_payment');
     }
 };

@@ -32,8 +32,8 @@ class AjoutArticleController extends Controller
         // Upload the image file
       
       
-        $imagePath = Storage::disk('public')->put('articleImage', $request->file('image'));
-        $imageUrl = asset('articleImage/' . $imagePath);
+        $imagePath = $request->file('image')->store('articleImage', 'public');
+        $imageUrl = asset('storage/' . $imagePath);
         $TTC_price = $validatedData['unit_price'] + $validatedData['TVA'];
         
         // Create a new Article instance
@@ -43,7 +43,7 @@ class AjoutArticleController extends Controller
         $article->unit_price = $validatedData['unit_price'];
         $article->TVA = $validatedData['TVA'];
         $article->TTC_price = $TTC_price;
-        $article->image = $imagePath;
+        $article->image =  $imageUrl;
         $article->category_id = $validatedData['category_id'];
         
         $article->save();

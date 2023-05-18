@@ -24,6 +24,8 @@ Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')-
 Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
 Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
 Route::get('/commandList', 'App\Http\Controllers\CommandListController@command')->name('commandList');
+Route::get('/printTicket', 'App\Http\Controllers\MenuController@printOrder');
+
 
 Route::get('/users','App\Http\Controllers\usersController@index')->name('users.index');
 Route::get('/login','App\Http\Controllers\usersController@login')->name('users.login');

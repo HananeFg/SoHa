@@ -3,6 +3,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
+        
     }
 
 
@@ -14,6 +15,8 @@
         cursor: pointer;
         margin-bottom: 10px;
         flex-direction: column;
+        
+
 
     }
     .category-image {
@@ -58,6 +61,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: space-between;
+    text-align: center;
    
     
 }
@@ -67,18 +71,19 @@
 }
 
 .menu-item img {
-    width: 100px;
+    width: 125px;
     height: 100px;
   }
   
   .menu-item span {
-    margin-left: 10px;
-    
+    font-weight: bold;
+    align-items: center;
   }
 
 .ticket-container {
     flex-shrink: 0;
-    width: 200px;
+    width: 240px;
+    height: 600px;
     padding: 10px;
     background-color: #f2f2f2;
 }
@@ -119,6 +124,9 @@ float: left;
     padding: 10px;
     background-color: #f0f0f0;
     float: left;
+    margin-right: 10px;
+    
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
     
     .more-categories-button {
@@ -135,3 +143,121 @@ float: left;
     .more-categories-button button:hover {
     background-color: #ffffff;
     }
+    /* ---------------------------------------------------------------------------soukaina.s part--------------- */
+    #popup {
+        position: absolute;
+        top: 9%;
+        left: 22%;
+        width: 50%;
+        height: 50%;
+        background-color: #ffffff;
+        z-index: 1000;
+        display: none;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+      }
+      
+    .tables {
+      float: right;
+  }
+  
+  .tables table {
+      display: block;
+  }
+  
+  .tables tr {
+      display: block;
+  }
+  
+  .tables td {
+      display: inline-block;
+      width: 25%; /* Adjust the width as needed */
+  }
+  
+      
+      
+    /*------------------------ hanane.s part ------------------------*/
+    .submit-button, .print-button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    
+    .submit-button:hover, .print-button:hover {
+        background-color: #45a049;
+    }
+    
+    .clear-ticket {
+        color: #999;
+        text-decoration: none;
+        margin-left: 10px;
+        font-size: 14px;
+    }
+    
+    .clear-ticket:hover {
+        color: #777;
+    }
+    
+    .remove-button {
+        right: 1%;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+      
+      .remove-button:hover {
+        background-color: #e60000;
+      }
+      
+      .total-price {
+        margin-top: 20px;
+        text-align: right;
+      }
+      
+      .total-price span:first-child {
+        font-weight: bold;
+      }
+      
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      
+      .button-container button {
+        background-color: #000066;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      
+      .button-container button:first-child {
+        background-color: #008000;
+      }
+      
+      .button-container button:last-child {
+        background-color: #ff4500;
+      }
+      
+      .button-container button:not(:last-child) {
+        margin-right: 10px;
+      }
+      
+      .button-container button:hover {
+        opacity: 0.8;
+      }
+      .ticket-id {
+        margin-bottom: 10px;
+      }
+      
+      .ticket-id span:first-child {
+        font-weight: bold;
+      }
+            
