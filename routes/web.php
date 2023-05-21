@@ -35,6 +35,7 @@ Route::post('/ajoutCategory', 'App\Http\Controllers\AjoutCategoryController@stor
 Route::get('/menu/{id}/details', 'App\Http\Controllers\CommandListController@menuDetails')->name('menu.details');
 Route::get('/add-sale', 'App\Http\Controllers\CommandListController@addSale')->name('add.sale');
 
+Route::post('/insert', 'App\Http\Controllers\MenuController@insertData');
 
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Category;
 use App\Models\Tables;
 use App\Models\User;
+use App\Models\Factures;
+
 
 
 
@@ -20,6 +22,19 @@ class MenuController extends Controller
     public function index(Request $request)
     {
 
+    }
+
+    public function insertData(Request $request) {
+        $tableId = $request->input('tableId');
+        $userId = $request->input('userId');
+    
+        $facteur = new Factures();
+        $facteur->table_id = $tableId;
+        $facteur->serveur_id=  $userId ;
+        
+        $facteur->save();
+        
+        return response()->json(['message' => 'Data inserted successfully.']);
     }
     
 

@@ -4,7 +4,7 @@
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="{{asset('Css/menu.css')}}">
   
-
+    
 </head>
 <body>
   {{-- --------------------------------------------------------------------------------------------------------- --}}
@@ -12,20 +12,23 @@
     
         <div class="servers">
             @foreach ($users as $user)
-            <div class="category-item">
-                <button class="user-name" onclick="selectUser({{ $user->id }})">{{ $user->name }}</button>
+            <div class="server-item">
+                <button class="user-name" data-user-id="{{ $user->id }}">{{ $user->name }} </button>
             </div>
             @endforeach
         </div>
         <div class="tables">
             @foreach ($tables as $table)
-            <div class="category-item">
-                <button class="table-name" onclick="selectTable({{ $table->id }})">{{ $table->name }}</button>
+            <div class="table-item">
+                <button class="table-name"  data-table-id="{{ $table->id }} ">{{ $table->name }} </button>
             </div>
             @endforeach
         </div>
+        {{-- onclick="closePopup()" --}}
+        <div>
+          <button class="done" onclick="insertData()" >Done</button>
+        </div>
     
-    <button onclick="closePopup()">Done</button>
 </div>
 
   {{-- --------------------------------------------------------------------------------------------------------- --}}
@@ -46,7 +49,13 @@
       <hr>
     
     <div class="category-sidebar">
-        <div class="category-list">
+     
+      <button onclick="scrollUp()" class="scroll" >        
+        <img src="{{ asset('upload\Scroll_icon.png') }}" alt="Icon Up" width="50" height="30">
+      </button>
+       
+     
+        <div class="category-list" id="category-list">
             @foreach ($categories as $category)
                 <div class="category-item" data-category="{{ $category->id }}">
                     <img src="{{ $category->image }}" alt="{{ $category->title }}" class="category-image">
@@ -54,9 +63,15 @@
                 </div>
             @endforeach
         </div>
-        
+
+      <button  onclick="scrollDown()" class="scroll" >        
+        <img  id="scrolldown"  src="{{ asset('upload\Scroll_icon.png') }}" alt="Icon Down" width="50" height="30">
+      </button>
+       
     </div>
     
+    
+
     <div class="menu-container">
         <div class="menu-items">
             <!-- Menu items go here -->
@@ -148,7 +163,7 @@
     ticketItem.classList.add('ticket-item');
 
     const ticketItemText = document.createElement('span');
-    ticketItemText.textContent = menuItemTitle + ' - $' + menuItemPrice.toFixed(2);
+    ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
 
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-button');
@@ -159,12 +174,12 @@
     ticketItemsContainer.appendChild(ticketItem);
 
     totalPrice += menuItemPrice;
-    totalPriceContainer.textContent = '$' + totalPrice.toFixed(2);
+    totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
     removeButton.addEventListener('click', () => {
     ticketItem.remove();
     totalPrice -= menuItemPrice;
-    totalPriceContainer.textContent = '$' + totalPrice.toFixed(2);
+    totalPriceContainer.textContent =  totalPrice.toFixed(2) + 'DH';
     });
     });
     });
@@ -195,7 +210,7 @@
       const price = parseFloat(priceElement.getAttribute('data-price'));
 
       totalPrice -= price;
-      totalPriceContainer.textContent = '$' + totalPrice.toFixed(2);
+      totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
       ticketItem.remove();
     });
@@ -211,30 +226,102 @@
     //--------------------------select a table and server POP-UP------------------------------------------------------
 
 
-        window.addEventListener("load", function() {
-        document.getElementById("popup").style.display = "block";
-        });
-        function closePopup() {
-          document.getElementById("popup").style.display = "none";
-        }
+      //  window.addEventListener("load", function() {
+      //   document.getElementById("popup").style.display = "block";
+      //   }); 
+        
 
-        function selectTable(tableNumber) {
-          alert("You have selected table " + tableNumber);
-          document.getElementById("popup").style.display = "none";
-        }
+      // function selectTable(tableNumber) {
+      //  document.querySelector(".table-item[data-id='" + tableNumber + "']").classList.add("selected");
+      // }
 
-        function selectServant(servantName) {
-          alert("You have selected servant " + servantName);
-          document.getElementById("popup").style.display = "none";
-        }
+      //   function selectServant(servantName) {
+      //     document.getElementById("popup").style.display = "none";
+      //   }
 
         function closePopup() {
           document.getElementById("popup").style.display = "none";
           document.body.style.pointerEvents = "initial";
         }
 
+        function scrollUp() {
+        var scrollableContainer = document.getElementById("category-list");
+        scrollableContainer.scrollTop -= 300;
+        }
+
+        function scrollDown() {
+        var scrollableContainer = document.getElementById("category-list");
+        scrollableContainer.scrollTop += 300;
+        }
 //------------------------------------------------------------------------------------------------------
-        </script>
+
+        var data = {}; // Declare the data object as a global variable
+
+
+        function insertData() {
+  // Retrieve the selected table and user IDs
+      var selectedTable = document.querySelector('.table-name.active');
+      var selectedUser = document.querySelector('.user-name.active');
+      closePopup();
+    
+      if (selectedTable && selectedUser) {
+
+        var tableId = selectedTable.getAttribute('data-table-id');
+        var userId = selectedUser.getAttribute('data-user-id');
+        
+        // Create an object to hold the data
+        data.tableId = tableId;
+        data.userId = userId;
+
+        insertIntoDatabase();
+        
+    }}
+
+    function insertIntoDatabase() {
+      // Send the data to your server-side code for insertion
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/insert', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Insertion successful
+          console.log('DONE');
+        }
+      };
+      
+      // Convert the data object to JSON string
+      var jsonData = JSON.stringify(data);
+      
+      // Send the request
+      xhr.send(jsonData);
+    }
+
+
+    function selectServant(servantName) {
+      var servantButtons = document.querySelectorAll('.user-name');
+      servantButtons.forEach(function (button) {
+        if (button.textContent === servantName) {
+          button.classList.add('active');
+        } else {
+          button.classList.remove('active');
+        }
+      });
+    }
+        
+    function selectTable(tableNumber) {
+      var tableItems = document.querySelectorAll('.table-item');
+      tableItems.forEach(function (item) {
+        var dataId = item.getAttribute('data-table-id');
+        if (dataId === tableNumber) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    } 
+
+</script>
+        
     
 </body>
 </html>
