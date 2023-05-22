@@ -24,7 +24,8 @@ Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')-
 Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
 Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
 Route::get('/commandList', 'App\Http\Controllers\CommandListController@command')->name('commandList');
-Route::get('/printTicket', 'App\Http\Controllers\MenuController@printOrder');
+Route::get('/printTicket', 'App\Http\Controllers\MenuController@printOrder')->name('printTicket');
+Route::get('/admin', 'App\Http\Controllers\HomeController@admin')->name('admin');
 
 
 Route::get('/users','App\Http\Controllers\usersController@index')->name('users.index');
@@ -35,7 +36,7 @@ Route::post('/ajoutCategory', 'App\Http\Controllers\AjoutCategoryController@stor
 Route::get('/menu/{id}/details', 'App\Http\Controllers\CommandListController@menuDetails')->name('menu.details');
 Route::get('/add-sale', 'App\Http\Controllers\CommandListController@addSale')->name('add.sale');
 
-Route::post('/insert', 'App\Http\Controllers\MenuController@insertData');
+Route::post('/menu', 'App\Http\Controllers\MenuController@insertData')->name('menu.insertData');
 
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

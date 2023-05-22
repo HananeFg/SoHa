@@ -3,34 +3,42 @@
 <head>
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="{{asset('Css/menu.css')}}">
-  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
 </head>
 <body>
   {{-- --------------------------------------------------------------------------------------------------------- --}}
   <div id="popup">
-    
+    <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm">
+        @csrf
         <div class="servers">
-            @foreach ($users as $user)
+            <h4>Select a server:</h4>
+            @foreach ($servers as $server)
             <div class="server-item">
-                <button class="user-name" data-user-id="{{ $user->id }}">{{ $user->name }} </button>
+                <label>
+                    <input type="radio" name="serverId" value="{{ $server->id }}">
+                    {{ $server->name }}
+                </label>
             </div>
             @endforeach
         </div>
         <div class="tables">
+            <h4>Select a table:</h4>
             @foreach ($tables as $table)
             <div class="table-item">
-                <button class="table-name"  data-table-id="{{ $table->id }} ">{{ $table->name }} </button>
+                <label>
+                    <input type="radio" name="tableId" value="{{ $table->id }}">
+                    {{ $table->name }}
+                </label>
             </div>
             @endforeach
         </div>
-        {{-- onclick="closePopup()" --}}
         <div>
-          <button class="done" onclick="insertData()" >Done</button>
+            <button class="done" type="button" onclick="submitForm()">Done</button>
         </div>
-    
+    </form>
 </div>
-
   {{-- --------------------------------------------------------------------------------------------------------- --}}
 
     <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
@@ -255,70 +263,37 @@
         }
 //------------------------------------------------------------------------------------------------------
 
-        var data = {}; // Declare the data object as a global variable
+      function submitForm() {
+        var selectedUsers = Array.from(document.querySelectorAll('input[name="serverId"]:checked'))
+            .map(function (radio) {
+                return radio.value;
+            });
 
+        var selectedTables = Array.from(document.querySelectorAll('input[name="tableId"]:checked'))
+            .map(function (radio) {
+                return radio.value;
+            });
 
-        function insertData() {
-  // Retrieve the selected table and user IDs
-      var selectedTable = document.querySelector('.table-name.active');
-      var selectedUser = document.querySelector('.user-name.active');
-      closePopup();
-    
-      if (selectedTable && selectedUser) {
+        if (selectedUsers.length === 1 && selectedTables.length === 1) {
+            // Add the selected user and table values to the form data
+            var formData = new FormData(document.getElementById('insertDataForm'));
+            formData.set('serverId', selectedUsers[0]);
+            formData.set('tableId', selectedTables[0]);
 
-        var tableId = selectedTable.getAttribute('data-table-id');
-        var userId = selectedUser.getAttribute('data-user-id');
-        
-        // Create an object to hold the data
-        data.tableId = tableId;
-        data.userId = userId;
-
-        insertIntoDatabase();
-        
-    }}
-
-    function insertIntoDatabase() {
-      // Send the data to your server-side code for insertion
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/insert', true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          // Insertion successful
-          console.log('DONE');
-        }
-      };
-      
-      // Convert the data object to JSON string
-      var jsonData = JSON.stringify(data);
-      
-      // Send the request
-      xhr.send(jsonData);
-    }
-
-
-    function selectServant(servantName) {
-      var servantButtons = document.querySelectorAll('.user-name');
-      servantButtons.forEach(function (button) {
-        if (button.textContent === servantName) {
-          button.classList.add('active');
+            // Send an AJAX request to submit the form data
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', "{{ route('menu.insertData') }}", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Handle response here if needed
+                }
+            };
+           
+            xhr.send(formData);
         } else {
-          button.classList.remove('active');
+            alert('Please select one server and one table.');
         }
-      });
     }
-        
-    function selectTable(tableNumber) {
-      var tableItems = document.querySelectorAll('.table-item');
-      tableItems.forEach(function (item) {
-        var dataId = item.getAttribute('data-table-id');
-        if (dataId === tableNumber) {
-          item.classList.add('active');
-        } else {
-          item.classList.remove('active');
-        }
-      });
-    } 
 
 </script>
         

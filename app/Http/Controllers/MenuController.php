@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateMenuRequest;
 use App\Models\Category;
 use App\Models\Tables;
 use App\Models\User;
+use App\Models\Serveurs;
 use App\Models\Factures;
 
 
@@ -24,18 +25,19 @@ class MenuController extends Controller
 
     }
 
-    public function insertData(Request $request) {
-        $tableId = $request->input('tableId');
-        $userId = $request->input('userId');
-    
-        $facteur = new Factures();
-        $facteur->table_id = $tableId;
-        $facteur->serveur_id=  $userId ;
-        
-        $facteur->save();
-        
-        return response()->json(['message' => 'Data inserted successfully.']);
-    }
+    public function insertData(Request $request)
+{
+    $tableId = $request->input('tableId');
+    $serverId = $request->input('serverId');
+    dd(($tableId));
+    $facteur = new Factures();
+    $facteur->table_id = $tableId;
+    $facteur->serveur_id = $serverId;
+    // dd(($facteur));
+    $facteur->save();
+
+    return response()->json(['success' => true]);
+}
     
 
     /**
@@ -98,7 +100,7 @@ class MenuController extends Controller
     {
         $categories = Category::all();
         $tables = Tables::all();
-        $users = User::where('role', '=', 'serveur')->get();
+        $servers = Serveurs::all();
 
         $selectedCategory = $request->input('category_id');
         $menus = Menu::when($selectedCategory, function ($query) use ($selectedCategory) {
@@ -106,7 +108,7 @@ class MenuController extends Controller
         })->get();
     
         // dd($categories, $menus);
-        return view('menu', compact('categories','users', 'menus','tables', 'selectedCategory'));
+        return view('menu', compact('categories','servers', 'menus','tables', 'selectedCategory'));
     }
 
     public function printOrder()

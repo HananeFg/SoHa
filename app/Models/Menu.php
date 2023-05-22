@@ -15,7 +15,4 @@ class Menu extends Model
         return $this->belongsTo(Category::class);
     }
 
-    // public function facture(){
-    //     return $this->belongsToMany(Facture::class);
-    // }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("user_id")->unsigned();
             $table->bigInteger("serveur_id")->unsigned();
             $table->bigInteger("client_id")->unsigned();
             $table->bigInteger("table_id")->unsigned();
@@ -23,6 +24,8 @@ return new class extends Migration
             $table->string("payment_status")->default("paid");
             $table->dateTime('datetime_facture');
             $table->timestamps();
+            $table->foreign('user_id')->references("id")
+            ->on("users")->onDelete("cascade");
             $table->foreign('serveur_id')->references("id")
             ->on("serveurs")->onDelete("cascade");
             $table->foreign('client_id')->references("id")

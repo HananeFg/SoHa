@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Tables extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "slug",
+        "status"
+    ];
+
+    public function factures()
+    {
+        return $this->hasMany(Factures::class);
+    }
 }

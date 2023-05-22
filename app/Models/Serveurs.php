@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Serveurs extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "email",
+        "tel",
+        "address"
+    ];
+
+    public function factures()
+    {
+        return $this->hasMany(Factures::class);
+    }
 }
