@@ -29,7 +29,7 @@
         <button class="sidebar-button">Categories</button>
         <button class="sidebar-button">Sales</button>
         <button class="sidebar-button">Clients</button>
-        <button class="sidebar-button">Cloture</button>
+        <button class="sidebar-button">Rapport</button>
         <button class="sidebar-button">Users</button>
         <button class="sidebar-button">Tables</button>
         <button class="sidebar-button">Settings</button>
