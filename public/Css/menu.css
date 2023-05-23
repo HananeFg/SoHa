@@ -90,6 +90,11 @@
 
 .ticket-item {
     margin-bottom: 10px;
+    
+}
+.ticket-items {
+  overflow-y: auto;
+  height: 72%;
 }
 
 .navbar {
@@ -184,6 +189,9 @@ float: left;
         padding: 10px 20px;
         margin-right: 10px;
         cursor: pointer;
+        width: 40%;
+        font-weight: bold;
+
     }
     
     .submit-button:hover, .print-button:hover {
@@ -228,6 +236,10 @@ float: left;
         display: flex;
         justify-content: space-between;
         margin-top: 20px;
+        bottom: 3%;
+        width:252px;
+        position: fixed;
+
       }
       
       .button-container button {

@@ -9,7 +9,7 @@
 </head>
 <body>
   {{-- --------------------------------------------------------------------------------------------------------- --}}
-  <div id="popup">
+  {{-- <div id="popup">
     <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm">
         @csrf
         <div class="servers">
@@ -38,7 +38,7 @@
             <button class="done" type="button" onclick="submitForm()">Done</button>
         </div>
     </form>
-</div>
+</div> --}}
   {{-- --------------------------------------------------------------------------------------------------------- --}}
 
     <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
@@ -263,37 +263,37 @@
         }
 //------------------------------------------------------------------------------------------------------
 
-      function submitForm() {
-        var selectedUsers = Array.from(document.querySelectorAll('input[name="serverId"]:checked'))
-            .map(function (radio) {
-                return radio.value;
-            });
+    //   function submitForm() {
+    //     var selectedUsers = Array.from(document.querySelectorAll('input[name="serverId"]:checked'))
+    //         .map(function (radio) {
+    //             return radio.value;
+    //         });
 
-        var selectedTables = Array.from(document.querySelectorAll('input[name="tableId"]:checked'))
-            .map(function (radio) {
-                return radio.value;
-            });
+    //     var selectedTables = Array.from(document.querySelectorAll('input[name="tableId"]:checked'))
+    //         .map(function (radio) {
+    //             return radio.value;
+    //         });
 
-        if (selectedUsers.length === 1 && selectedTables.length === 1) {
-            // Add the selected user and table values to the form data
-            var formData = new FormData(document.getElementById('insertDataForm'));
-            formData.set('serverId', selectedUsers[0]);
-            formData.set('tableId', selectedTables[0]);
+    //     if (selectedUsers.length === 1 && selectedTables.length === 1) {
+    //         // Add the selected user and table values to the form data
+    //         var formData = new FormData(document.getElementById('insertDataForm'));
+    //         formData.set('serverId', selectedUsers[0]);
+    //         formData.set('tableId', selectedTables[0]);
 
-            // Send an AJAX request to submit the form data
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', "{{ route('menu.insertData') }}", true);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    // Handle response here if needed
-                }
-            };
+    //         // Send an AJAX request to submit the form data
+    //         var xhr = new XMLHttpRequest();
+    //         xhr.open('POST', "{{ route('menu.insertData') }}", true);
+    //         xhr.onload = function () {
+    //             if (xhr.status === 200) {
+    //                 // Handle response here if needed
+    //             }
+    //         };
            
-            xhr.send(formData);
-        } else {
-            alert('Please select one server and one table.');
-        }
-    }
+    //         xhr.send(formData);
+    //     } else {
+    //         alert('Please select one server and one table.');
+    //     }
+    // }
 
 </script>
         
