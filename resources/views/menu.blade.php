@@ -94,8 +94,9 @@
         </div>
         <div class="ticket-container"> 
           <div class="ticket-id">
-            <span>Ticket     </span>
-            <span id="ticketId"></span>
+            <span>Ticket : N° </span>
+            <span > {{$facture->id}}</span>
+            <span class="date"> {{$facture->datetime_facture}}</span>
           </div>
           <hr>
             <div class="ticket-items">
@@ -129,12 +130,11 @@
       const clearButton = document.querySelector('.clear-button');
       const printButton = document.querySelector('.print-button');
       let totalPrice = 0;
-      let ticketId = generateTicketId(); 
-      document.querySelector("#ticketId").textContent = ticketId ;
-      // Generate a unique ticket ID
+     
+      
 
-      const ticketIdSpan = document.getElementById('ticketId');
-    ticketIdSpan.textContent = ticketId;
+     
+    
 
     categoryItems.forEach(item => {
     item.addEventListener('click', () => {
@@ -160,11 +160,42 @@
     //--------new modifications---------------------------------------------------
 
 
+    // menuItems.forEach(item => {
+    //   item.addEventListener('click', () => {
+    //       const menuItemId = item.getAttribute('data-menu');
+    //       const menuItemTitle = item.textContent;
+    //       const menuItemPrice = parseFloat(item.getAttribute('data-price'));
+
+    // // Create ticket item and update total price
+    // const ticketItem = document.createElement('div');
+    // ticketItem.classList.add('ticket-item');
+
+    // const ticketItemText = document.createElement('span');
+    // ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
+
+    // const removeButton = document.createElement('button');
+    // removeButton.classList.add('remove-button');
+    // removeButton.textContent = 'X';
+
+    // ticketItem.appendChild(ticketItemText);
+    // ticketItem.appendChild(removeButton);
+    // ticketItemsContainer.appendChild(ticketItem);
+
+    // totalPrice += menuItemPrice;
+    // totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+
+    // removeButton.addEventListener('click', () => {
+    // ticketItem.remove();
+    // totalPrice -= menuItemPrice;
+    // totalPriceContainer.textContent =  totalPrice.toFixed(2) + 'DH';
+    // });
+    // });
+    // });
     menuItems.forEach(item => {
-      item.addEventListener('click', () => {
-          const menuItemId = item.getAttribute('data-menu');
-          const menuItemTitle = item.textContent;
-          const menuItemPrice = parseFloat(item.getAttribute('data-price'));
+  item.addEventListener('click', () => {
+    const menuItemId = item.getAttribute('data-menu');
+    const menuItemTitle = item.textContent;
+    const menuItemPrice = parseFloat(item.getAttribute('data-price'));
 
     // Create ticket item and update total price
     const ticketItem = document.createElement('div');
@@ -185,12 +216,34 @@
     totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
     removeButton.addEventListener('click', () => {
-    ticketItem.remove();
-    totalPrice -= menuItemPrice;
-    totalPriceContainer.textContent =  totalPrice.toFixed(2) + 'DH';
+      ticketItem.remove();
+      totalPrice -= menuItemPrice;
+      totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
     });
-    });
-    });
+
+    // Send AJAX request to insert product into the database
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/insert-product'); // Replace '/insert-product' with the appropriate URL for your route
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          console.log(xhr.responseText); // Handle the response if needed
+        } else {
+          console.error('Error:', xhr.status); // Handle the error if needed
+        }
+      }
+    };
+    
+    const data = {
+      menuItemId: menuItemId,
+      menuItemTitle: menuItemTitle,
+      menuItemPrice: menuItemPrice
+    };
+    xhr.send(JSON.stringify(data));
+  });
+});
+
 
     submitButton.addEventListener('click', () => {
     // Code to handle submitting the order

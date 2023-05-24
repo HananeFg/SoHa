@@ -33,6 +33,7 @@ class MenuController extends Controller
     $facteur = new Factures();
     $facteur->table_id = $tableId;
     $facteur->serveur_id = $serverId;
+    
     // dd(($facteur));
     $facteur->save();
 
@@ -95,20 +96,26 @@ class MenuController extends Controller
 
     //     return view('menu', compact('categories', 'menus'));
     // }
+    
 
     public function menu(Request $request)
     {
         $categories = Category::all();
         $tables = Tables::all();
         $servers = Serveurs::all();
+       
 
+        
         $selectedCategory = $request->input('category_id');
         $menus = Menu::when($selectedCategory, function ($query) use ($selectedCategory) {
             return $query->where('category_id', $selectedCategory);
         })->get();
-    
+        $facture = new Factures();
+        $facture->datetime_facture=date('Y-m-d H:i:s');;
+        $facture->save();   
         // dd($categories, $menus);
-        return view('menu', compact('categories','servers', 'menus','tables', 'selectedCategory'));
+        
+        return view('menu', compact('categories','servers','facture', 'menus','tables', 'selectedCategory'));
     }
 
     public function printOrder()

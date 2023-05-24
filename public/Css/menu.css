@@ -82,10 +82,13 @@
 
 .ticket-container {
     flex-shrink: 0;
-    width: 240px;
-    height: 600px;
+    width: 20%;
+    height: 510px;
+    position: fixed;
+    right: 5px;
     padding: 10px;
     background-color: #f2f2f2;
+    
 }
 
 .ticket-item {
@@ -95,6 +98,14 @@
 .ticket-items {
   overflow-y: auto;
   height: 72%;
+}
+
+.date {
+  color: a7a2a2;
+  position: fixed;
+  top: 84px;
+  right: 15px;
+  font-size: 15px;
 }
 
 .navbar {
@@ -226,6 +237,9 @@ float: left;
       .total-price {
         margin-top: 20px;
         text-align: right;
+        position: fixed;
+        bottom: 77px;
+        right: 15px;
       }
       
       .total-price span:first-child {
