@@ -8,61 +8,24 @@
     
 </head>
 <body>
-  {{-- --------------------------------------------------------------------------------------------------------- --}}
-  {{-- <div id="popup">
-    <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm">
-        @csrf
-        <div class="servers">
-            <h4>Select a server:</h4>
-            @foreach ($servers as $server)
-            <div class="server-item">
-                <label>
-                    <input type="radio" name="serverId" value="{{ $server->id }}">
-                    {{ $server->name }}
-                </label>
-            </div>
-            @endforeach
-        </div>
-        <div class="tables">
-            <h4>Select a table:</h4>
-            @foreach ($tables as $table)
-            <div class="table-item">
-                <label>
-                    <input type="radio" name="tableId" value="{{ $table->id }}">
-                    {{ $table->name }}
-                </label>
-            </div>
-            @endforeach
-        </div>
-        <div>
-            <button class="done" type="button" onclick="submitForm()">Done</button>
-        </div>
-    </form>
-</div> --}}
-  {{-- --------------------------------------------------------------------------------------------------------- --}}
-
-    <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
+    <div class="navbar">
         <div class="back-button">
-          <a href="#">        
-            <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
-          </a>
+            <a href="#">        
+                <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
+            </a>
         </div>
         <div class="logo">
-          <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
-  
+            <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
         </div>
-      </div>
-      <br>
-      <br>
-      <hr>
-    
+    </div>
+    <br>
+    <br>
+    <hr>
+
     <div class="category-sidebar">
-     
-      <button onclick="scrollUp()" class="scroll" >        
-        <img src="{{ asset('upload\Scroll_icon.png') }}" alt="Icon Up" width="50" height="30">
-      </button>
-       
-     
+        <button onclick="scrollUp()" class="scroll">        
+            <img src="{{ asset('upload\Scroll_icon.png') }}" alt="Icon Up" width="50" height="30">
+        </button>
         <div class="category-list" id="category-list">
             @foreach ($categories as $category)
                 <div class="category-item" data-category="{{ $category->id }}">
@@ -71,285 +34,147 @@
                 </div>
             @endforeach
         </div>
-
-      <button  onclick="scrollDown()" class="scroll" >        
-        <img  id="scrolldown"  src="{{ asset('upload\Scroll_icon.png') }}" alt="Icon Down" width="50" height="30">
-      </button>
-       
+        <button onclick="scrollDown()" class="scroll">        
+            <img id="scrolldown" src="{{ asset('upload\Scroll_icon.png') }}" alt="Icon Down" width="50" height="30">
+        </button>
     </div>
-    
-    
 
     <div class="menu-container">
         <div class="menu-items">
             <!-- Menu items go here -->
             @foreach ($menus as $menu)
-               
-                <div class="menu-item" data-category="{{ $menu->category_id }}" data-price="{{ $menu->unit_price }}">
-                  <img src="{{ asset($menu->image) }}" class="menu-image">
-                  <br>
-                  <span class="menu-title">{{ $menu->title }}</span>
+                <div class="menu-item" data-category="{{ $menu->category_id }}" data-id="{{$menu->id}}" data-price="{{ $menu->unit_price }}">
+                    <img src="{{ asset($menu->image) }}" class="menu-image">
+                    <br>
+                    <span class="menu-title">{{ $menu->title }}</span>
                 </div>
             @endforeach
         </div>
         <div class="ticket-container"> 
-          <div class="ticket-id">
-            <span>Ticket : N° </span>
-            <span > {{$facture->id}}</span>
-            <span class="date"> {{$facture->datetime_facture}}</span>
-          </div>
-          <hr>
+            <div class="ticket-id">
+                <span>Ticket : N° </span>
+                <span> {{$facture->id}}</span>
+                <span class="date"> {{$facture->datetime_facture}}</span>
+            </div>
+            <hr>
             <div class="ticket-items">
                 <!-- Ticket items go here -->
             </div>
             <hr>
             <div class="ticket-footer">
-              <div class="total-price">
-                  <span>Total Price:</span>
-                  <span id="totalPrice">0.00DH</span>
-              </div>
-          </div>
-          
-          <div class="button-container">
-            <button class="submit-button">Submit</button>
-            <button class="print-button">Print</button>
-          </div>
-
-
-
+                <div class="total-price">
+                    <span>Total Price:</span>
+                    <span id="totalPrice">0.00DH</span>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="submit-button">Submit</button>
+                <button class="print-button">Print</button>
+            </div>
         </div>
     </div>
 
     <script>
-      // JavaScript code for handling menu item selection and ticket updates goes here
-      const categoryItems = document.querySelectorAll('.category-item');
-      const menuItems = document.querySelectorAll('.menu-item');
-      const ticketItemsContainer = document.querySelector('.ticket-items');
-      const totalPriceContainer = document.querySelector('.total-price span:last-child');
-      const submitButton = document.querySelector('.submit-button');
-      const clearButton = document.querySelector('.clear-button');
-      const printButton = document.querySelector('.print-button');
-      let totalPrice = 0;
-     
-      
+        // JavaScript code for handling menu item selection and ticket updates
+        const categoryItems = document.querySelectorAll('.category-item');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const ticketItemsContainer = document.querySelector('.ticket-items');
+        const totalPriceContainer = document.querySelector('.total-price span:last-child');
+        const submitButton = document.querySelector('.submit-button');
+        let totalPrice = 0;
 
-     
-    
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                categoryItems.forEach(item => item.classList.remove('active'));
+                item.classList.add('active');
+                const categoryId = item.getAttribute('data-category');
 
-    categoryItems.forEach(item => {
-    item.addEventListener('click', () => {
-      categoryItems.forEach(item => item.classList.remove('active'));
-      item.classList.add('active');
-      const categoryId = item.getAttribute('data-category');
+                // Filter menu items based on the selected category
+                menuItems.forEach(menuItem => {
+                    const menuCategoryId = menuItem.getAttribute('data-category');
+                    if (categoryId === menuCategoryId || categoryId === 'all') {
+                        menuItem.style.display = 'block';
+                    } else {
+                        menuItem.style.display = 'none';
+                    }
+                });
+            });
+        });
 
-      // Filter menu items based on the selected category
-      menuItems.forEach(menuItem => {
-        const menuCategoryId = menuItem.getAttribute('data-category');
-        if (categoryId === menuCategoryId || categoryId === 'all') {
-          menuItem.style.display = 'block';
-        } else {
-          menuItem.style.display = 'none';
-        }
-      });
-    });
-    });
-    menuItems.forEach(menuItem => menuItem.style.display = 'none');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const menuItemId = item.getAttribute('data-id');
+                const menuItemTitle = item.textContent;
+                const menuItemPrice = parseFloat(item.getAttribute('data-price'));
 
+                // Create ticket item and update total price
+                const ticketItem = document.createElement('div');
+                ticketItem.classList.add('ticket-item');
+                ticketItem.setAttribute('data-id', menuItemId);
+                ticketItem.setAttribute('data-price', menuItemPrice.toString());
 
+                const ticketItemText = document.createElement('span');
+                ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
 
-    //--------new modifications---------------------------------------------------
+                const removeButton = document.createElement('button');
+                removeButton.classList.add('remove-button');
+                removeButton.textContent = 'X';
 
+                ticketItem.appendChild(ticketItemText);
+                ticketItem.appendChild(removeButton);
+                ticketItemsContainer.appendChild(ticketItem);
 
-    // menuItems.forEach(item => {
-    //   item.addEventListener('click', () => {
-    //       const menuItemId = item.getAttribute('data-menu');
-    //       const menuItemTitle = item.textContent;
-    //       const menuItemPrice = parseFloat(item.getAttribute('data-price'));
+                totalPrice += menuItemPrice;
+                totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
-    // // Create ticket item and update total price
-    // const ticketItem = document.createElement('div');
-    // ticketItem.classList.add('ticket-item');
+                removeButton.addEventListener('click', () => {
+                    ticketItem.remove();
+                    totalPrice -= menuItemPrice;
+                    totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+                });
+            });
+        });
 
-    // const ticketItemText = document.createElement('span');
-    // ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
+        submitButton.addEventListener('click', () => {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    // const removeButton = document.createElement('button');
-    // removeButton.classList.add('remove-button');
-    // removeButton.textContent = 'X';
+            // Retrieve necessary data from the ticket items
+            const ticketItems = document.querySelectorAll('.ticket-item');
+            const items = Array.from(ticketItems).map(item => ({
+                menuItemId: item.getAttribute('data-id'),
+                menuItemPrice: parseFloat(item.getAttribute('data-price'))
+            }));
 
-    // ticketItem.appendChild(ticketItemText);
-    // ticketItem.appendChild(removeButton);
-    // ticketItemsContainer.appendChild(ticketItem);
-
-    // totalPrice += menuItemPrice;
-    // totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
-
-    // removeButton.addEventListener('click', () => {
-    // ticketItem.remove();
-    // totalPrice -= menuItemPrice;
-    // totalPriceContainer.textContent =  totalPrice.toFixed(2) + 'DH';
-    // });
-    // });
-    // });
-    menuItems.forEach(item => {
-  item.addEventListener('click', () => {
-    const menuItemId = item.getAttribute('data-menu');
-    const menuItemTitle = item.textContent;
-    const menuItemPrice = parseFloat(item.getAttribute('data-price'));
-
-    // Create ticket item and update total price
-    const ticketItem = document.createElement('div');
-    ticketItem.classList.add('ticket-item');
-
-    const ticketItemText = document.createElement('span');
-    ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
-
-    const removeButton = document.createElement('button');
-    removeButton.classList.add('remove-button');
-    removeButton.textContent = 'X';
-
-    ticketItem.appendChild(ticketItemText);
-    ticketItem.appendChild(removeButton);
-    ticketItemsContainer.appendChild(ticketItem);
-
-    totalPrice += menuItemPrice;
-    totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
-
-    removeButton.addEventListener('click', () => {
-      ticketItem.remove();
-      totalPrice -= menuItemPrice;
-      totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
-    });
-
-    // Send AJAX request to insert product into the database
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/insert-product'); // Replace '/insert-product' with the appropriate URL for your route
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          console.log(xhr.responseText); // Handle the response if needed
-        } else {
-          console.error('Error:', xhr.status); // Handle the error if needed
-        }
-      }
-    };
-    
-    const data = {
-      menuItemId: menuItemId,
-      menuItemTitle: menuItemTitle,
-      menuItemPrice: menuItemPrice
-    };
-    xhr.send(JSON.stringify(data));
-  });
-});
-
-
-    submitButton.addEventListener('click', () => {
-    // Code to handle submitting the order
-    // You can add your desired functionality here
-    const ticketData = {
-    id: ticketId,
-    totalPrice: totalPrice,
-    items: Array.from(ticketItemsContainer.children).map(item => item.textContent)
-    };
-    console.log(ticketData);
-    });
-
-    function generateTicketId() {
-    const timestamp = Date.now();
-    const random = Math.floor(Math.random() * 1000);
-    return timestamp + '-' + random;
-    }
-
-    const clearTicketLinks = document.querySelectorAll('.clear-ticket');
-    clearTicketLinks.forEach(link => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const ticketItem = link.parentElement;
-      const priceElement = ticketItem.querySelector('.menu-price');
-      const price = parseFloat(priceElement.getAttribute('data-price'));
-
-      totalPrice -= price;
-      totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
-
-      ticketItem.remove();
-    });
-    });
-
-
-    printButton.addEventListener('click', () => {
-      // Code to handle printing the order
-      // You can add your desired functionality here
-    });
-
-
-    //--------------------------select a table and server POP-UP------------------------------------------------------
-
-
-      //  window.addEventListener("load", function() {
-      //   document.getElementById("popup").style.display = "block";
-      //   }); 
-        
-
-      // function selectTable(tableNumber) {
-      //  document.querySelector(".table-item[data-id='" + tableNumber + "']").classList.add("selected");
-      // }
-
-      //   function selectServant(servantName) {
-      //     document.getElementById("popup").style.display = "none";
-      //   }
-
-        function closePopup() {
-          document.getElementById("popup").style.display = "none";
-          document.body.style.pointerEvents = "initial";
-        }
+            // Send AJAX request to insert products into the database
+            fetch('{{ route('insertProduct') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({ items, facture: '{{ $facture->id }}' })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Products inserted successfully');
+                    } else {
+                        throw new Error('Failed to insert products');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
 
         function scrollUp() {
-        var scrollableContainer = document.getElementById("category-list");
-        scrollableContainer.scrollTop -= 300;
+            var scrollableContainer = document.getElementById("category-list");
+            scrollableContainer.scrollTop -= 300;
         }
 
         function scrollDown() {
-        var scrollableContainer = document.getElementById("category-list");
-        scrollableContainer.scrollTop += 300;
+            var scrollableContainer = document.getElementById("category-list");
+            scrollableContainer.scrollTop += 300;
         }
-//------------------------------------------------------------------------------------------------------
-
-    //   function submitForm() {
-    //     var selectedUsers = Array.from(document.querySelectorAll('input[name="serverId"]:checked'))
-    //         .map(function (radio) {
-    //             return radio.value;
-    //         });
-
-    //     var selectedTables = Array.from(document.querySelectorAll('input[name="tableId"]:checked'))
-    //         .map(function (radio) {
-    //             return radio.value;
-    //         });
-
-    //     if (selectedUsers.length === 1 && selectedTables.length === 1) {
-    //         // Add the selected user and table values to the form data
-    //         var formData = new FormData(document.getElementById('insertDataForm'));
-    //         formData.set('serverId', selectedUsers[0]);
-    //         formData.set('tableId', selectedTables[0]);
-
-    //         // Send an AJAX request to submit the form data
-    //         var xhr = new XMLHttpRequest();
-    //         xhr.open('POST', "{{ route('menu.insertData') }}", true);
-    //         xhr.onload = function () {
-    //             if (xhr.status === 200) {
-    //                 // Handle response here if needed
-    //             }
-    //         };
-           
-    //         xhr.send(formData);
-    //     } else {
-    //         alert('Please select one server and one table.');
-    //     }
-    // }
-
-</script>
-        
-    
+    </script>
 </body>
 </html>

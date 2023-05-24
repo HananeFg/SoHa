@@ -37,6 +37,16 @@ Route::get('/menu/{id}/details', 'App\Http\Controllers\CommandListController@men
 Route::get('/add-sale', 'App\Http\Controllers\CommandListController@addSale')->name('add.sale');
 
 Route::post('/menu', 'App\Http\Controllers\MenuController@insertData')->name('menu.insertData');
+Route::post('/insertProduct', 'App\Http\Controllers\MenuController@insertProduct')->name('insertProduct');
+
+
+Route::resource('tables','App\Http\Controllers\TablesController');
+
+
+
+
+
+
 
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

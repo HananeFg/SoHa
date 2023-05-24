@@ -26,7 +26,7 @@
       <div class="form-group inline">
         <div class="form-element">
           <label for="name">Name:</label>
-          <input type="text" id="name" name="title" required>
+          <input type="text" id="name" name="title" placeholder="add your product name" required>
         </div>
         <div class="form-element">
           <label for="category">Category:</label>

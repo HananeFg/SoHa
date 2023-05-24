@@ -11,6 +11,8 @@ use App\Models\Tables;
 use App\Models\User;
 use App\Models\Serveurs;
 use App\Models\Factures;
+use App\Models\Details;
+
 
 
 
@@ -96,6 +98,7 @@ class MenuController extends Controller
 
     //     return view('menu', compact('categories', 'menus'));
     // }
+   
     
 
     public function menu(Request $request)
@@ -114,7 +117,7 @@ class MenuController extends Controller
         $facture->datetime_facture=date('Y-m-d H:i:s');;
         $facture->save();   
         // dd($categories, $menus);
-        
+        $this->facture = $facture;
         return view('menu', compact('categories','servers','facture', 'menus','tables', 'selectedCategory'));
     }
 
@@ -123,6 +126,24 @@ class MenuController extends Controller
     return view('printTicket');
     }
 
+    public function insertProduct(Request $request)
+    {
+        try {
+            $detail = new Details();
+        
+            $detail->produit_id = $request->input('menuItemId');
+            $detail->unit_price = $request->input('menuItemPrice');
+            $detail->facture_id= $request->input('facture');
+
+            $detail->save();
+            return response()->json(['success' => true, 'message' => 'Product inserted successfully']);
+
+            
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
     
 
 }
