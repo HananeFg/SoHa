@@ -2,7 +2,7 @@
 
 use Dompdf\Dompdf;
 
-'pdf_options' => [
+$pdf_options = [
     'default_paper_size' => 'ticket',
     'default_paper_orientation' => 'portrait',
     'custom_paper_sizes' => [

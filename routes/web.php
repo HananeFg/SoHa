@@ -57,8 +57,4 @@ Route::get('/generate-pdf', function () {
 
 
 
-
-
-
-
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');
