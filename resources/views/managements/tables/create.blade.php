@@ -13,7 +13,6 @@
       </div>
       <div class="logo">
         <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
-
       </div>
     </div>
  
@@ -49,7 +48,7 @@
     </form>
     @if (session('success'))
     <div class="alert alert-success">
-        <strong style="color: red">Success!</strong> {{ session('success') }}
+      <strong style="color: rgb(8, 151, 15)">Success!</strong> {{ session('success') }}
     </div>
     @endif
   </div>
