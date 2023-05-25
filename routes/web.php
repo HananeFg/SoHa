@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Dompdf\Dompdf;
+
 
 
 /*
@@ -23,7 +25,7 @@ Route::get('/about','App\Http\Controllers\HomeController@about')->name('about');
 Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')->name('ajoutArticle');
 Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
 Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
-Route::get('/commandList', 'App\Http\Controllers\CommandListController@command')->name('commandList');
+Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
 Route::get('/printTicket', 'App\Http\Controllers\MenuController@printOrder')->name('printTicket');
 Route::get('/admin', 'App\Http\Controllers\HomeController@admin')->name('admin');
 
@@ -41,6 +43,16 @@ Route::post('/insertProduct', 'App\Http\Controllers\MenuController@insertProduct
 
 
 Route::resource('tables','App\Http\Controllers\TablesController');
+
+Route::get('/generate-pdf', function () {
+    $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"
+
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->render();
+
+    return $dompdf->stream('ticket.pdf'); // Output the PDF as a stream or you can save it using $dompdf->save('path/to/file.pdf')
+});
 
 
 

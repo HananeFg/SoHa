@@ -27,20 +27,7 @@ class MenuController extends Controller
 
     }
 
-    public function insertData(Request $request)
-{
-    $tableId = $request->input('tableId');
-    $serverId = $request->input('serverId');
-    
-    $facteur = new Factures();
-    $facteur->table_id = $tableId;
-    $facteur->serveur_id = $serverId;
-    
-    // dd(($facteur));
-    $facteur->save();
-
-    return response()->json(['success' => true]);
-}
+ 
     
 
     /**
@@ -114,7 +101,7 @@ class MenuController extends Controller
             return $query->where('category_id', $selectedCategory);
         })->get();
         $facture = new Factures();
-        $facture->datetime_facture=date('Y-m-d H:i:s');;
+        $facture->datetime_facture=date('Y-m-d H:i:s');
         $facture->save();   
         // dd($categories, $menus);
       
@@ -141,15 +128,16 @@ class MenuController extends Controller
             $existingDetail->save();
         } else {
             // Create a new entry for the product
+                
             $detail = new Details();
             $detail->produit_id = $item['menuItemId'];
             $detail->unit_price = $item['menuItemPrice'];
             $detail->facture_id = $factureId;
             $detail->quantity = $item['quantity'];
             $detail->montant = $item['quantity']*$item['menuItemPrice'];
-
             $detail->save();
         }
+        
 
         return response()->json(['success' => true, 'message' => 'Product inserted successfully']);
     } catch (\Exception $e) {
@@ -157,7 +145,19 @@ class MenuController extends Controller
     }
 }
 
-    
-    
+    public function insertData(Request $request)
+    {
+        $tableId = $request->input('tableId');
+        $serverId = $request->input('serverId');
+        
+        $facture = Factures::where('id', $request->input('factureId'))->update([
+        'table_id' => $tableId,
+        'serveur_id' => $serverId  
+        ]);
+        
+        // dd(($facteur));
+
+        return response()->json(['success' => true]);
+    }
 
 }

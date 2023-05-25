@@ -11,10 +11,9 @@
 
   {{-- --------------------------------------------------------------------------------------------------------- --}}
   <div id="popup">
-    <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm">
+    <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm" style="display: flex;">
         @csrf
         <div class="servers">
-            <h4>Select a server:</h4>
             @foreach ($servers as $server)
             <div class="server-item">
                 <label>
@@ -25,7 +24,6 @@
             @endforeach
         </div>
         <div class="tables">
-            <h4>Select a table:</h4>
             @foreach ($tables as $table)
             <div class="table-item">
                 <label>
@@ -35,8 +33,8 @@
             </div>
             @endforeach
         </div>
-        <div>
-            <button class="done" type="button" >Done</button>
+        <div style="position: absolute ; right:5px; bottom:8px; " >
+            <button class="done" type="button" onclick="closePopup()" >Done</button>
         </div>
     </form>
 </div>
@@ -101,7 +99,7 @@
                 </div>
             </div>
             <div class="button-container">
-                <button class="submit-button">Submit</button>
+                <button class="submit-button" >Submit</button>
                 <button class="print-button">Print</button>
             </div>
         </div>
@@ -227,6 +225,13 @@ submitButton.addEventListener('click', () => {
   ticketItemsContainer.innerHTML = '';
   totalPrice = 0;
   totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+
+  window.open("/generate-pdf", "_blank");
+
+  setTimeout(function() {
+    window.location.href = "/commandList";
+  }, 1000);
+
 });
 
   
@@ -274,11 +279,13 @@ submitButton.addEventListener('click', () => {
     // Get the selected table and server IDs
     var tableId = $('input[name="tableId"]:checked').val();
     var serverId = $('input[name="serverId"]:checked').val();
+    
 
     // Create the data object to send in the AJAX request
     var data = {
       tableId: tableId,
       serverId: serverId,
+      factureId: '{{ $facture->id }}',
       _token: $('meta[name="csrf-token"]').attr('content') // Include the CSRF token
     };
 
@@ -301,7 +308,18 @@ submitButton.addEventListener('click', () => {
 
         
 //------------------------------------------------------------------------------------------------------
+$(document).ready(function() {
+  $(".table-item label").click(function() {
+    $(".table-item label").removeClass("clicked"); // Remove the "clicked" class from all labels
+    $(this).addClass("clicked"); // Add the "clicked" class to the clicked label
+  });
 
+  $(".server-item label").click(function() {
+    $(".server-item label").removeClass("clicked"); // Remove the "clicked" class from all labels
+    $(this).addClass("clicked"); // Add the "clicked" class to the clicked label
+  });
+
+});
  
 
 </script>

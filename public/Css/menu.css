@@ -163,18 +163,7 @@ float: left;
     background-color: #ffffff;
     }
     /* ---------------------------------------------------------------------------soukaina.s part--------------- */
-    #popup {
-        position: absolute;
-        top: 9%;
-        left: 22%;
-        width: 50%;
-        height: 50%;
-        background-color: #ffffff;
-        z-index: 1000;
-        
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-
-      }
+    
       
     .tables {
       float: right;
@@ -295,28 +284,76 @@ float: left;
         transform: translate(-50%, -50%);
         width: 50%;
         height: 50%;
-        background-color: #f2f2f2;
+        background-color: #f0F0F0;
         padding: 20px;
         border: 1px solid #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         z-index: 9999;
         display: grid;
-        grid-template-columns: 30% 70%;
+        
         grid-gap: 10px;
         justify-items: stretch;
         align-items: start;
       }
       
       .servers {
-        display: flex;
-        flex-direction: column;
-        width: 20%;
+        width: 25%;
+        margin-left: -19px;
+        margin-top: -19px;
       }
       .tables {
         display: flex;
-        flex-direction: row;
-        align-items: flex-start;
+        width: 75%;
+        flex-wrap: wrap;
       }
+      .table-item {
+        padding-right:10px;
+        padding-bottom: 10px;
+        
+      }
+
+      .server-item label input[type="radio"],
+      .table-item label input[type="radio"] {
+        display: none; /* Hide the default radio button */
+      }
+
+      .server-item label,
+      .table-item label {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #fff;
+        border: none;
+        color: #ffcc00;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width:15vh;
+        border: 1px solid #ccc;
+        font-weight: bolder;
+      }
+      
+      .table-item label.clicked {
+        color: #ffffff;
+        background-color: #ffcc00;
+      }
+
+      .server-item label.clicked {
+        color: #ffffff;
+        background-color: #ffcc00;
+      }
+      
+
+      .server-item label input[type="radio"]:checked + span,
+      .table-item label input[type="radio"]:checked + span {
+        background-color: #ccc; /* Change background color when radio button is checked */
+      }
+
+
+
+
+
       /* .server-item,
       .table-item {
         margin-bottom: 10px;

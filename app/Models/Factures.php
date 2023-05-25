@@ -27,14 +27,14 @@ class Factures extends Model
         return $this->belongsToMany(Details::class);
     }
 
-    public function serveur()
+    public function serveurs()
     {
-        return $this->belongsTo(Serveurs::class, 'serveur_id');
+        return $this->belongsTo(Serveurs::class);
     }
     
-    public function table()
+    public function tables()
     {
-        return $this->belongsTo(Tables::class, 'table_id');
+        return $this->belongsTo(Tables::class);
     }
     
 
