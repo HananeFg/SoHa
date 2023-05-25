@@ -5,9 +5,42 @@
     <link rel="stylesheet" href="{{asset('Css/menu.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
 </head>
 <body>
+
+  {{-- --------------------------------------------------------------------------------------------------------- --}}
+  <div id="popup">
+    <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm">
+        @csrf
+        <div class="servers">
+            <h4>Select a server:</h4>
+            @foreach ($servers as $server)
+            <div class="server-item">
+                <label>
+                    <input type="radio" name="serverId" value="{{ $server->id }}">
+                    {{ $server->name }}
+                </label>
+            </div>
+            @endforeach
+        </div>
+        <div class="tables">
+            <h4>Select a table:</h4>
+            @foreach ($tables as $table)
+            <div class="table-item">
+                <label>
+                    <input type="radio" name="tableId" value="{{ $table->id }}">
+                    {{ $table->name }}
+                </label>
+            </div>
+            @endforeach
+        </div>
+        <div>
+            <button class="done" type="button" >Done</button>
+        </div>
+    </form>
+</div>
+  {{-- --------------------------------------------------------------------------------------------------------- --}}
     <div class="navbar">
         <div class="back-button">
             <a href="#">        
@@ -58,7 +91,7 @@
             </div>
             <hr>
             <div class="ticket-items">
-                <!-- Ticket items go here -->
+                
             </div>
             <hr>
             <div class="ticket-footer">
@@ -75,106 +108,202 @@
     </div>
 
     <script>
-        // JavaScript code for handling menu item selection and ticket updates
-        const categoryItems = document.querySelectorAll('.category-item');
-        const menuItems = document.querySelectorAll('.menu-item');
-        const ticketItemsContainer = document.querySelector('.ticket-items');
-        const totalPriceContainer = document.querySelector('.total-price span:last-child');
-        const submitButton = document.querySelector('.submit-button');
-        let totalPrice = 0;
+    
+const categoryItems = document.querySelectorAll('.category-item');
+const menuItems = document.querySelectorAll('.menu-item');
+const ticketItemsContainer = document.querySelector('.ticket-items');
+const totalPriceContainer = document.querySelector('.total-price span:last-child');
+const submitButton = document.querySelector('.submit-button');
+let totalPrice = 0;
+const productQuantities = {};
 
-        categoryItems.forEach(item => {
-            item.addEventListener('click', () => {
-                categoryItems.forEach(item => item.classList.remove('active'));
-                item.classList.add('active');
-                const categoryId = item.getAttribute('data-category');
 
-                // Filter menu items based on the selected category
-                menuItems.forEach(menuItem => {
-                    const menuCategoryId = menuItem.getAttribute('data-category');
-                    if (categoryId === menuCategoryId || categoryId === 'all') {
-                        menuItem.style.display = 'block';
-                    } else {
-                        menuItem.style.display = 'none';
-                    }
-                });
-            });
-        });
+categoryItems.forEach(item => {
+  item.addEventListener('click', () => {
+    categoryItems.forEach(item => item.classList.remove('active'));
+    item.classList.add('active');
+    const categoryId = item.getAttribute('data-category');
 
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const menuItemId = item.getAttribute('data-id');
-                const menuItemTitle = item.textContent;
-                const menuItemPrice = parseFloat(item.getAttribute('data-price'));
 
-                // Create ticket item and update total price
-                const ticketItem = document.createElement('div');
-                ticketItem.classList.add('ticket-item');
-                ticketItem.setAttribute('data-id', menuItemId);
-                ticketItem.setAttribute('data-price', menuItemPrice.toString());
 
-                const ticketItemText = document.createElement('span');
-                ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
 
-                const removeButton = document.createElement('button');
-                removeButton.classList.add('remove-button');
-                removeButton.textContent = 'X';
 
-                ticketItem.appendChild(ticketItemText);
-                ticketItem.appendChild(removeButton);
-                ticketItemsContainer.appendChild(ticketItem);
+    
+    // Filter menu items based on the selected category
+    menuItems.forEach(menuItem => {
+      const menuCategoryId = menuItem.getAttribute('data-category');
+      if (categoryId === menuCategoryId || categoryId === 'all') {
+        menuItem.style.display = 'block';
+      } else {
+        menuItem.style.display = 'none';
+      }
+    });
+  });
+});
+menuItems.forEach(menuItem => menuItem.style.display = 'none');
+// _________________________________________________________________________________________________
 
-                totalPrice += menuItemPrice;
-                totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
-                removeButton.addEventListener('click', () => {
-                    ticketItem.remove();
-                    totalPrice -= menuItemPrice;
-                    totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
-                });
-            });
-        });
 
-        submitButton.addEventListener('click', () => {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            // Retrieve necessary data from the ticket items
-            const ticketItems = document.querySelectorAll('.ticket-item');
-            const items = Array.from(ticketItems).map(item => ({
-                menuItemId: item.getAttribute('data-id'),
-                menuItemPrice: parseFloat(item.getAttribute('data-price'))
-            }));
 
-            // Send AJAX request to insert products into the database
-            fetch('{{ route('insertProduct') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({ items, facture: '{{ $facture->id }}' })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Products inserted successfully');
-                    } else {
-                        throw new Error('Failed to insert products');
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        });
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const menuItemId = item.getAttribute('data-id');
+    const menuItemTitle = item.textContent;
+    const menuItemPrice = parseFloat(item.getAttribute('data-price'));
+
+      if (productQuantities[menuItemId]) {
+      productQuantities[menuItemId]++;
+    } else {
+      productQuantities[menuItemId] = 1;
+    }
+    // Create ticket item and update total price
+    const ticketItem = document.createElement('div');
+    ticketItem.classList.add('ticket-item');
+    ticketItem.setAttribute('data-id', menuItemId);
+    ticketItem.setAttribute('data-price', menuItemPrice.toString());
+
+    const ticketItemText = document.createElement('span');
+    ticketItemText.textContent = menuItemTitle + ' - ' + menuItemPrice.toFixed(2) + 'DH';
+
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('remove-button');
+   removeButton.innerHTML = '&times;'
+
+    ticketItem.appendChild(ticketItemText);
+    ticketItem.appendChild(removeButton);
+    ticketItemsContainer.appendChild(ticketItem);
+
+    totalPrice += menuItemPrice;
+    totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+
+    removeButton.addEventListener('click', () => {
+      ticketItem.remove();
+      totalPrice -= menuItemPrice;
+      totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+    });
+  });
+});
+
+
+
+
+
+submitButton.addEventListener('click', () => {
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  // Retrieve necessary data from the ticket items
+  const ticketItems = document.querySelectorAll('.ticket-item');
+  const items = Array.from(ticketItems).map(item => ({
+    menuItemId: item.getAttribute('data-id'),
+    menuItemPrice: parseFloat(item.getAttribute('data-price')),
+    quantity: productQuantities[item.getAttribute('data-id')]
+  }));
+
+
+  // Send AJAX request to insert products into the database
+  items.forEach(item => {
+    fetch('{{ route('insertProduct') }}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken
+      },
+      body: JSON.stringify({ item, facture: '{{ $facture->id }}' })
+    })
+      .then(response => {
+        if (response.ok) {
+          console.log('Product inserted successfully');
+        } else {
+          throw new Error('Failed to insert product');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  });
+  ticketItemsContainer.innerHTML = '';
+  totalPrice = 0;
+  totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+});
+
+  
+
+
+ 
+
+   
+    const clearTicketLinks = document.querySelectorAll('.clear-ticket');
+      clearTicketLinks.forEach(link => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const ticketItem = link.parentElement;
+        const priceElement = ticketItem.querySelector('.menu-price');
+        const price = parseFloat(priceElement.getAttribute('data-price'));
+
+        totalPrice -= price;
+        totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
+
+        ticketItem.remove();
+      });
+    });
+
+ 
+        function closePopup() {
+          document.getElementById("popup").style.display = "none";
+          document.body.style.pointerEvents = "initial";
+        }
 
         function scrollUp() {
-            var scrollableContainer = document.getElementById("category-list");
-            scrollableContainer.scrollTop -= 300;
+          var scrollableContainer = document.getElementById("category-list");
+          scrollableContainer.scrollTop -= 300;
         }
 
         function scrollDown() {
-            var scrollableContainer = document.getElementById("category-list");
-            scrollableContainer.scrollTop += 300;
+          var scrollableContainer = document.getElementById("category-list");
+          scrollableContainer.scrollTop += 300;
         }
-    </script>
+    //--------------------------select a table and server POP-UP------------------------------------------------------
+
+
+    $(document).ready(function() {
+  // Add click event listener to the "Done" button
+  $('.done').click(function() {
+    // Get the selected table and server IDs
+    var tableId = $('input[name="tableId"]:checked').val();
+    var serverId = $('input[name="serverId"]:checked').val();
+
+    // Create the data object to send in the AJAX request
+    var data = {
+      tableId: tableId,
+      serverId: serverId,
+      _token: $('meta[name="csrf-token"]').attr('content') // Include the CSRF token
+    };
+
+    // Send the AJAX request
+    $.ajax({
+      url: '{{ route("menu.insertData") }}',
+      type: 'POST',
+      data: data,
+      success: function(response) {
+        // Handle the success response here
+        console.log('Data inserted successfully');
+      },
+      error: function(xhr, status, error) {
+        // Handle the error response here
+        console.error('Failed to insert data:', error);
+      }
+    });
+  });
+});
+
+        
+//------------------------------------------------------------------------------------------------------
+
+ 
+
+</script>
 </body>
 </html>

@@ -31,7 +31,7 @@ class MenuController extends Controller
 {
     $tableId = $request->input('tableId');
     $serverId = $request->input('serverId');
-    dd(($tableId));
+    
     $facteur = new Factures();
     $facteur->table_id = $tableId;
     $facteur->serveur_id = $serverId;
@@ -117,7 +117,7 @@ class MenuController extends Controller
         $facture->datetime_facture=date('Y-m-d H:i:s');;
         $facture->save();   
         // dd($categories, $menus);
-        $this->facture = $facture;
+      
         return view('menu', compact('categories','servers','facture', 'menus','tables', 'selectedCategory'));
     }
 
@@ -127,23 +127,37 @@ class MenuController extends Controller
     }
 
     public function insertProduct(Request $request)
-    {
-        try {
+{
+    try {
+        $item = $request->input('item');
+        $factureId = $request->input('facture');
+
+        // Check if the product already exists in the database for the given facture
+        $existingDetail = Details::where('produit_id', $item['menuItemId'])
+            ->where('facture_id', $factureId)
+            ->first();
+
+        if ($existingDetail) {
+            $existingDetail->save();
+        } else {
+            // Create a new entry for the product
             $detail = new Details();
-        
-            $detail->produit_id = $request->input('menuItemId');
-            $detail->unit_price = $request->input('menuItemPrice');
-            $detail->facture_id= $request->input('facture');
+            $detail->produit_id = $item['menuItemId'];
+            $detail->unit_price = $item['menuItemPrice'];
+            $detail->facture_id = $factureId;
+            $detail->quantity = $item['quantity'];
+            $detail->montant = $item['quantity']*$item['menuItemPrice'];
 
             $detail->save();
-            return response()->json(['success' => true, 'message' => 'Product inserted successfully']);
-
-            
-
-        } catch (\Exception $e) {
-            return $e->getMessage();
         }
+
+        return response()->json(['success' => true, 'message' => 'Product inserted successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
     }
+}
+
+    
     
 
 }
