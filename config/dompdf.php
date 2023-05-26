@@ -7,8 +7,8 @@ $pdf_options = [
     'default_paper_orientation' => 'portrait',
     'custom_paper_sizes' => [
         'ticket' => [
-            0,  // Width (in millimeters)
-            80, // Height (in millimeters)
+            26.772, // Width (in points)
+            41.732, // Height (in points)
         ],
     ],
 ];

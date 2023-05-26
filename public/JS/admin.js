@@ -185,9 +185,22 @@ sidebarButtons.forEach(button => {
             });
         } else if (buttonText === 'Sales') {
             // Logic for Button 4
-            contentDiv.innerHTML += ``;
+            contentDiv.innerHTML += `<div class="item-section">
+            <div class="icon">
+              <!-- Icône de clients (remplacez avec votre propre icône) -->
+              <i class="fas fa-bag-shopping"></i>
+            </div>
+            <p>Here you can manage your sales.<a href="">Learn more</a></p>
+            <h2 class="title">Sales</h2>
+            <button class="add-button id="addProductButton">Add Sale</button>
+          </div>`;
             // Add more specific functionality
-            window.location.href = "/commandList";
+            //window.location.href = "/commandList";
+            const addProductButton = document.getElementById('addProductButton');
+            addProductButton.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "/commandList"; 
+            });
         } else if (buttonText === 'Clients') {
             // Logic for Button 5
             contentDiv.innerHTML += `<div class="item-section">
@@ -224,9 +237,15 @@ sidebarButtons.forEach(button => {
             </div>
             <p>Here you can manage your tables.<a href="">Learn more</a></p>
             <h2 class="title">Table</h2>
-            <button class="add-button">Add Table</button>
+            <button class="add-button" id="addProductButton">Add Table</button>
           </div>`;
-            // Add more specific functionality for Button 2
+            // Add more specific functionality
+            //redirect to tables
+            const addProductButton = document.getElementById('addProductButton');
+            addProductButton.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "tables";
+            });
         } else if (buttonText === 'Settings') {
             // Logic for Button 9
             contentDiv.innerHTML += `<p>This is the content for settings.</p>`;

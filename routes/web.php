@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Dompdf\Dompdf;
-
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 
 /*
@@ -44,17 +45,16 @@ Route::post('/insertProduct', 'App\Http\Controllers\MenuController@insertProduct
 
 Route::resource('tables','App\Http\Controllers\TablesController');
 
-Route::get('/generate-pdf', function () {
-    $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"
 
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml($html);
-    $dompdf->render();
+// Route::get('/generate-pdf', function () {
+//     $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"
 
-    return $dompdf->stream('ticket.pdf'); // Output the PDF as a stream or you can save it using $dompdf->save('path/to/file.pdf')
-});
+//     $dompdf = new Dompdf();
+//     $dompdf->loadHtml($html);
+//     $dompdf->render();
 
-
-
+//     return $dompdf->stream('ticket.pdf'); // Output the PDF as a stream or you can save it using $dompdf->save('path/to/file.pdf')
+// });
+Route::get('/generate-pdf', 'App\Http\Controllers\PdfController@generatePdf');
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

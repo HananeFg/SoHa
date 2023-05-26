@@ -57,5 +57,5 @@ class AjoutArticleController extends Controller
         
        
     }
-}
+}  
 

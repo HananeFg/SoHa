@@ -1,35 +1,50 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <style>
+      @page {
+        size: 8cm 10000cm;
+      }
+      .ticket {
+        font-family: 'Courier New', Courier, monospace;
+        width: 80mm;
+        margin: 0 auto;
+        padding: 5px;
+      
+    }
+    
+    .ticket .header {
+        text-align: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+    
+    .ticket .content {
+        margin-bottom: 3px;
+    }
+ 
+    
+    .ticket .footer {
+        text-align: right;
+    }
+</style>
+
 </head>
 <body>
     <div class="ticket">
         <div class="header">
-          <h2>Receipt</h2>
+            <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
         </div>
         <div class="content">
-          <ul>
-            <li>
-              <span class="item-name">Item 1</span>
-              <span class="item-price">$10.00</span>
-            </li>
-            <li>
-              <span class="item-name">Item 2</span>
-              <span class="item-price">$15.00</span>
-            </li>
-            <li>
-              <span class="item-name">Item 3</span>
-              <span class="item-price">$8.50</span>
-            </li>
-            <!-- Add more items as needed -->
-          </ul>
+            
+                @foreach ($items as $item)
+                <p>
+                    <span class="item-name">{{ $item->title }}</span>
+                </p>
+                @endforeach
+          
         </div>
-        <div class="footer">
-          <span class="total">Total: $33.50</span>
-        </div>
-      </div>
+    </div>
 </body>
 </html>

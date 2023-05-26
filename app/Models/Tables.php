@@ -19,4 +19,9 @@ class Tables extends Model
     {
         return $this->hasMany(Factures::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return "slug";
+    }
 }

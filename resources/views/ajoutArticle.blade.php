@@ -3,6 +3,8 @@
 <head>
   <title>Add Article</title>
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 <body>
     <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
@@ -21,6 +23,12 @@
   <br>
   <hr>
   <div class="container">
+    <div class="">
+      <h3 class="text-secondary">
+        <i class="fas fa-plus"></i>Ajouter un article
+      </h3>
+    </div>
+    <hr>
     <form  method="POST" action="{{ route('ajoutArticle.store') }}" enctype="multipart/form-data">
       @csrf
       <div class="form-group inline">
@@ -66,7 +74,7 @@
     </form>
     @if (session('success'))
     <div class="alert alert-success">
-        <strong style="color: red">Success!</strong> {{ session('success') }}
+        <strong style="color: rgb(23, 146, 52)">Ajoutée avec Success!</strong> {{ session('success') }}
     </div>
     @endif
   </div>

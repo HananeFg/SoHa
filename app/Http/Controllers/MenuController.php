@@ -13,10 +13,6 @@ use App\Models\Serveurs;
 use App\Models\Factures;
 use App\Models\Details;
 
-
-
-
-
 class MenuController extends Controller
 {
     /**
