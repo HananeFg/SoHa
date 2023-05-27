@@ -226,11 +226,31 @@ submitButton.addEventListener('click', () => {
   totalPrice = 0;
   totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
-  window.open("/generate-pdf", "_blank");
 
-  setTimeout(function() {
-    window.location.href = "/commandList";
-  }, 1000);
+  fetch('/printTicket', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-TOKEN': csrfToken
+  },
+  body: JSON.stringify({ factureId: '{{ $facture->id }}' })
+})
+  .then(response => {
+    console.log(response); // Check the response status
+    if (response.ok) {
+      console.log('Print order successful');
+    } else {
+      throw new Error('Failed to print order');
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+
+  // setTimeout(function() {
+  //   window.location.href = "/generatePdf";
+  // }, 1000);
 
 });
 

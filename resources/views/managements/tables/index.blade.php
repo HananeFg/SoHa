@@ -149,7 +149,7 @@
     @foreach ($tables as $table)
         <tr>
             <td>{{ $table->id }}</td>
-            <td>{{ $table->name }}</td>
+            <td>{{ $table->name }} and {{ $table->slug }}</td>
             <td>
               @if ($table->status)
                 <span>
@@ -162,11 +162,17 @@
               @endif
             </td>
             <td>
-                {{-- <a href="{{ route('menu.details', $menu->id) }}">View</a> --}}
-                <a href="{{ route('tables.edit',$tables) }}" class="btn btn-warning">
-                    <i class="fas fa-edit fa-x2"></i>
-                </a>
-            </td>
+              <form action="{{route('tables.destroy', $table->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer la catégorie du {{ $table->name }} ?');" method="post">
+
+                  {{ csrf_field() }} {{ method_field('DELETE') }}
+                  <a href="{{ route('tables.edit', $table->id) }}" class="btn btn-warning">
+                          <i class="fas fa-edit fa-x2"></i>
+                  </a>
+                  <button  class="btn btn-danger" type="submit">
+                      <i class="fas fa-trash fa-x2"></i>
+                  </button>
+              </form>
+          </td>
         </tr>
     @endforeach
   </table>

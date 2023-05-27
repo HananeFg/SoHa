@@ -27,7 +27,7 @@ Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')-
 Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
 Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
 Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
-Route::get('/printTicket', 'App\Http\Controllers\MenuController@printOrder')->name('printTicket');
+Route::post('/printTicket', 'App\Http\Controllers\MenuController@printOrder')->name('printTicket');
 Route::get('/admin', 'App\Http\Controllers\HomeController@admin')->name('admin');
 
 
@@ -44,7 +44,10 @@ Route::post('/insertProduct', 'App\Http\Controllers\MenuController@insertProduct
 
 
 Route::resource('tables','App\Http\Controllers\TablesController');
-
+Route::put('/tables/{table}/edit', 'App\Http\Controllers\TablesController@edit')->name('tables.edit');
+Route::get('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
+Route::put('tables/update/{table}', 'App\Http\Controllers\TablesController@update')->name('tables.update');
+Route::delete('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
 
 // Route::get('/generate-pdf', function () {
 //     $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"
@@ -55,6 +58,6 @@ Route::resource('tables','App\Http\Controllers\TablesController');
 
 //     return $dompdf->stream('ticket.pdf'); // Output the PDF as a stream or you can save it using $dompdf->save('path/to/file.pdf')
 // });
-Route::get('/generate-pdf', 'App\Http\Controllers\PdfController@generatePdf');
+Route::get('/generatePdf', 'App\Http\Controllers\PdfController@generatePdf')->name('generatePdf');
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

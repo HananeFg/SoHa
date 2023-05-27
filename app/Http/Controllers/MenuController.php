@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\Serveurs;
 use App\Models\Factures;
 use App\Models\Details;
+use App\Http\Controllers\PdfController;
+use Illuminate\Support\Facades\View;
 
 class MenuController extends Controller
 {
@@ -104,10 +106,20 @@ class MenuController extends Controller
         return view('menu', compact('categories','servers','facture', 'menus','tables', 'selectedCategory'));
     }
 
-    public function printOrder()
-    {
-    return view('printTicket');
+    public function printOrder(Request $request)
+   {
+    try {
+        $factureId = $request->input('factureId');
+
+        $pdfController = new PdfController();
+        $pdfResponse = $pdfController->generatePdf($factureId);
+
+        return $pdfResponse;
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
     }
+    // return response()->json(['success' => false, 'message' => $e->getMessage()]);
+   }
 
     public function insertProduct(Request $request)
 {
@@ -134,7 +146,8 @@ class MenuController extends Controller
             $detail->save();
         }
         
-
+       
+        
         return response()->json(['success' => true, 'message' => 'Product inserted successfully']);
     } catch (\Exception $e) {
         return response()->json(['success' => false, 'message' => $e->getMessage()]);
@@ -156,4 +169,5 @@ class MenuController extends Controller
         return response()->json(['success' => true]);
     }
 
+   
 }

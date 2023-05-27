@@ -42,11 +42,6 @@ class TablesController extends Controller
     public function store(Request $request)
     {
         //validation
-        
-        // $this->validate($request , [
-        //     "name" => "required|unique:tables,name",
-        //     "status" => "required|boolean"
-        // ]);
         $validData = $request->validate([
             'name' => 'required|unique:tables,name',
             'status' => 'required|boolean',
@@ -102,54 +97,78 @@ class TablesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tables $tables)
-    {
-        //
-         //validation
-        //  $this->validate($request , [
-        //     "name" => "required|unique:tables,name,".$tables->id,
-        //     "name" => "required|boolean"
-        // ]);
-        // //update data
-        // $name = $request->name;
-        // $tables->update([
-        //     "name" => $name,
-        //     "slug" => Str::slug($name)
-        // ]);
+    // public function update(Request $request, Tables $tables)
+    // {
+    //     //
+    //      //validation
+    //     //  $this->validate($request , [
+    //     //     "name" => "required|unique:tables,name,".$tables->id,
+    //     //     "name" => "required|boolean"
+    //     // ]);
+    //     // //update data
+    //     // $name = $request->name;
+    //     // $tables->update([
+    //     //     "name" => $name,
+    //     //     "slug" => Str::slug($name)
+    //     // ]);
+    //     $validData = $request->validate([
+    //         'name' => 'required|unique:tables,name,'.$tables->id,
+    //         'status' => 'required|boolean',
+    //     ]);
+    //     // Create a new table instance
+    //     $table = Tables::find($tables->id);
+    //     $table->name = $validData['name'];
+    //     $table->slug = $validData['name'];
+    //     $table->status = $validData['status'];
+    //     // save instance
+    //     $table->save();
+    //     //redirect user
+    //     // return redirect()->route("tables.index")->with([
+    //     //     "success" => "Table modified successfully"
+    //     // ]);
+    //       // Clear the form input fields
+    //       $request->session()->flash('success', 'Table added successfully');
+        
+    //       // Redirect back to the form with an empty form
+    //       return redirect()->route('tables.index');
+    // }
+    public function update(Request $request)
+    {   
+        $table = $request->table;
+        $table = Tables::find($request->table);
+    
         $validData = $request->validate([
-            'name' => 'required|unique:tables,name,'.$tables->id,
+            'name' => 'required|unique:tables,name,'.$table->id,
             'status' => 'required|boolean',
         ]);
-        // Create a new table instance
-        $table = Tables::find($request->id);
+    
         $table->name = $validData['name'];
-        $table->slug = $validData['name'];
+        $table->slug = Str::slug($validData['name']);
         $table->status = $validData['status'];
-        // save instance
         $table->save();
-        //redirect user
-        // return redirect()->route("tables.index")->with([
-        //     "success" => "Table modified successfully"
-        // ]);
-          // Clear the form input fields
-          $request->session()->flash('success', 'Table added successfully');
-        
-          // Redirect back to the form with an empty form
-          return redirect()->route('tables.index');
+    
+        $request->session()->flash('success', 'Table updated successfully');
+        return redirect()->route('tables.index');
     }
+    
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tables $tables)
+    public function destroy(Request $request)
     {
+        $table = $request->table;
+    
         //delete table
-        $name = $tables->name;
+        $tables = Tables::find($table);
         $tables->delete();
+    
         //redirect user
         return redirect()->route("tables.index")->with([
             "success" => "Table deleted successfully"
         ]);
     }
+    
     
 }

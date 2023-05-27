@@ -34,15 +34,19 @@
 <body>
     <div class="ticket">
         <div class="header">
-            <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
+          <H1>SOHA</H1>
         </div>
+
         <div class="content">
-            
+                <p style="text-align: center;">--------------------------------------------------</p>
                 @foreach ($items as $item)
                 <p>
                     <span class="item-name">{{ $item->title }}</span>
                 </p>
+              
                 @endforeach
+                <p style="text-align: center;">--------------------------------------------------</p>
+
           
         </div>
     </div>
