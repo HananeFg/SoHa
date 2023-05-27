@@ -32,13 +32,13 @@
       </h3>
     </div>
     <hr>
-    <form action="{{ route('tables.update', $tables->id) }}" method="POST">
+    <form action="{{ route('tables.update',  ['table' => $tables->id] ) }}" method="put">
       @csrf
-        @method("PUT")
+        {{-- @method("PUT") --}}
         <div class="form-group inline">
             <div class="form-element">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Titre" value="{{ $tables->id }}" required>
+                <input type="text" id="name" name="name" placeholder="Titre" value="{{ $tables->name }}" required>
             </div>
             <div class="form-element">
                 <label for="status">Status:</label>

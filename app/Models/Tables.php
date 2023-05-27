@@ -9,6 +9,9 @@ class Tables extends Model
 {
     use HasFactory;
 
+    protected $table = 'tables';
+
+
     protected $fillable = [
         "name",
         "slug",

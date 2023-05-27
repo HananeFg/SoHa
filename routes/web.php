@@ -44,8 +44,7 @@ Route::post('/insertProduct', 'App\Http\Controllers\MenuController@insertProduct
 
 
 Route::resource('tables','App\Http\Controllers\TablesController');
-Route::put('/tables/{table}/edit', 'App\Http\Controllers\TablesController@edit')->name('tables.edit');
-Route::get('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
+//Route::get('/tables/{table}/edit', 'App\Http\Controllers\TablesController@edit')->name('tables.edit');
 Route::put('tables/update/{table}', 'App\Http\Controllers\TablesController@update')->name('tables.update');
 Route::delete('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
 

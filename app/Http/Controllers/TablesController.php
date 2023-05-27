@@ -88,6 +88,7 @@ class TablesController extends Controller
      */
     public function edit(Tables $tables)
     {
+        dd($tables);
         //
         return view("managements.tables.edit")->with([
             "tables" => $tables
@@ -134,22 +135,23 @@ class TablesController extends Controller
     // }
     public function update(Request $request)
     {   
-        $table = $request->table;
-        $table = Tables::find($request->table);
+        $table = $request->input('table');
+        $tables = Tables::find($table);
     
         $validData = $request->validate([
             'name' => 'required|unique:tables,name,'.$table->id,
             'status' => 'required|boolean',
         ]);
     
-        $table->name = $validData['name'];
-        $table->slug = Str::slug($validData['name']);
-        $table->status = $validData['status'];
-        $table->save();
+        $tables->name = $validData['name'];
+        $tables->slug = Str::slug($validData['name']);
+        $tables->status = $validData['status'];
+        $tables->save();
     
         $request->session()->flash('success', 'Table updated successfully');
         return redirect()->route('tables.index');
     }
+    
     
     
 
