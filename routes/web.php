@@ -27,7 +27,6 @@ Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')-
 Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
 Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
 Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
-Route::post('/printTicket', 'App\Http\Controllers\MenuController@printOrder')->name('printTicket');
 Route::get('/admin', 'App\Http\Controllers\HomeController@admin')->name('admin');
 
 
@@ -41,13 +40,18 @@ Route::get('/add-sale', 'App\Http\Controllers\CommandListController@addSale')->n
 
 Route::post('/menu', 'App\Http\Controllers\MenuController@insertData')->name('menu.insertData');
 Route::post('/insertProduct', 'App\Http\Controllers\MenuController@insertProduct')->name('insertProduct');
+Route::get('/printTicket', 'App\Http\Controllers\MenuController@printTicket')->name('printTicket');
 
+Route::get('/menuId/{variable}', 'App\Http\Controllers\MenuController@menuId')->name('menuId');
+
+Route::get('/printForClient', 'App\Http\Controllers\MenuController@printForClient')->name('printForClient');
 
 Route::resource('tables','App\Http\Controllers\TablesController');
 Route::put('/tables/{table}/edit', 'App\Http\Controllers\TablesController@edit')->name('tables.edit');
 Route::get('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
 Route::put('tables/update/{table}', 'App\Http\Controllers\TablesController@update')->name('tables.update');
 Route::delete('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
+Route::get('/insertPayment', 'App\Http\Controllers\MenuController@insertPayment')->name('insertPayment');
 
 // Route::get('/generate-pdf', function () {
 //     $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"

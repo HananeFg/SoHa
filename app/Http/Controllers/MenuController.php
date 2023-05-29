@@ -14,111 +14,154 @@ use App\Models\Factures;
 use App\Models\Details;
 use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\View;
+use Dompdf\Dompdf;
+use Dompdf\FrameDecorator\Table;
+use Illuminate\Support\Facades\Http;
 
 class MenuController extends Controller
 {
     /**
+     * 
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
+    private $factureId;
 
-    }
-
- 
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMenuRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Menu $menu)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Menu $menu)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMenuRequest $request, Menu $menu)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Menu $menu)
-    {
-        //
-    }
-
-    // public function menu()
-    // {
-    //     $categories = Category::all();
-    //     $menus = Menu::all();
-
-    //     return view('menu', compact('categories', 'menus'));
-    // }
+  
    
     
 
+    // 
     public function menu(Request $request)
     {
+
         $categories = Category::all();
         $tables = Tables::all();
         $servers = Serveurs::all();
        
-
+        $showPopup = false;
         
         $selectedCategory = $request->input('category_id');
         $menus = Menu::when($selectedCategory, function ($query) use ($selectedCategory) {
             return $query->where('category_id', $selectedCategory);
         })->get();
+      
         $facture = new Factures();
         $facture->datetime_facture=date('Y-m-d H:i:s');
-        $facture->save();   
+        $facture->save();        
+        session(['factureId' => $facture->id]);
+        // dd(($this->factureId));
         // dd($categories, $menus);
       
-        return view('menu', compact('categories','servers','facture', 'menus','tables', 'selectedCategory'));
+        return view('menu', compact('categories','showPopup','servers','facture', 'menus','tables', 'selectedCategory'));
+    } 
+
+    public function menuId(Request $request,$variable)
+    {
+
+        $categories = Category::all();
+        $tables = Tables::all();
+        $servers = Serveurs::all();     
+        $showPopup = false;
+        $selectedCategory = $request->input('category_id');
+        $menus = Menu::when($selectedCategory, function ($query) use ($selectedCategory) {
+            return $query->where('category_id', $selectedCategory);
+        })->get();
+       
+        $facture = Factures::where('id',$variable)->first();
+        
+        session(['factureId' => $variable]);
+        // dd(($this->factureId));
+        // dd($categories, $menus);
+      
+        return view('menu', compact('categories','showPopup','servers','facture', 'menus','tables', 'selectedCategory'));
     }
 
-    public function printOrder(Request $request)
+    public function printTicket()
    {
+    $tableId = session('tableId');
+    $serverId = session('serverId');
+    $factureId = session('factureId');
     try {
-        $factureId = $request->input('factureId');
+        $items = Details::join('menus', function ($join) {
+            $join->on('details.produit_id', '=', 'menus.id');
+        })
+        ->where('details.facture_id', $factureId)
+        ->select('menus.*', 'menus.title as product_name', 'details.quantity as quantity')
+        ->get();
 
-        $pdfController = new PdfController();
-        $pdfResponse = $pdfController->generatePdf($factureId);
+        // $quantity =Details
+        $facture = Factures::where('id',$factureId)->get();
+        $server = Serveurs::where('id',$serverId)->get();
+        $table = Tables::where('id',$tableId)->get();
+      
+        $dompdf = new Dompdf();
+        
+        $html = View::make('ticket', ['items' => $items ,'factureId' => $factureId,'table' => $table,'server' => $server ,'facture' => $facture])->render();
+        $dompdf->loadHtml($html);
+      
+        $dompdf->render();
 
-        return $pdfResponse;
+        
+        $dompdf->stream('document.pdf');
+
+
     } catch (\Exception $e) {
         return response()->json(['success' => false, 'message' => $e->getMessage()]);
     }
     // return response()->json(['success' => false, 'message' => $e->getMessage()]);
+   }
+
+   public function printForClient(){
+    $tableId = session('tableId');
+    $serverId = session('serverId');
+    $factureId = session('factureId');
+    try {
+        $items = Details::join('menus', function ($join) {
+            $join->on('details.produit_id', '=', 'menus.id');
+        })
+        ->where('details.facture_id', $factureId)
+        ->select('menus.*', 'menus.title as product_name', 'details.quantity as quantity','details.montant as price')
+        ->get();
+        $totalSum = 0;
+        foreach ($items as $item) {
+            $totalSum += $item->price ;
+        }
+        Factures::where('id', $factureId)->update([
+            'total_price' => $totalSum
+        ]);
+
+
+        // $quantity =Details
+        $facture = Factures::where('id',$factureId)->get();
+        $facturee= Factures::where('id',$factureId)->get();
+        $server = Serveurs::where('id',$serverId)->get();
+        $table = Tables::where('id',$tableId)->get();
+        // dd(($table));
+        // dd(($items));
+        // $items = Details::where('facture_id', $factureId);
+        // dd($items);
+        $dompdf = new Dompdf();
+        
+        $html = View::make('ticketForClient', ['items' => $items ,'factureId' => $factureId,'table' => $table,'server' => $server , 'facture' => $facture ,'facturee' => $facturee])->render();
+        $dompdf->loadHtml($html);
+        
+        // Set paper size and orientation
+        // $dompdf->setPaper('80mm', 'auto');
+
+        // Render the PDF
+        $dompdf->render();
+
+        // Output the PDF as a stream or save it to a file
+        // $output = $dompdf->output();
+
+        $dompdf->stream('document.pdf');
+
+
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => $e->getMessage()]);
+    }
+      
+
    }
 
     public function insertProduct(Request $request)
@@ -158,6 +201,9 @@ class MenuController extends Controller
     {
         $tableId = $request->input('tableId');
         $serverId = $request->input('serverId');
+        session(['tableId' =>  $tableId]);
+        session(['serverId' =>  $serverId]);
+
         
         $facture = Factures::where('id', $request->input('factureId'))->update([
         'table_id' => $tableId,
@@ -169,5 +215,8 @@ class MenuController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function insertPayment(){
+
+}
    
 }

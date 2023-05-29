@@ -145,8 +145,7 @@
             <td>{{ $facture->serveur_id }}</td>
             <td>{{ $facture->payment_status }}</td>
             <td>
-                {{-- <a href="{{ route('menu.details', $menu->id) }}">View</a> --}}
-                view
+                <a href="{{ route('menuId', [ 'variable' => $facture->id]) }}">View</a>               
             </td>
         </tr>
     @endforeach

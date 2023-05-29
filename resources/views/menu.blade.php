@@ -10,6 +10,7 @@
 <body>
 
   {{-- --------------------------------------------------------------------------------------------------------- --}}
+  @if ($showPopup)
   <div id="popup">
     <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm" style="display: flex;">
         @csrf
@@ -38,8 +39,59 @@
         </div>
     </form>
 </div>
+@endif
   {{-- --------------------------------------------------------------------------------------------------------- --}}
-    <div class="navbar">
+  <div id="popupPayment" >
+    {{-- action="{{ route('insertPayment') }}"  --}}
+    <form method="POST" style="align-items: center">
+      @csrf
+      
+      <div class="total">
+          <h1 style="margin-bottom: 0;">{{$facture->total_price}}</h1>
+          <p style="color: rgb(94, 91, 91); margin-top: 0;">Total amount</p>
+        </div>
+        <div>
+          <h1 id="remainingPrice" style="margin-bottom: 0;"></h1>
+          <p style="color: rgb(94, 91, 91); margin-top: 0;">Charge</p>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div>
+            <p>Cache received</p>
+          </div>
+          <div>
+            <input type="text" class="charge" value="">
+          </div>
+        </div>
+
+      <br>
+      <br>
+      
+      <button type="button" class="methodPayment">Cache</button>
+      <br>
+      <br>
+
+      <button type="button" class="methodPayment">Gratuit</button>
+     <br>
+     <br>
+     <button type="button" class="valider"> VALIDER</button> 
+      
+      {{-- <label for="amount_given">Amount Given:</label>
+      <input type="number" name="amount_given" id="amount_given" required>
+    
+     
+    
+      <label for="charge">Charge:</label>
+      <input type="number" name="charge" id="charge" required> --}}
+    
+      {{-- <button type="submit" name="payment_option" value="gratuit">Gratuit</button>
+      <button type="submit" name="payment_option" value="card">Card</button>
+    --}}
+  </form>
+       
+</div>
+    {{-- ------------------------------------------------------------------------------------------------------ --}}
+  <div class="navbar">
         <div class="back-button">
             <a href="#">        
                 <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
@@ -51,7 +103,7 @@
     </div>
     <br>
     <br>
-    <hr>
+   
 
     <div class="category-sidebar">
         <button onclick="scrollUp()" class="scroll">        
@@ -111,6 +163,7 @@ const categoryItems = document.querySelectorAll('.category-item');
 const menuItems = document.querySelectorAll('.menu-item');
 const ticketItemsContainer = document.querySelector('.ticket-items');
 const totalPriceContainer = document.querySelector('.total-price span:last-child');
+const printButton = document.querySelector('.print-button');
 const submitButton = document.querySelector('.submit-button');
 let totalPrice = 0;
 const productQuantities = {};
@@ -226,34 +279,20 @@ submitButton.addEventListener('click', () => {
   totalPrice = 0;
   totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
+  setTimeout(function() {window.location.href = "/printTicket";},6000);
 
-  fetch('/printTicket', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-CSRF-TOKEN': csrfToken
-  },
-  body: JSON.stringify({ factureId: '{{ $facture->id }}' })
-})
-  .then(response => {
-    console.log(response); // Check the response status
-    if (response.ok) {
-      console.log('Print order successful');
-    } else {
-      throw new Error('Failed to print order');
-    }
-  })
-  .catch(error => {
-    console.error(error);
-  });
+  setTimeout(function() {
+    window.location.href = "/commandList";
+  }, 7050);
 
-
-  // setTimeout(function() {
-  //   window.location.href = "/generatePdf";
-  // }, 1000);
-
+  
 });
 
+      printButton.addEventListener('click', () => {
+
+        window.location.href = "/printForClient";
+
+    });
   
 
 
@@ -341,6 +380,15 @@ $(document).ready(function() {
 
 });
  
+  const total_price = parseFloat("{{$facture->total_price}}");
+  const chargeInput = document.querySelector('.charge');
+  const remainingPrice = document.getElementById('remainingPrice');
+
+  chargeInput.addEventListener('input', () => {
+    const charge = parseFloat(chargeInput.value) || 0;
+    const remaining = total_price - charge;
+    remainingPrice.textContent = remaining.toFixed(2) + " DH";
+  });
 
 </script>
 </body>

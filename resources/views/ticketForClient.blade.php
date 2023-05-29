@@ -63,13 +63,16 @@
                 @foreach ($items as $item)
                 <p>
                     <span class="item-name">{{ $item->quantity }} x {{ $item->product_name }}</span>
+                    <span class="item-name" style=" position:absolute; right: -20px;">{{ $item->price }} </span>
 
                 </p>
               
                 @endforeach
                 
                 <p style="text-align: center;">--------------------------------------------------</p>
-               
+                @foreach ($facturee as $fact)
+                <span  style=" position:absolute; right: 0px;">Total : {{$fact->total_price}}</span>
+                @endforeach
         </div>
     </div>
 </body>
