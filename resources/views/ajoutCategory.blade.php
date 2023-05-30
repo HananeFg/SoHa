@@ -49,7 +49,7 @@
     </form>
     @if (session('success'))
     <div class="alert alert-success">
-        <strong style="color: red">Success!</strong> {{ session('success') }}
+        <strong style="color: rgb(35, 198, 76)">Success!</strong> {{ session('success') }}
     </div>
     @endif
   </div>

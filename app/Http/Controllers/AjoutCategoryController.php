@@ -27,13 +27,14 @@ class AjoutCategoryController extends Controller
         ]);
         
         // Upload the image file
-        $imagePath = $request->file('image')->store('images');
+        $imagePath = $request->file('image')->store('articleImage', 'public');
+        $imageUrl = asset('storage/' . $imagePath);
         
         // Create a new Article instance
         $category = new Category();
         $category->title = $validatedData['title'];
         $category->slug = $validatedData['slug'];
-        $category->image = $imagePath;
+        $category->image = $imageUrl;;
         
         $category->save();
      

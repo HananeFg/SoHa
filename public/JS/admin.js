@@ -9,7 +9,7 @@ sidebarButtons.forEach(button => {
 
         // Get button text and display relevant content
         const buttonText = button.innerText;
-        contentDiv.innerHTML = `<h1>${buttonText}</h1>`;
+        // contentDiv.innerHTML = `<h1>${buttonText}</h1>`;
         // Add additional content based on the selected button
         // For example, you can make AJAX requests here to fetch dynamic data
           // Implement your logic for each button's functionality
@@ -179,8 +179,9 @@ sidebarButtons.forEach(button => {
               <i class="fas fa-tags"></i>
             </div>
             <p>Here you can manage your categories.<a href="">Learn more</a></p>
-            <h2 class="title">Category</h2>
-            <button class="add-button" id="addProductButton">Add Category</button>
+            <h2 class="title">Categorie</h2>
+            <button class="add-button" id="addProductButton">Ajouter Categorie</button>
+            <button class="add-button" id="addPB">Voir les Categories</button>
           </div>`;
             // Add more specific functionality
             // Add event listener to the Add Category button
@@ -189,21 +190,31 @@ sidebarButtons.forEach(button => {
                 // Redirect to the desired route when the button is clicked
                 window.location.href = "/ajoutCategory"; 
             });
+            const addPB = document.getElementById('addPB');
+            addPB.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "categories"; 
+            });
         } else if (buttonText === 'Sales') {
             // Logic for Button 4
             contentDiv.innerHTML += `<div class="item-section">
             <div class="icon">
-              <!-- Icône de clients (remplacez avec votre propre icône) -->
               <i class="fas fa-bag-shopping"></i>
             </div>
             <p>Here you can manage your sales.<a href="">Learn more</a></p>
-            <h2 class="title">Sales</h2>
-            <button class="add-button id="addProductButton">Add Sale</button>
+            <h2 class="title">Ventes</h2>
+            <button class="add-button" id="addProductButton">Ajouter une vente</button>
+            <button class="add-button" id="addPB">Voir les ventes</button>
           </div>`;
             // Add more specific functionality
             //window.location.href = "/commandList";
             const addProductButton = document.getElementById('addProductButton');
             addProductButton.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "/menu"; 
+            });
+            const addPB = document.getElementById('addPB');
+            addPB.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
                 window.location.href = "/commandList"; 
             });
@@ -211,15 +222,25 @@ sidebarButtons.forEach(button => {
             // Logic for Button 5
             contentDiv.innerHTML += `<div class="item-section">
             <div class="icon">
-              <!-- Icône de clients (remplacez avec votre propre icône) -->
               <i class="fa fa-users"></i>
             </div>
             <p>Here you can manage your customers.<a href="">Learn more</a></p>
-            <h2 class="title">Customers</h2>
-            <button class="add-button">Add Customer</button>
+            <h2 class="title">Clients</h2>
+            <button class="add-button" id="addProductButton">Ajouter un client</button>
+            <button class="add-button" id="addPB">Voir les clients</button>
           </div>
           `;
-            // Add more specific functionality for Button 3
+            // Add more specific functionality
+            const addProductButton = document.getElementById('addProductButton');
+            addProductButton.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "clients"; 
+            });
+            const addPB = document.getElementById('addPB');
+            addPB.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "clients"; 
+            });
         } else if (buttonText === 'Rapports') {
             // Logic for Button 6
             contentDiv.innerHTML += `<p>This is the content for Button 2.</p>`;
@@ -231,10 +252,21 @@ sidebarButtons.forEach(button => {
             <i class="fas fa-user"></i>
             </div>
             <p>Here you can manage your users.<a href="">Learn more</a></p>
-            <h2 class="title">User</h2>
-            <button class="add-button">Add User</button>
+            <h2 class="title">Utilisateurs</h2>
+            <button class="add-button" id="addProductButton">Ajouter un utilisateur</button>
+            <button class="add-button" id="addPB">Voir les utilisateurs</button>
           </div>`;
-            // Add more specific functionality for Button 3
+            // Add more specific functionality
+            const addProductButton = document.getElementById('addProductButton');
+            addProductButton.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "user"; 
+            });
+            const addPB = document.getElementById('addPB');
+            addPB.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "user"; 
+            });
         } else if (buttonText === 'Tables') {
             // Logic for Button 8
             contentDiv.innerHTML += `<div class="item-section">
@@ -243,7 +275,8 @@ sidebarButtons.forEach(button => {
             </div>
             <p>Here you can manage your tables.<a href="">Learn more</a></p>
             <h2 class="title">Table</h2>
-            <button class="add-button" id="addProductButton">Add Table</button>
+            <button class="add-button" id="addProductButton">Ajouter une Table</button>
+            <button class="add-button" id="addPB">Voir les tables</button>
           </div>`;
             // Add more specific functionality
             //redirect to tables
@@ -251,6 +284,11 @@ sidebarButtons.forEach(button => {
             addProductButton.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
                 window.location.href = "tables";
+            });
+            const addPB = document.getElementById('addPB');
+            addPB.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "tables"; 
             });
         } else if (buttonText === 'Settings') {
             // Logic for Button 9

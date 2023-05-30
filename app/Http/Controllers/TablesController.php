@@ -53,24 +53,10 @@ class TablesController extends Controller
         $table->status = $validData['status'];
         // save instance
         $table->save();
-
-        //store data
-        // $name = $request->name;
-        // Tables::create([
-        //     "name" => $name,
-        //     "slug" => Str::slug($name),
-        //     "status" => $request->status
-        // ]);
-
-        //redirect user
-        // return redirect()->route("tables.index")->with([
-        //     "success" => "Table added successfully"
-        // ]);
-             // Clear the form input fields
-             $request->session()->flash('success', 'Talbe added successfully');
-        
-             // Redirect back to the form with an empty form
-             return redirect()->route('tables.index');
+        // Clear the form input fields
+        $request->session()->flash('success', 'Talbe added successfully');
+        // Redirect back to the form with an empty form
+        return redirect()->route('tables.index');
              
     }
 
@@ -98,41 +84,6 @@ class TablesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(Request $request, Tables $tables)
-    // {
-    //     //
-    //      //validation
-    //     //  $this->validate($request , [
-    //     //     "name" => "required|unique:tables,name,".$tables->id,
-    //     //     "name" => "required|boolean"
-    //     // ]);
-    //     // //update data
-    //     // $name = $request->name;
-    //     // $tables->update([
-    //     //     "name" => $name,
-    //     //     "slug" => Str::slug($name)
-    //     // ]);
-    //     $validData = $request->validate([
-    //         'name' => 'required|unique:tables,name,'.$tables->id,
-    //         'status' => 'required|boolean',
-    //     ]);
-    //     // Create a new table instance
-    //     $table = Tables::find($tables->id);
-    //     $table->name = $validData['name'];
-    //     $table->slug = $validData['name'];
-    //     $table->status = $validData['status'];
-    //     // save instance
-    //     $table->save();
-    //     //redirect user
-    //     // return redirect()->route("tables.index")->with([
-    //     //     "success" => "Table modified successfully"
-    //     // ]);
-    //       // Clear the form input fields
-    //       $request->session()->flash('success', 'Table added successfully');
-        
-    //       // Redirect back to the form with an empty form
-    //       return redirect()->route('tables.index');
-    // }
     public function update(Request $request)
     {   
         $table = $request->input('table');
@@ -151,9 +102,6 @@ class TablesController extends Controller
         $request->session()->flash('success', 'Table updated successfully');
         return redirect()->route('tables.index');
     }
-    
-    
-    
 
     /**
      * Remove the specified resource from storage.

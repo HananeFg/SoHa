@@ -3,7 +3,7 @@
 <head>
     <style>
       @page {
-        size: 8cm 10000cm;
+        size: 9cm 30cm;
       }
       .ticket {
         font-family: 'Courier New', Courier, monospace;
@@ -54,7 +54,7 @@
             <div style=" display: inline-block;">
                 
                 @foreach ($server as $server)
-                <p>| serveur : {{$server->name}}</p>
+                <p>| serveur:{{$server->name}}</p>
                 @endforeach
             </div>
                 <p style="text-align: center;">--------------------------------------------------</p>

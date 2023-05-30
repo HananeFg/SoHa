@@ -3,7 +3,7 @@
 <head>
     <style>
       @page {
-        size: 8cm 10000cm;
+        size: 9cm 20cm;
       }
       .ticket {
         font-family: 'Courier New', Courier, monospace;

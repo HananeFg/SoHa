@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Menu</title>
+  <title>Categorie</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -129,9 +129,9 @@
   <div class="">
     <div class="d-flex flex-row justify-content-between align-items-center border-bottom pb-1">
       <h3 class="text-secondary">
-        <i class="fas fa-table fa-x2"></i> Products
+        <i class="fas fa-list fa-x2"></i> Categories
       </h3>
-      <a href="{{ route("ajoutArticle") }}" class="ml-auto">
+      <a href="{{ route("ajoutCategory") }}" class="ml-auto">
         <div class="icon">
           <i class="fas fa-square-plus fa-x2" ></i>
         </div>
@@ -142,26 +142,20 @@
   <table>
     <tr>
         <th>id</th>
-        <th>Nom</th>
-        <th>Categorie</th>
-        <th>Prix unitaire</th>
-        <th>TVA</th>
-        <th>TTC</th>
+        <th>Titre</th>
+        <th>Description</th>
         <th>Action</th>
     </tr>
-    @foreach ($products as $product)
+    @foreach ($categories as $categ)
         <tr>
-            <td>{{ $product->id }}</td>
-            <td>{{ $product->title }}</td>
-            <td>{{ $product->category_id }}</td>
-            <td>{{ $product->unit_price }}</td>
-            <td>{{ $product->TVA }}</td>
-            <td>{{ $product->TTC_price }}</td>
+            <td>{{ $categ->id }}</td>
+            <td>{{ $categ->title }}</td>
+            <td>{{ $categ->slug }}</td>
             <td>
-              <form action="{{route('products.destroy', $product->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $product->title }} ?');" method="post">
+              <form action="{{route('categories.destroy', $categ->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer la categorie du {{ $categ->title }} ?');" method="post">
 
                   {{ csrf_field() }} {{ method_field('DELETE') }}
-                  <a href="{{ route('products.edit', $products) }}" class="btn btn-warning">
+                  <a href="{{ route('categories.edit', $categ) }}" class="btn btn-warning">
                           <i class="fas fa-edit fa-x2"></i>
                   </a>
                   <button  class="btn btn-danger" type="submit">
@@ -176,7 +170,7 @@
 <!-- ... -->
 
 
-        {{ $products->onEachSide(1)->links() }}
+        {{ $categories->onEachSide(1)->links() }}
 
 </body>
 </html>

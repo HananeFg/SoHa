@@ -158,13 +158,32 @@
         <tr>
             <td>{{ $facture->id }}</td>
             <td>{{ $facture->created_at }}</td>
-            <td>{{ $facture->table_id }}</td>
-            <td>{{ $facture->serveur_id }}</td>
+            <td>
+                {{-- @if ($facture->table) --}}
+                    {{ $facture->table }}
+                {{-- @else
+                    Not Found
+                @endif --}}
+            </td>
+            <td>
+                {{-- @if ($facture->serveur) --}}
+                    {{ $facture->serveur->name }}
+                {{-- @else
+                    Not Found
+                @endif --}}
+            </td>
             <td>{{ $facture->payment_status }}</td>
             <td>
-                <a href="{{ route('menuId', [ 'variable' => $facture->id]) }} " class="btn btn-primary">
+                @if ($facture->payment_status == 'paid')
+                <a href="#" class="btn btn-primary" disabled>
                     <i class="fas fa-eye fa-x2"></i>
-                </a>               
+                </a>
+            @else
+                <a href="{{ route('menuId', ['variable' => $facture->id]) }}" class="btn btn-primary">
+                    <i class="fas fa-eye fa-x2"></i>
+                </a>
+            @endif
+                
             </td>
         </tr>
     @endforeach

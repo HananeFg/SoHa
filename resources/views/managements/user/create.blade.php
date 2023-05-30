@@ -56,7 +56,7 @@
 
     @if (session('success'))
         <div class="alert alert-success">
-            <strong style="color: rgb(23, 146, 52)">success!</strong> {{ session('success') }}
+            <strong style="color: rgb(23, 146, 52)">Success!</strong> {{ session('success') }}
         </div>
     @endif
 </div>

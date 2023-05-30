@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal("total_recieved")->default(0);
             $table->decimal("change")->default(0);
             $table->string("payment_type")->default("cash");
-            $table->string("payment_status")->default("paid");
+            $table->string("payment_status")->default("unpaid");
             $table->dateTime('datetime_facture');
             $table->timestamps();
             $table->foreign('user_id')->references("id")

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Menu;
+use App\Models\Tables;
 use App\Models\Category;
 use App\Models\Factures;
+use App\Models\Serveurs;
+use Illuminate\Http\Request;
 
 class CommandListController extends Controller
 {
@@ -20,8 +22,11 @@ class CommandListController extends Controller
     public function commandList()
     {
         $factures = Factures::with('serveurs','tables')->paginate(5);
+        $tables = Tables::where('');
+        $servers = Serveurs::all();
+        $factures = Factures::with('serveurs','tables')->paginate(5);
 
-        return view('commandList', compact('factures'));
+        return view('commandList', compact('factures',));
     }
 
     public function menuDetails($id)

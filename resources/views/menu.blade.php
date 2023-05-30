@@ -10,7 +10,9 @@
 <body>
 
   {{-- --------------------------------------------------------------------------------------------------------- --}}
+ 
   @if ($showPopup)
+  <div id="pop" >
   <div id="popup">
     <form action="{{ route('menu.insertData') }}" method="POST" id="insertDataForm" style="display: flex;">
         @csrf
@@ -35,57 +37,60 @@
             @endforeach
         </div>
         <div style="position: absolute ; right:5px; bottom:8px; " >
-            <button class="done" type="button" onclick="closePopup()" >Done</button>
+            <button class="done" type="button" onclick="closepop()" >Done</button>
         </div>
     </form>
 </div>
+</div>
 @endif
   {{-- --------------------------------------------------------------------------------------------------------- --}}
-  <div id="popupPayment"  >
-    {{-- action="{{ route('insertPayment') }}"  --}}
-    <form method="POST" action="{{ route('insertPayment') }}" style="align-items: center">
-      @csrf
-      <div style="display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      flex-wrap: wrap;
-      flex-direction: row;
-      align-content: flex-end;
-      justify-content: space-evenly;">
-      <div >
-          <h1 style="margin-bottom: 0;" >{{$facture->total_price}} DH</h1>
-          <p style="color: rgb(94, 91, 91); margin-top: 0px;  margin-left: 21px;">Total amount</p>
+  <div id="pop" style="display: none;">
+  <div id="popupPayment">
+    <form method="POST" action="{{ route('insertPayment') }}" onsubmit="event.preventDefault(); submitForm()">
+        @csrf
+        <div class="total" style="display: flex;
+        justify-content: space-evenly;">
+            <div>
+                <h1 style="margin-bottom: 0;">{{$facture->total_price}}DH</h1>
+                <p style="color: rgb(94, 91, 91); margin-top: 0;">Total amount</p>
+            </div>
+            <div>
+                <h1 id="remainingPrice" style="margin-bottom: 0;">0.00 DH</h1>
+                <p style="color: rgb(94, 91, 91); margin-top: 0;">Change</p>
+            </div>
         </div>
-        <div class="total">
-          <h1 id="remainingPrice" style="margin-bottom: 0;">0.00 DH</h1>
-          <p style="color: rgb(94, 91, 91); margin-top: 0px;   margin-left: 21px;">Change</p>
-        </div>
-      </div>
-        
-          <div>
+
+        <div>
             <p>Cache received</p>
-          </div>
-          <div>
-            <input type="text"  class="charge" name="received_amount" value="">
-          </div>
-        
+        </div>
+        <div>
+            <input type="text" class="charge" name="received_amount" value="">
+        </div>
 
-      <br>
-      <br>
-      
-      <button type="submit" name="payment_option" value="card">Card</button>
-      <br>
-      <br>
+        <br>
+        <br>
+      <div style="grid-gap: 10px ;display: grid;">
+        <label for="cardOption" class="methodPayment">
+          <input type="radio" style="width: 30px;" id="cardOption" class="methodPayment" name="payment_option" value="card">
+          Card
+        </label>
+    
+        <label for="gratuitOption" class="methodPayment">
+          <input type="radio" style="width: 30px;" id="gratuitOption" class="methodPayment" name="payment_option" value="gratuit">
+          Gratuit
+        </label>
 
-      <button type="submit" name="payment_option" value="gratuit">Gratuit</button>
-     <br>
-     <br>
-     <button type="submit" class="valider" name="submit" value="valider"> VALIDER</button> 
-      
-     
-  </div>
-  </form>
-       
+        <label for="cashOption" class="methodPayment">
+          <input type="radio" style="width: 30px;" id="cashOption" class="methodPayment" name="payment_option" value="cash">
+          Cash
+        </label>
+      </div>
+        <br>
+        <br>
+        <button class="print-button" style="position:absolute; right:130px; width:100px;">PRINT</button>
+        <button type="submit" class="valider" onclick="submitForm()">VALIDER</button>
+    </form>
+</div>
 </div>
     {{-- ------------------------------------------------------------------------------------------------------ --}}
   <div class="navbar">
@@ -148,8 +153,9 @@
                 </div>
             </div>
             <div class="button-container">
-                <button class="submit-button" >Submit</button>
-                <button class="print-button">Print</button>
+                <button class="submit-button" >SUBMIT</button>
+                <button class="payer-button" style="width:100px" onclick="openPaymentPopup()">PAYER</button>
+
             </div>
         </div>
     </div>
@@ -302,11 +308,11 @@ submitButton.addEventListener('click', () => {
     });
 
  
-        function closePopup() {
-          document.getElementById("popup").style.display = "none";
+        function closepop() {
+          document.getElementById("pop").style.display = "none";
           document.body.style.pointerEvents = "initial";
         }
-
+       
         function scrollUp() {
           var scrollableContainer = document.getElementById("category-list");
           scrollableContainer.scrollTop -= 300;
@@ -367,15 +373,58 @@ $(document).ready(function() {
 
 });
  
-  const total_price = parseFloat("{{$facture->total_price}}");
-  const chargeInput = document.querySelector('.charge');
-  const remainingPrice = document.getElementById('remainingPrice');
 
-  chargeInput.addEventListener('input', () => {
+const total_price = parseFloat("{{$facture->total_price}}");
+const chargeInput = document.querySelector('.charge');
+const remainingPrice = document.getElementById('remainingPrice');
+
+chargeInput.addEventListener('input', () => {
     const charge = parseFloat(chargeInput.value) || 0;
-    const remaining = charge - total_price ;
+    const remaining = charge - total_price;
     remainingPrice.textContent = remaining.toFixed(2) + " DH";
-  });
+});
+
+function submitForm() {
+    const receivedAmount = chargeInput.value;
+    const paymentOption = document.querySelector('input[name="payment_option"]:checked').value;
+
+    const data = {
+        payment_option: paymentOption,
+        received_amount: receivedAmount
+    };
+
+    fetch('{{ route("insertPayment") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            closepop();
+            setTimeout(function() {
+          window.location.href = "/commandList";
+        }, 1050);
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    
+}
+
+
+function openPaymentPopup() {
+    var popup = document.getElementById("pop");
+    popup.style.display = "block";
+  }
+
+
 
 </script>
 </body>

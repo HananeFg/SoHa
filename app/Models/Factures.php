@@ -29,12 +29,12 @@ class Factures extends Model
 
     public function serveurs()
     {
-        return $this->belongsTo(Serveurs::class);
+        return $this->belongsTo(Serveurs::class, 'serveur_id');
     }
     
     public function tables()
     {
-        return $this->belongsTo(Tables::class);
+        return $this->belongsTo(Tables::class, 'table_id');
     }
     
 

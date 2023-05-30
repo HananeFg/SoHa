@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Add Table</title>
+  <title>Add client</title>
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
@@ -28,24 +28,28 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Ajouter une table
+        <i class="fas fa-plus"></i> Ajouter un client
       </h3>
     </div>
     <hr>
-    <form method="POST" action="{{ route('tables.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('clients.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group inline">
             <div class="form-element">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Add table name"  required>
+                <label for="name">Nom:</label>
+                <input type="text" id="name" name="name" placeholder=""  required>
             </div>
             <div class="form-element">
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="">Disponible</option>
-                    <option value="0">Non</option>
-                    <option value="1">Oui</option>
-                </select>
+                <label for="name">Email:</label>
+                <input type="email" id="email" name="name" placeholder=""  required>
+            </div>
+            <div class="form-element">
+                <label for="name">Tel:</label>
+                <input type="tel" id="tel" name="name" placeholder=""  required>
+            </div>
+            <div class="form-element">
+                <label for="name">Adresse:</label>
+                <input type="text" id="address" name="name" placeholder=""  required>
             </div>
         </div>
 

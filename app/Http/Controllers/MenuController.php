@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\View;
 use Dompdf\Dompdf;
 use Dompdf\FrameDecorator\Table;
 use Illuminate\Support\Facades\Http;
+use App\Models\Payments;
 
 class MenuController extends Controller
 {
@@ -38,7 +39,7 @@ class MenuController extends Controller
         $tables = Tables::all();
         $servers = Serveurs::all();
        
-        $showPopup = false;
+        $showPopup = true;
         
         $selectedCategory = $request->input('category_id');
         $menus = Menu::when($selectedCategory, function ($query) use ($selectedCategory) {
@@ -82,6 +83,20 @@ class MenuController extends Controller
     $serverId = session('serverId');
     $factureId = session('factureId');
     try {
+         $item = Details::join('menus', function ($join) {
+                $join->on('details.produit_id', '=', 'menus.id');
+            })
+            ->where('details.facture_id', $factureId)
+            ->select('menus.*', 'menus.title as product_name', 'details.quantity as quantity','details.montant as price')
+            ->get();
+            $totalSum = 0;
+            foreach ($item as $itemd) {
+                $totalSum += $itemd->price ;
+            }
+            Factures::where('id', $factureId)->update([
+                'total_price' => $totalSum
+            ]);
+
         $items = Details::join('menus', function ($join) {
             $join->on('details.produit_id', '=', 'menus.id');
         })
@@ -199,12 +214,17 @@ class MenuController extends Controller
 
     public function insertData(Request $request)
     {
+        $factureId = session('factureId');
         $tableId = $request->input('tableId');
         $serverId = $request->input('serverId');
         session(['tableId' =>  $tableId]);
         session(['serverId' =>  $serverId]);
 
-       
+        Factures::where('id', $factureId)->update([
+            'table_id' =>  $tableId,
+            'serveur_id' => $serverId
+        ]);
+
         
         // dd(($facteur));
 
@@ -213,22 +233,45 @@ class MenuController extends Controller
 
     public function insertPayment(Request $request)
     {
-        // Retrieve the selected payment option, received amount, and submit parameter
-        $paymentOption = $request->input('payment_option');
-        $receivedAmount = $request->input('received_amount');
-        $submitValue = $request->input('submit');
-        $factureId = session('factureId');
-        
-                $totalAmount = $facture->total_price;
-                $facture = Factures::where('id', $request->input('factureId'))->update([
-                'payment_type' => $paymentOption,
-                'change' => $receivedAmount - $totalAmount,
-               ' payment_status' => 'paid'
+        try {
+            
+            $paymentOption = $request->input('payment_option');
+            $receivedAmount = $request->input('received_amount');
+            $factureId = session('factureId');
+            $fact = Factures::where('id', $factureId)->get();
+            foreach($fact as $fact){    
+            $price =$fact->total_price;
+            $change = $receivedAmount - $fact->total_price;
+            
+            }
+           
+
+            if($paymentOption =='card' || $paymentOption =='gratuit' ){
+                $change = 0.00;
+                $receivedAmount = 0.00;
+            }
+           
+                Factures::where('id', $factureId)->update([
+                    'payment_type' => $paymentOption,
+                    'total_recieved' => $receivedAmount,
+                    'change' => $change,
+                    'payment_status' => 'paid'
                 ]);
-                
+
+            $payment=new Payments();
+            $payment->price=$price;
+            $payment->save(); 
           
-     
+             
+            return response()->json(['success' => true, 'message' => 'Payment inserted successfully']);
+        } catch (\Exception $e) {
+            // Log the error message
+            Log::error('Error in insertPayment: ' . $e->getMessage());
+            // Return error response
+            return response()->json(['success' => false, 'message' => 'An error occurred while processing the payment.']);
+        }
     }
+    
     
 
     public function index()
@@ -300,21 +343,7 @@ class MenuController extends Controller
 
     public function update(Request $request)
     {   
-        $product = $request->input('table');
-        $tables = Tables::find($table);
-    
-        $validData = $request->validate([
-            'name' => 'required|unique:tables,name,'.$table->id,
-            'status' => 'required|boolean',
-        ]);
-    
-        $tables->name = $validData['name'];
-        $tables->slug = Str::slug($validData['name']);
-        $tables->status = $validData['status'];
-        $tables->save();
-    
-        $request->session()->flash('success', 'Table updated successfully');
-        return redirect()->route('products.index');
+       
     }
     
     
