@@ -31,17 +31,12 @@ class AdminController extends Controller
         $category = new Category();
         $category->title = $validatedData['title'];
         $category->slug = $validatedData['slug'];
-            $category->image = $imagePath;
-            
-            $category->save();
-         
-    
-                // Clear the form input fields
-            $request->session()->flash('success', 'category added successfully');
-            
-            // Redirect back to the form with an empty form
-            return redirect()->route('ajoutCategory');
-            
-           
-        }
+        $category->image = $imagePath;
+        $category->save();
+        // Clear the form input fields
+        $request->session()->flash('success', 'category added successfully');
+        // Redirect back to the form with an empty form
+        return redirect()->route('ajoutCategory');
+        
+    }
 }

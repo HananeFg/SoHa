@@ -28,17 +28,16 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Modifier la {{ $tables->name }}
+        <i class="fas fa-plus"></i>Ajouter une table
       </h3>
     </div>
     <hr>
-    <form action="{{ route('tables.update',  ['table' => $tables->id] ) }}" method="post">
-      @csrf
-        @method("PUT")
+    <form method="POST" action="{{ route('tables.store') }}" enctype="multipart/form-data">
+        @csrf
         <div class="form-group inline">
             <div class="form-element">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Titre" value="{{ $tables->name }}" required>
+                <input type="text" id="name" name="name" placeholder="Add table name"  required>
             </div>
             <div class="form-element">
                 <label for="status">Status:</label>

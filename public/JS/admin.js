@@ -27,7 +27,7 @@ sidebarButtons.forEach(button => {
                 </div>
                 <div class="statistic">
                   <h2>Total Revenue</h2>
-                  <p id="totalRevenue">$0</p>
+                  <p id="totalRevenue">0DH</p>
                 </div>
               </div>
 
@@ -157,6 +157,7 @@ sidebarButtons.forEach(button => {
                 <p>Here you can manage your products.<a href="">Learn more</a></p>
                 <h2 class="title">Product</h2>
                 <button class="add-button" id="addProductButton">Add Product</button>
+                <button class="add-button" id="addPB">View Products</button>
             </div>
           `;
             // Add more specific functionality 
@@ -165,6 +166,11 @@ sidebarButtons.forEach(button => {
             addProductButton.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
                 window.location.href = "/ajoutArticle"; 
+             });
+             const addPB = document.getElementById('addPB');
+            addPB.addEventListener('click', () => {
+                // Redirect to the desired route when the button is clicked
+                window.location.href = "products"; 
              });
         } else if (buttonText === 'Categories') {
             // Logic for Button 3

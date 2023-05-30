@@ -12,14 +12,14 @@ class CommandListController extends Controller
     //
     public function command()
     {
-        $menus = Menu::with('category')->paginate(10);
+        $menus = Menu::with('category')->paginate(6);
 
         return view('commandList', compact('menus'));
     }
 
     public function commandList()
     {
-        $factures = Factures::with('serveurs','tables')->paginate(8);
+        $factures = Factures::with('serveurs','tables')->paginate(5);
 
         return view('commandList', compact('factures'));
     }

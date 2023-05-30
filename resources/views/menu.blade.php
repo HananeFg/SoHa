@@ -41,52 +41,49 @@
 </div>
 @endif
   {{-- --------------------------------------------------------------------------------------------------------- --}}
-  <div id="popupPayment" >
+  <div id="popupPayment"  >
     {{-- action="{{ route('insertPayment') }}"  --}}
-    <form method="POST" style="align-items: center">
+    <form method="POST" action="{{ route('insertPayment') }}" style="align-items: center">
       @csrf
-      
-      <div class="total">
-          <h1 style="margin-bottom: 0;">{{$facture->total_price}}</h1>
-          <p style="color: rgb(94, 91, 91); margin-top: 0;">Total amount</p>
+      <div style="display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-content: flex-end;
+      justify-content: space-evenly;">
+      <div >
+          <h1 style="margin-bottom: 0;" >{{$facture->total_price}} DH</h1>
+          <p style="color: rgb(94, 91, 91); margin-top: 0px;  margin-left: 21px;">Total amount</p>
         </div>
-        <div>
-          <h1 id="remainingPrice" style="margin-bottom: 0;"></h1>
-          <p style="color: rgb(94, 91, 91); margin-top: 0;">Charge</p>
+        <div class="total">
+          <h1 id="remainingPrice" style="margin-bottom: 0;">0.00 DH</h1>
+          <p style="color: rgb(94, 91, 91); margin-top: 0px;   margin-left: 21px;">Change</p>
         </div>
+      </div>
         
-        <div style="display: flex; align-items: center; gap: 10px;">
           <div>
             <p>Cache received</p>
           </div>
           <div>
-            <input type="text" class="charge" value="">
+            <input type="text"  class="charge" name="received_amount" value="">
           </div>
-        </div>
+        
 
       <br>
       <br>
       
-      <button type="button" class="methodPayment">Cache</button>
-      <br>
-      <br>
-
-      <button type="button" class="methodPayment">Gratuit</button>
-     <br>
-     <br>
-     <button type="button" class="valider"> VALIDER</button> 
-      
-      {{-- <label for="amount_given">Amount Given:</label>
-      <input type="number" name="amount_given" id="amount_given" required>
-    
-     
-    
-      <label for="charge">Charge:</label>
-      <input type="number" name="charge" id="charge" required> --}}
-    
-      {{-- <button type="submit" name="payment_option" value="gratuit">Gratuit</button>
       <button type="submit" name="payment_option" value="card">Card</button>
-    --}}
+      <br>
+      <br>
+
+      <button type="submit" name="payment_option" value="gratuit">Gratuit</button>
+     <br>
+     <br>
+     <button type="submit" class="valider" name="submit" value="valider"> VALIDER</button> 
+      
+     
+  </div>
   </form>
        
 </div>
@@ -175,11 +172,6 @@ categoryItems.forEach(item => {
     item.classList.add('active');
     const categoryId = item.getAttribute('data-category');
 
-
-
-
-
-    
     // Filter menu items based on the selected category
     menuItems.forEach(menuItem => {
       const menuCategoryId = menuItem.getAttribute('data-category');
@@ -193,11 +185,6 @@ categoryItems.forEach(item => {
 });
 menuItems.forEach(menuItem => menuItem.style.display = 'none');
 // _________________________________________________________________________________________________
-
-
-
-
-
 
 menuItems.forEach(item => {
   item.addEventListener('click', () => {
@@ -386,7 +373,7 @@ $(document).ready(function() {
 
   chargeInput.addEventListener('input', () => {
     const charge = parseFloat(chargeInput.value) || 0;
-    const remaining = total_price - charge;
+    const remaining = charge - total_price ;
     remainingPrice.textContent = remaining.toFixed(2) + " DH";
   });
 

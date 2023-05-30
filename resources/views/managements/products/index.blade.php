@@ -129,9 +129,9 @@
   <div class="">
     <div class="d-flex flex-row justify-content-between align-items-center border-bottom pb-1">
       <h3 class="text-secondary">
-        <i class="fas fa-table fa-x2"></i>Tables
+        <i class="fas fa-table fa-x2"></i>Products
       </h3>
-      <a href="{{ route("tables.create") }}" class="ml-auto">
+      <a href="{{ route("ajoutArticle") }}" class="ml-auto">
         <div class="icon">
           <i class="fas fa-square-plus fa-x2" ></i>
         </div>
@@ -143,36 +143,30 @@
     <tr>
         <th>id</th>
         <th>Nom</th>
-        <th>Disponible</th>
+        <th>Categorie</th>
+        <th>Prix_unitaire</th>
+        <th>TVA</th>
         <th>Action</th>
     </tr>
-    @foreach ($tables as $table)
+    @foreach ($products as $product)
         <tr>
-            <td>{{ $table->id }}</td>
-            <td>{{ $table->name }}</td>
+            <td>{{ $product->id }}</td>
+            <td>{{ $product->title }}</td>
+            <td>{{ $product->category_id }}</td>
+            <td>{{ $product->unit_price }}</td>
+            <td>{{ $product->TVA }}</td>
             <td>
-              @if ($table->status)
-                <span>
-                  Oui
-                </span>
-              @else 
-                <span>
-                  Non
-                </span>
-              @endif
-            </td>
-            <td>
-              <form action="{{route('tables.destroy', $table->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer la catégorie du {{ $table->name }} ?');" method="post">
+              <form action="{{route('products.destroy', $product->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $product->title }} ?');" method="post">
 
                   {{ csrf_field() }} {{ method_field('DELETE') }}
-                  <a href="{{ route('tables.edit', $table->id) }}" class="btn btn-warning">
+                  <a href="{{ route('products.edit', $products) }}" class="btn btn-warning">
                           <i class="fas fa-edit fa-x2"></i>
                   </a>
                   <button  class="btn btn-danger" type="submit">
                       <i class="fas fa-trash fa-x2"></i>
                   </button>
               </form>
-          </td>
+            </td>
         </tr>
     @endforeach
   </table>
@@ -180,7 +174,7 @@
 <!-- ... -->
 
 
-        {{ $tables->onEachSide(1)->links() }}
+        {{ $products->onEachSide(1)->links() }}
 
 </body>
 </html>

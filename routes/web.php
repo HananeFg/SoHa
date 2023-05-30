@@ -46,11 +46,12 @@ Route::get('/menuId/{variable}', 'App\Http\Controllers\MenuController@menuId')->
 
 Route::get('/printForClient', 'App\Http\Controllers\MenuController@printForClient')->name('printForClient');
 
-Route::resource('tables','App\Http\Controllers\TablesController');
-//Route::get('/tables/{table}/edit', 'App\Http\Controllers\TablesController@edit')->name('tables.edit');
+Route::resource('tables', 'App\Http\Controllers\TablesController');
 Route::put('tables/update/{table}', 'App\Http\Controllers\TablesController@update')->name('tables.update');
 Route::delete('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
 Route::get('/insertPayment', 'App\Http\Controllers\MenuController@insertPayment')->name('insertPayment');
+
+Route::resource('products', 'App\Http\Controllers\MenuController');
 
 // Route::get('/generate-pdf', function () {
 //     $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"

@@ -3,14 +3,16 @@
 
 <html>
     <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <title>Caissier</title>
         <style>
             /* Add some basic styling for the table */
@@ -105,6 +107,12 @@
   .currentDate {
     margin-left: 5%;  
   }
+  .icon {
+      
+      font-size: 50px;
+      margin-bottom: 10px;
+      margin-left: 90%;
+    }
 
         </style>
     </head>
@@ -121,8 +129,17 @@
         </div>
         <br><br><br>
 
-        <h3>Liste des Commandes</h3>
-        <div class="currentDate" id="currentDate"></div>
+        <div class="d-flex  justify-content-between align-items-center border-bottom pb-1">
+            <h3 class="text-secondary">
+              <i class="fas fa-list fa-x2"></i> Liste de commandes<span class="currentDate" id="currentDate" style="float: right"></span>
+            </h3>
+            <a href="{{ route("menu") }}" class="ml-auto">
+              <div class="icon">
+                <i class="fas fa-square-plus fa-x2" ></i>
+              </div>
+            </a>
+          </div>
+        
 
 <!-- resources/views/welcome.blade.php -->
 
@@ -135,7 +152,7 @@
         <th>Table</th>
         <th>Server</th>
         <th>Status</th>
-        <th>View</th>
+        <th>Action</th>
     </tr>
     @foreach ($factures as $facture)
         <tr>
@@ -145,7 +162,9 @@
             <td>{{ $facture->serveur_id }}</td>
             <td>{{ $facture->payment_status }}</td>
             <td>
-                <a href="{{ route('menuId', [ 'variable' => $facture->id]) }}">View</a>               
+                <a href="{{ route('menuId', [ 'variable' => $facture->id]) }} " class="btn btn-primary">
+                    <i class="fas fa-eye fa-x2"></i>
+                </a>               
             </td>
         </tr>
     @endforeach
@@ -155,11 +174,6 @@
 
 
         {{ $factures->onEachSide(1)->links() }}
-
-
-        <div class="add-sale-button">
-            <button class="add-button" href="{{ route('add.sale') }}">Add a Sale</button>
-        </div>
 
 
         {{-- scripts --}}

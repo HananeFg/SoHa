@@ -204,19 +204,137 @@ class MenuController extends Controller
         session(['tableId' =>  $tableId]);
         session(['serverId' =>  $serverId]);
 
-        
-        $facture = Factures::where('id', $request->input('factureId'))->update([
-        'table_id' => $tableId,
-        'serveur_id' => $serverId  
-        ]);
+       
         
         // dd(($facteur));
 
         return response()->json(['success' => true]);
     }
 
-    public function insertPayment(){
+    public function insertPayment(Request $request)
+    {
+        // Retrieve the selected payment option, received amount, and submit parameter
+        $paymentOption = $request->input('payment_option');
+        $receivedAmount = $request->input('received_amount');
+        $submitValue = $request->input('submit');
+        $factureId = session('factureId');
+        
+                $totalAmount = $facture->total_price;
+                $facture = Factures::where('id', $request->input('factureId'))->update([
+                'payment_type' => $paymentOption,
+                'change' => $receivedAmount - $totalAmount,
+               ' payment_status' => 'paid'
+                ]);
+                
+          
+     
+    }
+    
 
-}
+    public function index()
+    {
+        //
+        return view("managements.products.index")->with([
+            "products" => Menu::paginate(5)
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+        return view("managements.products.create");
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //validation
+        $validData = $request->validate([
+            'name' => 'required|unique:tables,name',
+            'status' => 'required|boolean',
+        ]);
+        // Create a new table instance
+        $table = new Menu();
+        $table->name = $validData['name'];
+        $table->slug = $validData['name'];
+        $table->status = $validData['status'];
+        // save instance
+        $table->save();
+
+        //store data
+
+        // Clear the form input fields
+        $request->session()->flash('success', 'Talbe added successfully');
+
+        // Redirect back to the form with an empty form
+        return redirect()->route('products.index');
+             
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Menu $products)
+    {
+        //
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Menu $products)
+    {
+        dd($products);
+        //
+        return view("managements.products.edit")->with([
+            "products" => $Products
+        ]);
+    }
+
+
+    public function update(Request $request)
+    {   
+        $product = $request->input('table');
+        $tables = Tables::find($table);
+    
+        $validData = $request->validate([
+            'name' => 'required|unique:tables,name,'.$table->id,
+            'status' => 'required|boolean',
+        ]);
+    
+        $tables->name = $validData['name'];
+        $tables->slug = Str::slug($validData['name']);
+        $tables->status = $validData['status'];
+        $tables->save();
+    
+        $request->session()->flash('success', 'Table updated successfully');
+        return redirect()->route('products.index');
+    }
+    
+    
+    
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Request $request)
+    {
+        $product = $request->product;
+    
+        //delete table
+        $products = Menu::find($product);
+        $products->delete();
+    
+        //redirect user
+        return redirect()->route("products.index")->with([
+            "success" => "article deleted successfully"
+        ]);
+    }
    
 }
