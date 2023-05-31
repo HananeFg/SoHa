@@ -37,19 +37,19 @@
         <div class="form-group inline">
             <div class="form-element">
                 <label for="name">Nom:</label>
-                <input type="text" id="name" name="name" placeholder=""  required>
+                <input type="text" id="name" name="name" placeholder="Nom du client"  required>
             </div>
             <div class="form-element">
                 <label for="name">Email:</label>
-                <input type="email" id="email" name="name" placeholder=""  required>
+                <input type="email" id="email" name="email" placeholder="du client"  required>
             </div>
             <div class="form-element">
                 <label for="name">Tel:</label>
-                <input type="tel" id="tel" name="name" placeholder=""  required>
+                <input type="tel" id="tel" name="tel" placeholder="du client"  required>
             </div>
             <div class="form-element">
                 <label for="name">Adresse:</label>
-                <input type="text" id="address" name="name" placeholder=""  required>
+                <input type="text" id="address" name="address" placeholder="du client"  required>
             </div>
         </div>
 

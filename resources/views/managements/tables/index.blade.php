@@ -108,9 +108,15 @@
     .icon {
       
       font-size: 50px;
-      margin-bottom: 10px;
-      margin-left: 90%;
+      margin-bottom: 5px;
+      margin-right: 5%;
     } 
+    .title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
 
   </style>
 </head>
@@ -127,15 +133,15 @@
   </div>
   <br><br><br>
   <div class="">
-    <div class="d-flex flex-row justify-content-between align-items-center border-bottom pb-1">
+    <div class="title">
       <h3 class="text-secondary">
         <i class="fas fa-table fa-x2"></i>Tables
       </h3>
-      <a href="{{ route("tables.create") }}" class="ml-auto">
-        <div class="icon">
-          <i class="fas fa-square-plus fa-x2" ></i>
-        </div>
-      </a>
+      <div class="icon">
+        <a href="{{ route("tables.create") }}" class="ml-auto">
+            <i class="fas fa-square-plus fa-x2" ></i>
+        </a> 
+      </div>
     </div>
   </div>
   

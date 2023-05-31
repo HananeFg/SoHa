@@ -20,7 +20,7 @@
             @foreach ($servers as $server)
             <div class="server-item">
                 <label>
-                    <input type="radio" name="serverId" value="{{ $server->id }}">
+                    <input type="radio" name="serverId" value="{{ $server->id }}"  required>
                     {{ $server->name }}
                 </label>
             </div>
@@ -30,14 +30,14 @@
             @foreach ($tables as $table)
             <div class="table-item">
                 <label>
-                    <input type="radio" name="tableId" value="{{ $table->id }}">
+                    <input type="radio" name="tableId" value="{{ $table->id }}"  required>
                     {{ $table->name }}
                 </label>
             </div>
             @endforeach
         </div>
         <div style="position: absolute ; right:5px; bottom:8px; " >
-            <button class="done" type="button" onclick="closepop()" >Done</button>
+            <button class="done" type="button" onclick="validateFormAndClosePop()" >Done</button>
         </div>
     </form>
 </div>
@@ -95,13 +95,13 @@
     {{-- ------------------------------------------------------------------------------------------------------ --}}
   <div class="navbar">
         <div class="back-button">
-            <a href="#">        
+            <a href="{{ route('commandList') }}">        
                 <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
             </a>
         </div>
         <div class="logo">
             <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
-        </div>
+          </div>
     </div>
     <br>
     <br>
@@ -425,7 +425,32 @@ function openPaymentPopup() {
   }
 
 
+  function validateFormAndClosePop() {
+        var serverSelected = false;
+        var tableSelected = false;
 
+        var serverRadios = document.getElementsByName('serverId');
+        for (var i = 0; i < serverRadios.length; i++) {
+            if (serverRadios[i].checked) {
+                serverSelected = true;
+                break;
+            }
+        }
+
+        var tableRadios = document.getElementsByName('tableId');
+        for (var j = 0; j < tableRadios.length; j++) {
+            if (tableRadios[j].checked) {
+                tableSelected = true;
+                break;
+            }
+        }
+
+        if (serverSelected && tableSelected) {
+            closepop();
+        } else {
+            alert('Please select a server and a table.');
+        }
+    }
 </script>
 </body>
 </html>

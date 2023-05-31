@@ -50,6 +50,8 @@
     <div class="content">
         <!-- Content for each page will be dynamically loaded here -->
     </div>
+    <div id="dailyRevenueDataJson" data-json="{{ $dailyRevenueDataJson }}"></div>
+    <div id="monthlyRevenueDataJson" data-json="{{ $monthlyRevenueDataJson }}"></div>
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

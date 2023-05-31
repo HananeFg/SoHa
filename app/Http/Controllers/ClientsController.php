@@ -40,10 +40,14 @@ class ClientsController extends Controller
         //validation
         $validData = $request->validate([
             'name' => 'required|unique:clients,name',
-            'email' => 'required|unique',
-            'tel' => 'required|unique',
-            'address' => 'required|',
+            'email' => 'required|unique:clients,email',
+            'tel' => 'required|unique:clients,tel',
+            'address' => 'required',
         ]);
+        
+        // if ($validator->fails()) {
+        //     dd($validator->errors());
+        // }
         // Create a new table instance
         $client = new Clients();
         $client->name = $validData['name'];
@@ -89,7 +93,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Clients $clients)
+    public function destroy(Request $request)
     {
         //
         $client = $request->client;

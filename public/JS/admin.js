@@ -13,140 +13,139 @@ sidebarButtons.forEach(button => {
         // Add additional content based on the selected button
         // For example, you can make AJAX requests here to fetch dynamic data
           // Implement your logic for each button's functionality
+          
           if (buttonText === 'Dashboard') {
             // Clear existing content
             contentDiv.innerHTML = '';
+
             // Logic for Button 1
             contentDiv.innerHTML += `
-            <div class="dashboard">
-              <h1>Restaurant Management Dashboard</h1>
-              <div class="statistics">
-                <div class="statistic">
-                  <h2>Total Orders</h2>
-                  <p id="totalOrders">0</p>
+              <div class="dashboard">
+                <h1>Restaurant Management Dashboard</h1>
+                <div class="statistics">
+                  <div class="statistic">
+                    <h2>Total Orders</h2>
+                    <p id="totalOrders">0</p>
+                  </div>
+                  <div class="statistic">
+                    <h2>Total Revenue</h2>
+                    <p id="totalRevenue">0DH</p>
+                  </div>
                 </div>
-                <div class="statistic">
-                  <h2>Total Revenue</h2>
-                  <p id="totalRevenue">0DH</p>
+
+                <div class="graph-container">
+                  <div class="statistic">
+                    <h2>Revenue Trend (Daily)</h2>
+                    <canvas id="dailyRevenueChart"></canvas>
+                  </div>
+                  <div class="statistic">
+                    <h2>Revenue Trend (Monthly)</h2>
+                    <canvas id="monthlyRevenueChart"></canvas>
+                  </div>
                 </div>
-              </div>
 
-              <div class="graph-container">
-                <div class="statistic">
-                  <h2>Revenue Trend</h2>
-                  <canvas id="revenueChart"></canvas>
+                <div class="orders">
+                  <h2>Recent Orders</h2>
+                  <table id="orderTable">
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer Name</th>
+                      <th>Total Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </table>
                 </div>
-                <div class="statistic">
-                  <h2>Order Status</h2>
-                  <canvas id="orderStatusChart"></canvas>
-                </div>
-              </div>
-            
-              <div class="orders">
-                <h2>Recent Orders</h2>
-                <table id="orderTable">
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer Name</th>
-                    <th>Total Amount</th>
-                    <th>Status</th>
-                  </tr>
-                </table>
-              </div>
-            </div>`;
-            // Add more specific functionality for Dashbord
-    // Sample data for demonstration
-    const orders = [
-      { id: 1, customer: 'John Doe', amount: 50, status: 'Completed' },
-      { id: 2, customer: 'Jane Smith', amount: 30, status: 'In Progress' },
-      { id: 3, customer: 'Michael Johnson', amount: 25, status: 'Completed' },
-    ];
+              </div>`;
 
-    // Update the statistics and orders table
-    function updateDashboard() {
-      const totalOrders = document.getElementById('totalOrders');
-      const totalRevenue = document.getElementById('totalRevenue');
-      const orderTable = document.getElementById('orderTable');
-      const revenueChart = document.getElementById('revenueChart');
-    
-      // Calculate total orders and revenue
-      let orderCount = 0;
-      let totalAmount = 0;
-    
-      for (const order of orders) {
-        orderCount++;
-        totalAmount += order.amount;
-        const row = orderTable.insertRow();
-        row.innerHTML = `<td>${order.id}</td><td>${order.customer}</td><td>$${order.amount}</td><td>${order.status}</td>`;
-      }
-    
-      totalOrders.textContent = orderCount;
-      totalRevenue.textContent = `$${totalAmount}`;
-    
-      // Generate revenue trend graph
-      const revenueData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [
-          {
-            label: 'Revenue',
-            data: [500, 1000, 800, 1200, 1500, 2000],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-          },
-        ],
-      };
-    
-      const revenueConfig = {
-        type: 'line',
-        data: revenueData,
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      };
-    
-      new Chart(revenueChart, revenueConfig);
+            // Update the statistics and orders table
+            const dailyRevenueDataElement = document.getElementById('dailyRevenueDataJson');
+            const dailyRevenueDataJson = dailyRevenueDataElement.getAttribute('data-json');
+            const dailyRevenueData = JSON.parse(dailyRevenueDataJson);
 
-      // Generate order status graph
-      const orderStatusData = {
-        labels: ['Completed', 'In Progress', 'Pending'],
-        datasets: [
-          {
-            label: 'Order Status',
-            data: [30, 20, 10],
-            backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(255, 99, 132, 0.6)'],
-            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 99, 132, 1)'],
-            borderWidth: 1,
-          },
-        ],
-      };
+            const monthlyRevenueDataElement = document.getElementById('monthlyRevenueDataJson');
+            const monthlyRevenueDataJson = monthlyRevenueDataElement.getAttribute('data-json');
+            const monthlyRevenueData = JSON.parse(monthlyRevenueDataJson);
 
-      const orderStatusConfig = {
-        type: 'bar',
-        data: orderStatusData,
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      };
+            dailyRevenueData.forEach(entry => {
+              entry.data = parseFloat(entry.data);
+            });
 
-      new Chart(orderStatusChart, orderStatusConfig);
-    }
-    
+            monthlyRevenueData.forEach(entry => {
+              entry.data = parseFloat(entry.data);
+            });
 
-    // Call the updateDashboard function when the page loads
-    updateDashboard();
+            function updateDashboard(dailyRevenueData, monthlyRevenueData) {
+              const dailyRevenueChart = document.getElementById('dailyRevenueChart');
+              const monthlyRevenueChart = document.getElementById('monthlyRevenueChart');
+              const orderTable = document.getElementById('orderTable');
 
-        } else if (buttonText === 'Products') {
+              // Generate daily revenue trend graph
+              const dailyRevenueChartData = {
+                labels: dailyRevenueData.map(entry => entry.label),
+                datasets: [
+                  {
+                    label: 'Daily Revenue',
+                    data: dailyRevenueData.map(entry => entry.data),
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                  },
+                ],
+              };
+
+              // Create and render the daily revenue chart
+              new Chart(dailyRevenueChart, {
+                type: 'bar',
+                data: dailyRevenueChartData,
+                options: {
+                  // Add any desired options for the chart
+                },
+              });
+
+              // Generate monthly revenue trend graph
+              const monthlyRevenueChartData = {
+                labels: monthlyRevenueData.map(entry => entry.label),
+                datasets: [
+                  {
+                    label: 'Monthly Revenue',
+                    data: monthlyRevenueData.map(entry => entry.data),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                  },
+                ],
+              };
+
+              // Create and render the monthly revenue chart
+              new Chart(monthlyRevenueChart, {
+                type: 'bar',
+                data: monthlyRevenueChartData,
+                options: {
+                  // Add any desired options for the chart
+                },
+              });
+
+              // Fetch recent orders data and update the table
+              fetch('/orders')
+                .then(response => response.json())
+                .then(data => {
+                  data.forEach(order => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                      <td>${order.id}</td>
+                      <td>${order.customer_name}</td>
+                      <td>${order.total_amount}</td>
+                      <td>${order.status}</td>
+                    `;
+                    orderTable.appendChild(row);
+                  });
+                });
+            }
+
+            updateDashboard(dailyRevenueData, monthlyRevenueData);
+          }
+         
+           else if (buttonText === 'Products') {
             // Logic for Button 2
             contentDiv.innerHTML += `
             <div class="item-section">
@@ -242,9 +241,10 @@ sidebarButtons.forEach(button => {
                 window.location.href = "clients"; 
             });
         } else if (buttonText === 'Rapports') {
-            // Logic for Button 6
-            contentDiv.innerHTML += `<p>This is the content for Button 2.</p>`;
-            // Add more specific functionality for Button 2
+          window.location.href = "reports";
+          // Logic for Button 6
+          //contentDiv.innerHTML += `<p>This is the content for Button 2.</p>`;
+          // Add more specific functionality for Button 2
         } else if (buttonText === 'Users') {
             // Logic for Button 7
             contentDiv.innerHTML += `<div class="item-section">

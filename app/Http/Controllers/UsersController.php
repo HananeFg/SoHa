@@ -61,7 +61,7 @@ class UsersController extends Controller
         {
             // Authentication successful
             $request->session()->regenerate();
-            return redirect()->route('home');
+            return redirect()->route('commandList');
             
         } else {
             // Authentication failed

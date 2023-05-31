@@ -16,10 +16,14 @@
         <title>Caissier</title>
         <style>
             /* Add some basic styling for the table */
-            table {
+            .container {
+                width: 90%;
                 margin-left: 5%;
                 margin-right: 5%;
-                width: 90%;
+            }
+            table {
+                
+                width: 100%;
                 border-collapse: collapse;
             }
             
@@ -63,62 +67,68 @@
 
             .navbar {
        
-       position: fixed;
-       top: 0;
-       left: 0;
-       background-color: #000066;
-       color: #fff;
-      
-       width: 100%;
-       z-index: 999; /* Add a higher z-index to ensure the navbar appears on top of other elements */
-     
-   }
-   .navbar::after {
-   content: "";
-   display: table;
-   clear: both;
-   }
-   .navbar .logo {
-   font-size: 24px;
-   font-weight: bold;
-   float: right;
-   }
-   .navbar .back-button {
-   font-size: 18px;
-   float: left;
-   }
+                position: fixed;
+                top: 0;
+                left: 0;
+                background-color: #000066;
+                color: #fff;
+                
+                width: 100%;
+                z-index: 999; /* Add a higher z-index to ensure the navbar appears on top of other elements */
+                
+            }
+            .navbar::after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+            .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            float: right;
+            }
+            .navbar .back-button {
+            font-size: 18px;
+            float: left;
+            }
 
-   .add-button {
-    position: absolute;
-    bottom: 5px;
-    right: 5%;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    /* border-radius: 4px; */
-    cursor: pointer;
-  }
+            .add-button {
+                position: absolute;
+                bottom: 5px;
+                right: 5%;
+                padding: 10px 20px;
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                /* border-radius: 4px; */
+                cursor: pointer;
+            }
 
-  h3 {
-    margin-left: 5%;
-  }
+            .currentDate {
+                margin-left: 5%;  
+            }
+            .icon {
+                
+                font-size: 50px;
+                margin-bottom: 5px;
+                margin-right: 5%;
+                } 
+                .title {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                }
+                .card {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    margin: auto;
+                }
+                .date {
 
-  .currentDate {
-    margin-left: 5%;  
-  }
-  .icon {
-      
-      font-size: 50px;
-      margin-bottom: 5px;
-      margin-right: 5%;
-    } 
-    .title {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
+                }
 
         </style>
     </head>
@@ -135,14 +145,28 @@
         </div>
         <br><br><br>
 
+        <div class="container">
         <div class="title">
             <h3 class="text-secondary">
-              <i class="fas fa-list fa-x2"></i> Liste de commandes
+              <i class="fas fa-list fa-x2"></i> Rapports
             </h3><span class="currentDate" id="currentDate" style="float: right"></span>
-            <div class="icon">
-                <a href="{{ route("menu") }}" class="ml-auto">
-                    <i class="fas fa-square-plus fa-x2" ></i>
+            {{-- <div class="icon"> --}}
+                <a href="{{ route("menu") }}" class="btn btn-secondary">
+                    <i class="fas fa-chevron-left fa-x2" ></i>
                 </a>
+            {{-- </div> --}}
+          </div>
+          <div class="card">
+            <div class="date">
+                <form action="{{ route("reports.generate") }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <input type="date" name="from" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" name="to" class="form-control">
+                    </div>
+                </form>
             </div>
           </div>
         
@@ -158,7 +182,7 @@
         <th>Table</th>
         <th>Server</th>
         <th>Status</th>
-        <th>Action</th>
+        
     </tr>
     @foreach ($factures as $facture)
         <tr>
@@ -179,26 +203,16 @@
                 @endif
             </td>
             <td>{{ $facture->payment_status }}</td>
-            <td>
-                @if ($facture->payment_status == 'paid')
-                <a href="#" class="btn btn-primary" disabled>
-                    <i class="fas fa-eye fa-x2"></i>
-                </a>
-            @else
-                <a href="{{ route('menuId', ['variable' => $facture->id]) }}" class="btn btn-primary">
-                    <i class="fas fa-eye fa-x2"></i>
-                </a>
-            @endif
-                
-            </td>
+           
         </tr>
     @endforeach
 </table>
+</div>
 
 <!-- ... -->
 
 
-        {{ $factures->onEachSide(1)->links() }}
+        {{-- {{ $factures->onEachSide(1)->links() }} --}}
 
 
         {{-- scripts --}}

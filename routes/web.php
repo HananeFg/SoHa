@@ -25,8 +25,6 @@ Route::get('/home','App\Http\Controllers\HomeController@home')->name('home'); //
 Route::get('/about','App\Http\Controllers\HomeController@about')->name('about');
 Route::get('/ajoutArticle','App\Http\Controllers\AjoutArticleController@index')->name('ajoutArticle');
 Route::get('/ajoutCategory','App\Http\Controllers\AjoutCategoryController@index')->name('ajoutCategory');
-Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
-Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
 Route::get('/admin', 'App\Http\Controllers\HomeController@admin')->name('admin');
 
 
@@ -55,16 +53,16 @@ Route::resource('products', 'App\Http\Controllers\MenuController');
 Route::resource('categories', 'App\Http\Controllers\CategoryController');
 Route::resource('user', 'App\Http\Controllers\UsersController');
 Route::resource('clients', 'App\Http\Controllers\ClientsController');
+Route::get('reports', 'App\Http\Controllers\ReportController@index')->name("reports.index");
+Route::post('reports/generate', 'App\Http\Controllers\ReportController@generate')->name("reports.generate");
+Route::post('reports/export', 'App\Http\Controllers\ReportController@export')->name("reports.export");
 
-// Route::get('/generate-pdf', function () {
-//     $html = view('ticket')->render(); // Assuming your ticket HTML is in a Laravel Blade view called "ticket"
+Route::group(['middleware' => 'customAuth'], function () {
+    Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
+    Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
 
-//     $dompdf = new Dompdf();
-//     $dompdf->loadHtml($html);
-//     $dompdf->render();
 
-//     return $dompdf->stream('ticket.pdf'); // Output the PDF as a stream or you can save it using $dompdf->save('path/to/file.pdf')
-// });
+});
 Route::get('/generatePdf', 'App\Http\Controllers\PdfController@generatePdf')->name('generatePdf');
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');
