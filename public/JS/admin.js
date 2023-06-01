@@ -23,9 +23,10 @@ sidebarButtons.forEach(button => {
               <div class="dashboard">
                 <h1>Restaurant Management Dashboard</h1>
                 <div class="statistics">
-                  <div class="statistic">
-                    <h2>Total Orders</h2>
-                    <p id="totalOrders">0</p>
+                  <div class="statistic" >
+                  <p style="font-size :30px;" id="totalOrders">0</p>
+                  <p style="color:grey;">Total Orders</p>
+                   
                   </div>
                   <div class="statistic">
                     <h2>Total Revenue</h2>
@@ -66,6 +67,10 @@ sidebarButtons.forEach(button => {
             const monthlyRevenueDataJson = monthlyRevenueDataElement.getAttribute('data-json');
             const monthlyRevenueData = JSON.parse(monthlyRevenueDataJson);
 
+            const totalOrdersDataElement = document.getElementById('totalOrdersDataJson');
+            const totalOrdersDataJson = totalOrdersDataElement.getAttribute('data-json');
+            const totalOrdersData = JSON.parse(totalOrdersDataJson);
+            
             dailyRevenueData.forEach(entry => {
               entry.data = parseFloat(entry.data);
             });
@@ -74,10 +79,10 @@ sidebarButtons.forEach(button => {
               entry.data = parseFloat(entry.data);
             });
 
-            function updateDashboard(dailyRevenueData, monthlyRevenueData) {
+            function updateDashboard(dailyRevenueData, monthlyRevenueData, totalOrders) {
               const dailyRevenueChart = document.getElementById('dailyRevenueChart');
               const monthlyRevenueChart = document.getElementById('monthlyRevenueChart');
-              const orderTable = document.getElementById('orderTable');
+              // const orderTable = document.getElementById('orderTable');
 
               // Generate daily revenue trend graph
               const dailyRevenueChartData = {
@@ -124,25 +129,27 @@ sidebarButtons.forEach(button => {
                   // Add any desired options for the chart
                 },
               });
-
+             
+              const totalOrdersElement = document.getElementById('totalOrders');
+              totalOrdersElement.innerText = totalOrdersData;
               // Fetch recent orders data and update the table
-              fetch('/orders')
-                .then(response => response.json())
-                .then(data => {
-                  data.forEach(order => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                      <td>${order.id}</td>
-                      <td>${order.customer_name}</td>
-                      <td>${order.total_amount}</td>
-                      <td>${order.status}</td>
-                    `;
-                    orderTable.appendChild(row);
-                  });
-                });
+              // fetch('/orders')
+              //   .then(response => response.json())
+              //   .then(data => {
+              //     data.forEach(order => {
+              //       const row = document.createElement('tr');
+              //       row.innerHTML = `
+              //         <td>${order.id}</td>
+              //         <td>${order.customer_name}</td>
+              //         <td>${order.total_amount}</td>
+              //         <td>${order.status}</td>
+              //       `;
+              //       orderTable.appendChild(row);
+              //     });
+              //   });
             }
 
-            updateDashboard(dailyRevenueData, monthlyRevenueData);
+            updateDashboard(dailyRevenueData, monthlyRevenueData, totalOrdersData);
           }
          
            else if (buttonText === 'Products') {
@@ -233,7 +240,7 @@ sidebarButtons.forEach(button => {
             const addProductButton = document.getElementById('addProductButton');
             addProductButton.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
-                window.location.href = "clients"; 
+                window.location.href = "clients/create"; 
             });
             const addPB = document.getElementById('addPB');
             addPB.addEventListener('click', () => {
@@ -260,12 +267,12 @@ sidebarButtons.forEach(button => {
             const addProductButton = document.getElementById('addProductButton');
             addProductButton.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
-                window.location.href = "user"; 
+                window.location.href = "utilisateurs/create"; 
             });
             const addPB = document.getElementById('addPB');
             addPB.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
-                window.location.href = "user"; 
+                window.location.href = "utilisateurs"; 
             });
         } else if (buttonText === 'Tables') {
             // Logic for Button 8
@@ -283,7 +290,7 @@ sidebarButtons.forEach(button => {
             const addProductButton = document.getElementById('addProductButton');
             addProductButton.addEventListener('click', () => {
                 // Redirect to the desired route when the button is clicked
-                window.location.href = "tables";
+                window.location.href = "tables/create";
             });
             const addPB = document.getElementById('addPB');
             addPB.addEventListener('click', () => {

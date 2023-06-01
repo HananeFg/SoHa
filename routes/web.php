@@ -53,6 +53,8 @@ Route::resource('products', 'App\Http\Controllers\MenuController');
 Route::resource('categories', 'App\Http\Controllers\CategoryController');
 Route::resource('user', 'App\Http\Controllers\UsersController');
 Route::resource('clients', 'App\Http\Controllers\ClientsController');
+Route::put('clients/update/{client}', 'App\Http\Controllers\ClientsController@update')->name('clients.update');
+
 Route::get('reports', 'App\Http\Controllers\ReportController@index')->name("reports.index");
 Route::post('reports/generate', 'App\Http\Controllers\ReportController@generate')->name("reports.generate");
 Route::post('reports/export', 'App\Http\Controllers\ReportController@export')->name("reports.export");

@@ -15,7 +15,7 @@
 <body>
   <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
     <div class="back-button">
-      <a href="#">        
+      <a href="{{ route("clients.index") }}">        
         <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
       </a>
     </div>
@@ -34,7 +34,8 @@
     <hr>
     <form method="POST" action="{{ route('clients.store') }}" enctype="multipart/form-data">
         @csrf
-        <div class="form-group inline">
+        <div class="form-group inline flex-col">
+          <div class="flex-row">
             <div class="form-element">
                 <label for="name">Nom:</label>
                 <input type="text" id="name" name="name" placeholder="Nom du client"  required>
@@ -43,6 +44,9 @@
                 <label for="name">Email:</label>
                 <input type="email" id="email" name="email" placeholder="du client"  required>
             </div>
+          </div>
+            <br>
+          <div class="flex-row">
             <div class="form-element">
                 <label for="name">Tel:</label>
                 <input type="tel" id="tel" name="tel" placeholder="du client"  required>
@@ -51,6 +55,8 @@
                 <label for="name">Adresse:</label>
                 <input type="text" id="address" name="address" placeholder="du client"  required>
             </div>
+          </div>  
+           
         </div>
 
         <div class="form-group fix">

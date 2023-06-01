@@ -6,23 +6,37 @@ body {
 }
 
 .sidebar {
-    background-color: #f4f4f4;
-    width: 200px;
+    background-color: #fff;
+    width: 230px;
     height: 100vh;
     padding: 20px;
     box-sizing: border-box;
     float: left;
+    position: fixed;
+    top: 63px;
+    box-shadow: 2px 2px 5px rgba(2, 0, 0, 0.3);
+
 }
 
 .sidebar-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #ffcc00;
-    border: none;
-    text-align: left;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 10px;
+  background-color: #ffcc00;
+  border: none;
+  text-align: left;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  /* clip-path: polygon(0% 0%, 100% 0%, 91% 100%, 0% 100%); */
+  box-shadow: 2px 2px 5px rgba(2, 0, 0, 0.3);
+}
+
+.sidebar-button.active {
+  background-color: #fcdc5b;
+  color: #ffffff;
 }
 
 .content {

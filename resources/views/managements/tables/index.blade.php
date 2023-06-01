@@ -123,7 +123,7 @@
 <body>
   <div class="navbar">
     <div class="back-button">
-        <a href="#">        
+        <a href="{{ route("admin") }}">        
             <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
         </a>
     </div>

@@ -15,7 +15,7 @@
 <body>
   <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
     <div class="back-button">
-      <a href="#">        
+      <a href="{{ route("tables.index") }}">        
         <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
       </a>
     </div>
@@ -28,32 +28,33 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Modifier la {{ $tables->name }}
+        <i class="fas fa-pen-to-square"></i> Modifier la <u>{{ $table->name }}</u>
       </h3>
     </div>
     <hr>
-    <form action="{{ route('tables.update',  ['table' => $tables->id] ) }}" method="post">
+    <form action="{{ route('tables.update', ['table' => $table->id]) }}" method="post">
       @csrf
-        @method("PUT")
-        <div class="form-group inline">
-            <div class="form-element">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Titre" value="{{ $tables->name }}" required>
-            </div>
-            <div class="form-element">
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="">Disponible</option>
-                    <option value="0">Non</option>
-                    <option value="1">Oui</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group fix">
-            <input type="submit" value="Valider">
-        </div>
-    </form>
+      @method("PUT")
+      <div class="form-group inline">
+          <div class="form-element">
+              <label for="name">Name:</label>
+              <input type="text" id="name" name="name" placeholder="Titre" value="{{ $table->name }}" required>
+          </div>
+          <div class="form-element">
+              <label for="status">Status:</label>
+              <select id="status" name="status" required>
+                  <option value="">Disponible</option>
+                  <option value="0">Non</option>
+                  <option value="1">Oui</option>
+              </select>
+          </div>
+      </div>
+      <input type="hidden" name="table" value="{{ $table->id }}">
+      <div class="form-group fix">
+        <input type="submit" value="Modifier">
+    </div>
+  </form>
+  
 
     @if (session('success'))
         <div class="alert alert-success">

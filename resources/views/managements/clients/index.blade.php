@@ -123,7 +123,7 @@
 <body>
   <div class="navbar">
     <div class="back-button">
-        <a href="#">        
+        <a href="{{ route("admin") }}">        
             <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
         </a>
     </div>
@@ -167,7 +167,7 @@
               <form action="{{route('clients.destroy', $client->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer le client {{ $client->name }} ?');" method="post">
 
                   {{ csrf_field() }} {{ method_field('DELETE') }}
-                  <a href="{{ route('products.edit', $clients) }}" class="btn btn-warning">
+                  <a href="{{ route('clients.edit', $client) }}" class="btn btn-warning">
                           <i class="fas fa-edit fa-x2"></i>
                   </a>
                   <button  class="btn btn-danger" type="submit">

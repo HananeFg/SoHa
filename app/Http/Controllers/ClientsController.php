@@ -9,10 +9,10 @@ use App\Http\Requests\UpdateClientsRequest;
 
 class ClientsController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware("auth");
-    // }
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     /**
      * Display a listing of the resource.
      */
@@ -45,9 +45,6 @@ class ClientsController extends Controller
             'address' => 'required',
         ]);
         
-        // if ($validator->fails()) {
-        //     dd($validator->errors());
-        // }
         // Create a new table instance
         $client = new Clients();
         $client->name = $validData['name'];
@@ -74,20 +71,40 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Clients $clients)
+    public function edit(Clients $client)
     {
         //
         return view("managements.clients.edit")->with([
-            "clients" => $clients
+            "client" => $client
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateClientsRequest $request, Clients $clients)
+    public function update(Request $request, $client)
     {
         //
+        $clients = Clients::find($client);
+
+        $validData = $request->validate([
+            'name' => 'required|unique:clients,name,'.$clients->id,
+            'email' => 'required|unique:clients,email',
+            'tel' => 'required|unique:clients,tel',
+            'address' => 'required',
+        ]);
+
+        $clients->update([
+            "name" => $validData['name'],
+            "email" => $validData['email'],
+            "tel" => $validData['tel'],
+            "address" => $validData['address'],
+        ]);
+    
+        //$tables->save();
+
+        $request->session()->flash('success', 'updated successfully');
+        return redirect()->route('clients.index');
     }
 
     /**

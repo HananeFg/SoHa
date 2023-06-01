@@ -40,7 +40,7 @@ class HomeController extends Controller
             $startDate->addDay(); // Increment by 1 day for the next iteration
         }
 
-        $totalOrders = Order::whereDate('created_at', Carbon::today())->count();
+        $totalOrders = Factures::whereDate('created_at', Carbon::today())->count();
         // Fetch the data for each month
         $startMonth = Carbon::now()->startOfYear();
         while ($startMonth->year == Carbon::now()->year) {
@@ -58,9 +58,13 @@ class HomeController extends Controller
     
         $dailyRevenueDataJson = json_encode($dailyRevenueData);
         $monthlyRevenueDataJson = json_encode($monthlyRevenueData);
-    
-        return view('admin',['totalOrders' => $totalOrders])->with('dailyRevenueDataJson', $dailyRevenueDataJson)
-                            ->with('monthlyRevenueDataJson', $monthlyRevenueDataJson);
+        $totalOrdersDataJson = json_encode($totalOrders);
+        // dd(($totalOrders));
+        return view('admin')
+            
+        ->with('dailyRevenueDataJson', $dailyRevenueDataJson)
+        ->with('monthlyRevenueDataJson', $monthlyRevenueDataJson)
+        ->with( 'totalOrders', $totalOrdersDataJson);
     }
     
     

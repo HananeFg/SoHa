@@ -11,10 +11,10 @@ use App\Http\Requests\UpdateTablesRequest;
 
 class TablesController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware("auth");
-    // }
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     /**
      * Display a listing of the resource.
      */
@@ -72,36 +72,39 @@ class TablesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tables $tables)
+    public function edit(Tables $table)
     {
-        dd($tables);
+        //dd($tables);
         //
         return view("managements.tables.edit")->with([
-            "tables" => $tables
+            "table" => $table
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
-    {   
-        $table = $request->input('table');
+    public function update(Request $request, $table)
+    {
         $tables = Tables::find($table);
-    
+
         $validData = $request->validate([
-            'name' => 'required|unique:tables,name,'.$table->id,
+            'name' => 'required|unique:tables,name,'.$tables->id,
             'status' => 'required|boolean',
         ]);
+
+        $tables->update([
+            "name" => $validData['name'],
+            "slug" => Str::slug($validData['name']),
+            "status" => $validData['status'],
+        ]);
     
-        $tables->name = $validData['name'];
-        $tables->slug = Str::slug($validData['name']);
-        $tables->status = $validData['status'];
-        $tables->save();
-    
+
+
         $request->session()->flash('success', 'Table updated successfully');
         return redirect()->route('tables.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
