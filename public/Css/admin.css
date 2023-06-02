@@ -93,6 +93,22 @@ body {
     margin-bottom: 10px;
   }
   
+  .statistic2 {
+    height: 42px;
+    width: 200px; 
+    display:flex;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+
+  }
+    .statistics-text{
+    margin-right: 10px;
+    font-size: 52px;
+    padding-right: 15px;
+     }
+
   .add-button {
     padding: 10px 20px;
     margin-bottom: 2px;
@@ -114,6 +130,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    border-radius: 8px
   }
   
   .statistic {

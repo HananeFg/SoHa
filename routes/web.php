@@ -51,6 +51,8 @@ Route::post('/insertPayment', 'App\Http\Controllers\MenuController@insertPayment
 
 Route::resource('products', 'App\Http\Controllers\MenuController');
 Route::resource('categories', 'App\Http\Controllers\CategoryController');
+Route::put('categories/update/{category}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
+
 Route::resource('user', 'App\Http\Controllers\UsersController');
 Route::resource('clients', 'App\Http\Controllers\ClientsController');
 Route::put('clients/update/{client}', 'App\Http\Controllers\ClientsController@update')->name('clients.update');

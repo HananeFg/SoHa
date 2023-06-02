@@ -34,7 +34,7 @@ class AjoutCategoryController extends Controller
         $category = new Category();
         $category->title = $validatedData['title'];
         $category->slug = $validatedData['slug'];
-        $category->image = $imageUrl;;
+        $category->image = $imageUrl;
         
         $category->save();
      

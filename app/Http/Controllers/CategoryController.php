@@ -9,10 +9,10 @@ use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware("auth");
-    // }
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     /**
      * Display a listing of the resource.
      */
@@ -48,13 +48,14 @@ class CategoryController extends Controller
         ]);
         
         // Upload the image file
-        $imagePath = $request->file('image')->store('images');
-        
+        $imagePath = $request->file('image')->store('articleImage', 'public');
+        $imageUrl = asset('storage/' . $imagePath);
+
         // Create a new Article instance
         $category = new Category();
         $category->title = $validatedData['title'];
         $category->slug = $validatedData['slug'];
-        $category->image = $imagePath;
+        $category->image = $imageUrl;
         
         $category->save();
     
@@ -81,16 +82,36 @@ class CategoryController extends Controller
     {
         //
         return view("managements.categories.edit")->with([
-            "categories" => $category
+            "category" => $category
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, $category)
     {
         //
+        $categories = Category::find($category);
+
+        $validData = $request->validate([
+            'title' => 'required|unique:categories,title,'.$categories->id,
+            'slug' => 'required|boolean',
+            'image' => 'required|image',
+        ]);
+       // Upload the image file
+       $imagePath = $request->file('image')->store('articleImage', 'public');
+       $imageUrl = asset('storage/' . $imagePath);
+
+        $categories->update([
+            "title" => $validData['title'],
+            "slug" => Str::slug($validData['name']),
+            "image" => $imagePath,
+        ]);
+        $category->image = $imagePath;
+
+        $request->session()->flash('success', 'Table updated successfully');
+        return redirect()->route('tables.index');
     }
 
     /**

@@ -21,16 +21,36 @@ sidebarButtons.forEach(button => {
             // Logic for Button 1
             contentDiv.innerHTML += `
               <div class="dashboard">
-                <h1>Restaurant Management Dashboard</h1>
-                <div class="statistics">
-                  <div class="statistic" >
-                  <p style="font-size :30px;" id="totalOrders">0</p>
-                  <p style="color:grey;">Total Orders</p>
-                   
+                  <h1>Restaurant Management Dashboard</h1>
+      
+         
+                  <div class="statistics">
+                  <div  class="statistic2" >
+                  <div class="statistics-text">
+                  <i class="fa-solid fa-file-lines"  style="color: #000066; size :20px font-size:100px"></i>
                   </div>
-                  <div class="statistic">
-                    <h2>Total Revenue</h2>
-                    <p id="totalRevenue">0DH</p>
+                  <div display: flex; flex-direction: column;>
+                  <p style="font-size :30px; margin-bottom: 2px; margin-top: 8px; text-align :left;" id="totalOrders" value="">0</p>
+                  <p style="color:grey; margin-top: 8px; margin-bottom: 2px; text-align :left;">Total Orders</p>
+                   </div>
+                  </div>
+                  <div class="statistic2">
+                  <div class="statistics-text">
+                  <i class="fa-solid fa-file-lines"  style="color: #000066; size :20px font-size:100px"></i>
+                  </div>
+                  <div display: flex; flex-direction: column;>
+                    <p   style="font-size :30px; margin-bottom: 2px; margin-top: 8px; text-align :left;" id="totalRevenue">0 dh</p>
+                    <p   style="color:grey; margin-top: 8px; margin-bottom: 2px; text-align :left;" >Total Revenue</p>
+                  </div>
+                  </div>
+                  <div  class="statistic2" >
+                  <div class="statistics-text">
+                  <i class="fa-solid fa-file-lines"  style="color: #000066; size :20px font-size:100px"></i>
+                  </div>
+                  <div display: flex; flex-direction: column;>
+                  <p style="font-size :30px; margin-bottom: 2px; margin-top: 8px; text-align :left;" id="averagePrice" value="">0</p>
+                  <p style="color:grey; margin-top: 8px; margin-bottom: 2px; text-align :left;">Average Revenue</p>
+                   </div>
                   </div>
                 </div>
 
@@ -70,7 +90,14 @@ sidebarButtons.forEach(button => {
             const totalOrdersDataElement = document.getElementById('totalOrdersDataJson');
             const totalOrdersDataJson = totalOrdersDataElement.getAttribute('data-json');
             const totalOrdersData = JSON.parse(totalOrdersDataJson);
+
+            const totalPriceDataElement = document.getElementById('totalPriceDataJson');
+            const totalPriceDataJson = totalPriceDataElement.getAttribute('data-json');
+            const totalPriceData = JSON.parse(totalPriceDataJson);
             
+            const averagePriceDataElement = document.getElementById('averagePriceDataJson');
+            const averagePriceDataJson = averagePriceDataElement.getAttribute('data-json');
+            const averagePriceData = JSON.parse(averagePriceDataJson);
             dailyRevenueData.forEach(entry => {
               entry.data = parseFloat(entry.data);
             });
@@ -79,7 +106,7 @@ sidebarButtons.forEach(button => {
               entry.data = parseFloat(entry.data);
             });
 
-            function updateDashboard(dailyRevenueData, monthlyRevenueData, totalOrders) {
+            function updateDashboard(dailyRevenueData, monthlyRevenueData, totalOrders,totalRevenue, averagePrice) {
               const dailyRevenueChart = document.getElementById('dailyRevenueChart');
               const monthlyRevenueChart = document.getElementById('monthlyRevenueChart');
               // const orderTable = document.getElementById('orderTable');
@@ -100,7 +127,7 @@ sidebarButtons.forEach(button => {
 
               // Create and render the daily revenue chart
               new Chart(dailyRevenueChart, {
-                type: 'bar',
+                type: 'line', // Change the chart type to 'line'
                 data: dailyRevenueChartData,
                 options: {
                   // Add any desired options for the chart
@@ -132,6 +159,12 @@ sidebarButtons.forEach(button => {
              
               const totalOrdersElement = document.getElementById('totalOrders');
               totalOrdersElement.innerText = totalOrdersData;
+
+              const totalPriceElement = document.getElementById('totalRevenue');
+              totalPriceElement.innerText = totalPriceData+" dh";
+             
+              const  averagePriceElement = document.getElementById('averagePrice');
+              averagePriceElement.innerText =  averagePriceData+" dh";
               // Fetch recent orders data and update the table
               // fetch('/orders')
               //   .then(response => response.json())
@@ -149,7 +182,7 @@ sidebarButtons.forEach(button => {
               //   });
             }
 
-            updateDashboard(dailyRevenueData, monthlyRevenueData, totalOrdersData);
+            updateDashboard(dailyRevenueData, monthlyRevenueData, totalOrdersData,totalPriceData, averagePriceData);
           }
          
            else if (buttonText === 'Products') {

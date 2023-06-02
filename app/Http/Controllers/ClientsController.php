@@ -88,9 +88,9 @@ class ClientsController extends Controller
         $clients = Clients::find($client);
 
         $validData = $request->validate([
-            'name' => 'required|unique:clients,name,'.$clients->id,
-            'email' => 'required|unique:clients,email',
-            'tel' => 'required|unique:clients,tel',
+            'name' => 'required|',
+            'email' => 'required|',
+            'tel' => 'required|',
             'address' => 'required',
         ]);
 
@@ -100,9 +100,7 @@ class ClientsController extends Controller
             "tel" => $validData['tel'],
             "address" => $validData['address'],
         ]);
-    
-        //$tables->save();
-
+        
         $request->session()->flash('success', 'updated successfully');
         return redirect()->route('clients.index');
     }

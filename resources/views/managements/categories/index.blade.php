@@ -106,7 +106,6 @@
       margin-left: 5%;
     }
     .icon {
-      
       font-size: 50px;
       margin-bottom: 5px;
       margin-right: 5%;
@@ -117,6 +116,21 @@
       justify-content: space-between;
       align-items: center;
     } 
+
+    .category-item {
+      display: flex;
+      padding: 1px;
+      background-color: #ffffff;
+      cursor: pointer;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .category-image {
+        width: 50px; /* Adjust the width as needed */
+        height: 50px; /* Adjust the height as needed */
+      
+    }
 
   </style>
 </head>
@@ -150,6 +164,7 @@
         <th>id</th>
         <th>Titre</th>
         <th>Description</th>
+        <th>Image</th>
         <th>Action</th>
     </tr>
     @foreach ($categories as $categ)
@@ -157,6 +172,11 @@
             <td>{{ $categ->id }}</td>
             <td>{{ $categ->title }}</td>
             <td>{{ $categ->slug }}</td>
+            <td>
+              <div class="category-item" data-category="{{ $categ->id }}">
+                <img src="{{ $categ->image }}" alt="{{ $categ->title }}" class="category-image">
+            </div>
+            </td>
             <td>
               <form action="{{route('categories.destroy', $categ->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer la categorie du {{ $categ->title }} ?');" method="post">
 

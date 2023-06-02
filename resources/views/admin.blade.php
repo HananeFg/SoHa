@@ -62,6 +62,10 @@
     <div id="dailyRevenueDataJson" data-json="{{ $dailyRevenueDataJson }}"></div>
     <div id="monthlyRevenueDataJson" data-json="{{ $monthlyRevenueDataJson }}"></div>
     <div id="totalOrdersDataJson" data-json="{{ $totalOrders }}"></div>
+    <div id="totalPriceDataJson" data-json="{{ $totalPrice }}"></div>
+    <div id="averagePriceDataJson" data-json="{{ $averagePrice }}"></div>
+
+
 
 
     <!-- JavaScript -->
