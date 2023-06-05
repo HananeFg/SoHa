@@ -32,7 +32,7 @@
       </h3>
     </div>
     <hr>
-    <form action="{{ route('categories.update', ['category' => $category->id]) }}" method="post">
+    <form action="{{ route('categories.update', ['category' => $category->id]) }}" method="post" enctype="multipart/form-data">
       @csrf
       @method("PUT")
       <div class="form-group inline">
@@ -42,14 +42,15 @@
         </div>
       </div>
       <div class="form-group description">
-        <textarea id="description" name="slug" placeholder="Description" value="{{ $category->slug }}" required></textarea>
+        <label >Description:</label>
+        <textarea id="description" name="slug" placeholder="Description"  required>{{ $category->slug }}</textarea>
       </div>
       <div class="form-group inline">
         <div class="form-element">
           <label for="image">Upload Image:</label>
           <div class="upload-btn">
             <label for="file-upload">Choose File</label>
-            <input type="file" id="file-upload" name="image" accept="image/*" >
+            <input type="file" id="file-upload" name="image" accept="image/*" value="{{ $category->image }}" >
           </div>
         </div>
       </div>

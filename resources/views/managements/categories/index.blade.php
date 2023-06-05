@@ -137,7 +137,7 @@
 <body>
   <div class="navbar">
     <div class="back-button">
-        <a href="#">        
+        <a href="{{ route("admin") }}">        
             <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
         </a>
     </div>
@@ -175,14 +175,14 @@
             <td>
               <div class="category-item" data-category="{{ $categ->id }}">
                 <img src="{{ $categ->image }}" alt="{{ $categ->title }}" class="category-image">
-            </div>
+              </div>
             </td>
             <td>
               <form action="{{route('categories.destroy', $categ->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer la categorie du {{ $categ->title }} ?');" method="post">
 
                   {{ csrf_field() }} {{ method_field('DELETE') }}
                   <a href="{{ route('categories.edit', $categ) }}" class="btn btn-warning">
-                          <i class="fas fa-edit fa-x2"></i>
+                    <i class="fas fa-edit fa-x2"></i>
                   </a>
                   <button  class="btn btn-danger" type="submit">
                       <i class="fas fa-trash fa-x2"></i>

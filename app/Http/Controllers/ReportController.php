@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Details;
 use App\Models\Factures;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,8 +17,8 @@ class ReportController extends Controller
 
     public function index()
     {
-        $factures = Factures::all();
-        return view("reports.index")->with("factures", $factures);
+        $factures = Factures::with('details','menus');
+        return view("reports.index", compact('factures'));
     }
     
 
@@ -28,6 +29,9 @@ class ReportController extends Controller
             "from" => "required",
             "to" => "required",
         ]);
+        //initialisation
+        $startDate = " "; // Initialisation de la variable $startDate
+        $endDate = " "; // Initialisation de la variable $endDate
         //get data
         $startDate = date("Y-m-d H:i:s",strtotime($request->from."00:00:00"));
         $endDate = date("Y-m-d H:i:s",strtotime($request->to."23:59:59"));

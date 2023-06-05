@@ -7,6 +7,13 @@ use DB;
 use Carbon\Carbon;
 use App\Models\Factures;
 use App\Models\Servers;
+use App\Models\Category;
+use App\Models\Details;
+use App\Models\Menu;
+
+
+
+
 
 
 class HomeController extends Controller
@@ -62,24 +69,58 @@ class HomeController extends Controller
         $startMonth->addMonth(); // Increment by 1 month for the next iteration
     }
 
+     // Fetch the revenue per category
+     $categories = Category::all();
+     $categoryRevenueData = [];
+     
+     // Calculate the start and end dates for the last 30 days
+     $startDate = Carbon::now()->subDays(30)->startOfDay();
+     $endDate = Carbon::now()->endOfDay();
+     
+     foreach ($categories as $category) {
+         $categoryTotalAmount = Factures::join('details', 'factures.id', '=', 'details.facture_id')
+             ->join('menus', 'details.produit_id', '=', 'menus.id')
+             ->where('menus.category_id', $category->id)
+             ->whereBetween('factures.created_at', [$startDate, $endDate])
+             ->sum('details.montant');
+     
+         $categoryRevenueData[] = [
+             'label' => $category->title,
+             'data' => $categoryTotalAmount,
+         ];
+     }
+     
+
+    
+     
+     // Fetch the top 5 menus based on total revenue returned
+     $topRevenueMenus = Menu::join('details', 'menus.id', '=', 'details.produit_id')
+         ->select('menus.title', DB::raw('SUM(details.montant) as total_revenue'))
+         ->groupBy('menus.id', 'menus.title')
+         ->orderBy('total_revenue', 'desc')
+         ->take(5)
+         ->get();
+     
+    
+
     $dailyRevenueDataJson = json_encode($dailyRevenueData);
     $monthlyRevenueDataJson = json_encode($monthlyRevenueData);
+    $categoryRevenueDataJson = json_encode($categoryRevenueData);
     $totalOrdersDataJson = json_encode($totalOrders);
     $totalPriceDataJson = json_encode($totalPrice);
+    $topRevenueMenusDataJson = json_encode($topRevenueMenus);
     $averagePriceFormatted = number_format($averagePrice, 2); // Format the average price with 2 decimal places
 
     return view('admin')
         ->with('dailyRevenueDataJson', $dailyRevenueDataJson)
         ->with('monthlyRevenueDataJson', $monthlyRevenueDataJson)
+        ->with('categoryRevenueDataJson', $categoryRevenueDataJson)
         ->with('totalOrders', $totalOrdersDataJson)
         ->with('totalPrice', $totalPriceDataJson)
+        ->with('topRevenueMenus', $topRevenueMenusDataJson)
         ->with('averagePrice', $averagePriceFormatted);
+
 }
-
-    
-    
-    
-
 
     public function blog($myid, $author = 'author by default') {
         $posts = [

@@ -15,4 +15,8 @@ class Menu extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function details(){
+        return $this->belongsToMany(Details::class, 'produit_id');
+    }
+
 }

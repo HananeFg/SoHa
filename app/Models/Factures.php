@@ -24,7 +24,7 @@ class Factures extends Model
 
     public function details()
     {
-        return $this->belongsToMany(Details::class);
+        return $this->hasMany(Details::class, 'facture_id');
     }
 
     public function serveurs()

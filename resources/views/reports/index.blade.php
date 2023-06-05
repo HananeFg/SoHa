@@ -3,7 +3,12 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
+        <!-- Latest compiled and minified CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css"> --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
@@ -127,7 +132,11 @@
                     margin: auto;
                 }
                 .date {
-
+                    border: 1px;
+                    border-radius: 3px;
+                    padding: 1%;
+                    margin: 1%;
+                    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
                 }
 
         </style>
@@ -149,26 +158,38 @@
         <div class="title">
             <h3 class="text-secondary">
               <i class="fas fa-list fa-x2"></i> Rapports
-            </h3><span class="currentDate" id="currentDate" style="float: right"></span>
+            </h3>
+            {{-- <span class="currentDate" id="currentDate" style="float: right"></span> --}}
             {{-- <div class="icon"> --}}
                 <a href="{{ route("menu") }}" class="btn btn-secondary">
                     <i class="fas fa-chevron-left fa-x2" ></i>
                 </a>
             {{-- </div> --}}
           </div>
+          
           <div class="card">
             <div class="date">
                 <form action="{{ route("reports.generate") }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <input type="date" name="from" class="form-control">
+                        <label for="from">date début</label>
+                        <input type="date" name="from" placeholder="date debut" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="date" name="to" class="form-control">
+                        <label for="from">date fin</label>
+                        <input type="date" name="to" placeholder="date fin"  class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">
+                            Afficher le rapport
+                        </button>
                     </div>
                 </form>
             </div>
           </div>
+            <h4 class="text-secondary font-weight-bold">
+                Rapport de {{ $startDate }} à {{ $endDate }}
+          </h4>
         
 
 <!-- resources/views/welcome.blade.php -->
@@ -178,16 +199,25 @@
 <table>
     <tr>
         <th>N°Ticket</th>
-        <th>Date and Time</th>
-        <th>Table</th>
         <th>Server</th>
-        <th>Status</th>
+        <th>Table</th>
+        <th>Details</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+        <th>Total TTC</th>
         
     </tr>
     @foreach ($factures as $facture)
+        
         <tr>
             <td>{{ $facture->id }}</td>
-            <td>{{ $facture->created_at }}</td>
+            <td>
+                @if ($facture->serveurs)
+                    {{ $facture->serveurs->name }}
+                @else
+                    ---------
+                @endif
+            </td>
             <td>
                 @if ($facture->tables)
                     {{ $facture->tables->name }}
@@ -196,17 +226,45 @@
                 @endif
             </td>
             <td>
-                @if ($facture->serveurs)
-                    {{ $facture->serveurs->name }}
-                @else
-                    ---------
-                @endif
+                @foreach ($facture->details as $detail)
+                    <dl>{{ $detail->menus->title }}</dl>
+                @endforeach
             </td>
-            <td>{{ $facture->payment_status }}</td>
-           
+            <td>
+                @foreach ($facture->details as $detail)
+                    <dl>{{ $detail->unit_price }}DH</dl>
+                @endforeach
+            </td>
+            <td> 
+                @foreach ($facture->details as $detail)
+                    <dl>{{ $detail->quantity }}</dl>
+                @endforeach
+            </td>
+            <td>{{ $facture->total_price }}</td>
         </tr>
     @endforeach
 </table>
+<div class="d-grid">
+    <button type="button" class="btn btn-success btn-block">
+        <dt>Total : {{ $total }} DH</dt>
+    </button>
+</div>
+<form action="{{ route("reports.export") }}" method="post">
+    @csrf
+    <div class="form-group">
+        <input type="hidden" name="from" value="{{ $startDate }}" class="form-control">
+    </div>
+    <div class="form-group">
+        <input type="hidden" name="to" value="{{ $endDate }}"  class="form-control">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-outline-danger border border-danger">
+            Génerer le rapport
+        </button>
+    </div>
+</form>
+<hr>
+
 </div>
 
 <!-- ... -->

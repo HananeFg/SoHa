@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -96,8 +97,8 @@ class CategoryController extends Controller
 
         $validData = $request->validate([
             'title' => 'required|unique:categories,title,'.$categories->id,
-            'slug' => 'required|boolean',
-            'image' => 'required|image',
+            'slug' => 'required|string',
+            'image' => 'required|file|mimes:jpeg,png,gif',
         ]);
        // Upload the image file
        $imagePath = $request->file('image')->store('articleImage', 'public');
@@ -105,13 +106,13 @@ class CategoryController extends Controller
 
         $categories->update([
             "title" => $validData['title'],
-            "slug" => Str::slug($validData['name']),
-            "image" => $imagePath,
+            "slug" => Str::slug($validData['title']),
+            "image" => $imageUrl,
         ]);
-        $category->image = $imagePath;
+        //$category->image = $imagePath;
 
         $request->session()->flash('success', 'Table updated successfully');
-        return redirect()->route('tables.index');
+        return redirect()->route('categories.index');
     }
 
     /**

@@ -9,7 +9,7 @@
 <body>
     <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
       <div class="back-button">
-        <a href="#">        
+        <a href="{{ route("products.index") }}">        
           <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
         </a>
       </div>

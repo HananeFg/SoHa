@@ -50,13 +50,20 @@ Route::delete('tables/destroy/{table}', 'App\Http\Controllers\TablesController@d
 Route::post('/insertPayment', 'App\Http\Controllers\MenuController@insertPayment')->name('insertPayment');
 
 Route::resource('products', 'App\Http\Controllers\MenuController');
+Route::put('products/update/{product}', 'App\Http\Controllers\MenuController@update')->name('products.update');
+
 Route::resource('categories', 'App\Http\Controllers\CategoryController');
 Route::put('categories/update/{category}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
 
 Route::resource('user', 'App\Http\Controllers\UsersController');
+Route::get('cloture', 'App\Http\Controllers\ClotureController@index')->name('cloture');
+
+Route::put('user/update/{user}', 'App\Http\Controllers\UsersController@update')->name('user.update');
+
 Route::resource('clients', 'App\Http\Controllers\ClientsController');
 Route::put('clients/update/{client}', 'App\Http\Controllers\ClientsController@update')->name('clients.update');
 
+//reports
 Route::get('reports', 'App\Http\Controllers\ReportController@index')->name("reports.index");
 Route::post('reports/generate', 'App\Http\Controllers\ReportController@generate')->name("reports.generate");
 Route::post('reports/export', 'App\Http\Controllers\ReportController@export')->name("reports.export");
@@ -64,8 +71,6 @@ Route::post('reports/export', 'App\Http\Controllers\ReportController@export')->n
 Route::group(['middleware' => 'customAuth'], function () {
     Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
     Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
-
-
 });
 Route::get('/generatePdf', 'App\Http\Controllers\PdfController@generatePdf')->name('generatePdf');
 

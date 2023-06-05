@@ -117,13 +117,27 @@
       justify-content: space-between;
       align-items: center;
     }
+    .category-item {
+      display: flex;
+      padding: 1px;
+      background-color: #ffffff;
+      cursor: pointer;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .category-image {
+        width: 50px; /* Adjust the width as needed */
+        height: 50px; /* Adjust the height as needed */
+      
+    }
 
   </style>
 </head>
 <body>
   <div class="navbar">
     <div class="back-button">
-        <a href="#">        
+        <a href="{{ route("admin") }}">        
             <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
         </a>
     </div>
@@ -153,6 +167,7 @@
         <th>Prix unitaire</th>
         <th>TVA</th>
         <th>TTC</th>
+        <th>Image</th>
         <th>Action</th>
     </tr>
     @foreach ($products as $product)
@@ -164,14 +179,18 @@
             <td>{{ $product->TVA }}</td>
             <td>{{ $product->TTC_price }}</td>
             <td>
+              <div class="category-item" data-category="{{ $product->id }}">
+                <img src="{{ $product->image }}" alt="{{ $product->title }}" class="category-image">
+              </div>
+            </td>
+            <td>
               <form action="{{route('products.destroy', $product->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $product->title }} ?');" method="post">
-
                   {{ csrf_field() }} {{ method_field('DELETE') }}
-                  <a href="{{ route('products.edit', $products) }}" class="btn btn-warning">
-                          <i class="fas fa-edit fa-x2"></i>
+                  <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
+                    <i class="fas fa-edit fa-x2"></i>
                   </a>
                   <button  class="btn btn-danger" type="submit">
-                      <i class="fas fa-trash fa-x2"></i>
+                    <i class="fas fa-trash fa-x2"></i>
                   </button>
               </form>
             </td>

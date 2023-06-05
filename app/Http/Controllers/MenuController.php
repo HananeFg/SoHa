@@ -18,6 +18,7 @@ use Dompdf\Dompdf;
 use Dompdf\FrameDecorator\Table;
 use Illuminate\Support\Facades\Http;
 use App\Models\Payments;
+use App\Models\Facture_payment;
 
 class MenuController extends Controller
 {
@@ -259,9 +260,21 @@ class MenuController extends Controller
                 ]);
 
             $payment=new Payments();
+            $paymentId=$payment->id;
             $payment->price=$price;
             $payment->save(); 
           
+            $facture_payment=new Facture_payment();
+            $facture_payment->facture_id=$factureId;
+            $facture_payment->payment_id=$paymentId;
+            $facture_payment->payment_type=$paymentOption;
+            $facture_payment->payment_status='paid';
+            $facture_payment->Montant=$receivedAmount;
+            $facture_payment->save(); 
+            
+            
+            
+            
              
             return response()->json(['success' => true, 'message' => 'Payment inserted successfully']);
         } catch (\Exception $e) {
@@ -312,7 +325,7 @@ class MenuController extends Controller
         //store data
 
         // Clear the form input fields
-        $request->session()->flash('success', 'Talbe added successfully');
+        $request->session()->flash('success', 'added successfully');
 
         // Redirect back to the form with an empty form
         return redirect()->route('products.index');
@@ -331,19 +344,44 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Menu $products)
+    public function edit(Menu $product)
     {
-        dd($products);
+        //dd($products);
+        $categories = Category::all();
         //
         return view("managements.products.edit")->with([
-            "products" => $Products
+            "product" => $product,
+            "categories" => $categories
         ]);
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $product)
     {   
        
+        //
+        $categories = Category::all();
+
+        $title = $request->input('title');
+        $categoryId = $request->input('category_id');
+        $slug = $request->input('slug');
+        $unitPrice = $request->input('unit_price');
+        $TVA = $request->input('TVA');
+        session(['title' =>  $title]);
+        session(['category_id' =>  $categoryId]);
+        session(['slug' =>  $slug]);
+        session(['unit_price' =>  $unitPrice]);
+        session(['TVA' =>  $TVA]);
+        Menu::where('id', $product)->update([
+            'title' =>  $title,
+            'category_id' => $categoryId,
+            'slug' =>  $slug,
+            'unit_price' =>  $unitPrice,
+            'TVA' =>  $TVA,
+        ]);
+
+        $request->session()->flash('success', 'updated successfully');
+        return redirect()->route('products.index')->with('categories', $categories);
     }
     
     

@@ -50,7 +50,7 @@ class AjoutArticleController extends Controller
      
 
             // Clear the form input fields
-        $request->session()->flash('success', 'Article added successfully');
+        $request->session()->flash('success',' ');
         
         // Redirect back to the form with an empty form
         return redirect()->route('ajoutArticle');
