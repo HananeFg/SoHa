@@ -17,7 +17,7 @@
 <body>
   <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
     <div class="back-button">
-      <a href="{{ route("tables.index") }}">        
+      <a href="{{ route('utilisateurs.index') }}">        
         <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
       </a>
     </div>
@@ -39,26 +39,36 @@
     <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
 </div>
   <div class="content">
+  
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Ajouter une table
+        <i class="fas fa-plus"></i>Ajouter un utilisateur
       </h3>
     </div>
     <hr>
-    <form method="POST" action="{{ route('tables.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('utilisateurs.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group inline">
             <div class="form-element">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Add table name"  required>
+                <input type="text" id="name" name="name" placeholder=""  required>
             </div>
             <div class="form-element">
-                <label for="status">Status:</label>
-                <select id="status" name="status" required>
-                    <option value="">Disponible</option>
-                    <option value="0">Non</option>
-                    <option value="1">Oui</option>
+              <label for="name">email:</label>
+              <input type="text" id="email" name="email" placeholder=""  required>
+            </div>
+            <div class="form-element">
+              <label for="name">login:</label>
+              <input type="text" id="name" name="name" placeholder=""  required>
+            </div>
+            <div class="form-element">
+                <label for="status">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="">Choisir un role</option>
+                    <option value="admin">Admin</option>
+                    <option value="serveur">Serveur</option>
+                    <option value="caissier">Caissier</option>
                 </select>
             </div>
         </div>
@@ -70,7 +80,7 @@
 
     @if (session('success'))
         <div class="alert alert-success">
-            <strong style="color: rgb(23, 146, 52)">success!</strong> {{ session('success') }}
+            <strong style="color: rgb(23, 146, 52)">Success!</strong> {{ session('success') }}
         </div>
     @endif
 </div>

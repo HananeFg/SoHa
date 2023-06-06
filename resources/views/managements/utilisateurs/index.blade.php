@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Menu</title>
+  <title>Users</title>
+  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -123,7 +125,7 @@
 <body>
   <div class="navbar">
     <div class="back-button">
-        <a href="#">        
+        <a href="{{ route("admin") }}">        
             <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
         </a>
     </div>
@@ -132,42 +134,50 @@
     </div>
   </div>
   <br><br><br>
-  <div class="">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
+</div>
+  <div class="content">
     <div class="title">
       <h3 class="text-secondary">
-        <i class="fas fa-table fa-x2"></i> Products
+        <i class="fas fa-user fa-x2"></i> users
       </h3>
       <div class="icon">
-        <a href="{{ route("ajoutArticle") }}" class="ml-auto">
+        <a href="{{ route("utilisateurs.create") }}" class="ml-auto">
             <i class="fas fa-square-plus fa-x2" ></i>
         </a>
       </div>
     </div>
-  </div>
+  
   
   <table>
     <tr>
         <th>id</th>
-        <th>Nom</th>
-        <th>Categorie</th>
-        <th>Prix unitaire</th>
-        <th>TVA</th>
-        <th>TTC</th>
+        <th>Nom et prénom</th>
+        <th>Email</th>
+        <th>Role</th>
         <th>Action</th>
     </tr>
-    @foreach ($products as $product)
+    @foreach ($users as $user)
         <tr>
-            <td>{{ $product->id }}</td>
-            <td>{{ $product->title }}</td>
-            <td>{{ $product->category_id }}</td>
-            <td>{{ $product->unit_price }}</td>
-            <td>{{ $product->TVA }}</td>
-            <td>{{ $product->TTC_price }}</td>
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->role }}</td>
             <td>
-              <form action="{{route('products.destroy', $product->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $product->title }} ?');" method="post">
+              <form action="{{route('utilisateurs.destroy', $user->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $user->name }} ?');" method="post">
 
                   {{ csrf_field() }} {{ method_field('DELETE') }}
-                  <a href="{{ route('products.edit', $products) }}" class="btn btn-warning">
+                  <a href="{{ route('utilisateurs.edit', $users) }}" class="btn btn-warning">
                           <i class="fas fa-edit fa-x2"></i>
                   </a>
                   <button  class="btn btn-danger" type="submit">
@@ -182,7 +192,9 @@
 <!-- ... -->
 
 
-        {{ $products->onEachSide(1)->links() }}
+        {{ $users->onEachSide(1)->links() }}
+      </div>
+      <script src="{{ asset('JS/admin.js') }}"></script>
 
 </body>
 </html>

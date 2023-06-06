@@ -3,6 +3,8 @@
 
 <html>
     <head>
+        <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+
         <!-- Latest compiled and minified CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -144,7 +146,7 @@
     <body>
         <div class="navbar">
             <div class="back-button">
-                <a href="{{ route('users.login') }}">        
+                <a href="{{ route('admin') }}">        
                     <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
                 </a>
             </div>
@@ -153,11 +155,23 @@
             </div>
         </div>
         <br><br><br>
-
+          <!-- Sidebar -->
+  <div class="sidebar">
+    <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
+</div>
+<div class="content">
         <div class="container">
         <div class="title">
             <h3 class="text-secondary">
-              <i class="fas fa-list fa-x2"></i> Rapports
+              <i class="fas fa-file fa-x2"></i> Rapports
             </h3>
             {{-- <span class="currentDate" id="currentDate" style="float: right"></span> --}}
             {{-- <div class="icon"> --}}
@@ -188,8 +202,10 @@
             </div>
           </div>
             <h4 class="text-secondary font-weight-bold">
-                Rapport de {{ $startDate }} à {{ $endDate }}
-          </h4>
+                @isset($startDate, $endDate)
+                    Rapport de {{ $startDate }} à {{ $endDate }}
+                @endisset
+            </h4>
         
 
 <!-- resources/views/welcome.blade.php -->
@@ -205,6 +221,7 @@
         <th>Prix</th>
         <th>Quantité</th>
         <th>Total TTC</th>
+        <th>Mode  de paiment</th>
         
     </tr>
     @foreach ($factures as $facture)
@@ -241,16 +258,21 @@
                 @endforeach
             </td>
             <td>{{ $facture->total_price }}</td>
+            <td>{{ $facture->payment_type }}</td>
         </tr>
     @endforeach
 </table>
 <div class="d-grid">
-    <button type="button" class="btn btn-success btn-block">
-        <dt>Total : {{ $total }} DH</dt>
-    </button>
+    @isset($total)
+        <button type="button" class="btn btn-success btn-block">
+            <dt>Total : {{ $total }} DH</dt>
+        </button>
+    @endisset
+    
 </div>
 <form action="{{ route("reports.export") }}" method="post">
     @csrf
+    @isset($startDate, $endDate)
     <div class="form-group">
         <input type="hidden" name="from" value="{{ $startDate }}" class="form-control">
     </div>
@@ -262,11 +284,12 @@
             Génerer le rapport
         </button>
     </div>
+    @endisset
 </form>
 <hr>
 
 </div>
-
+</div>
 <!-- ... -->
 
 
@@ -274,6 +297,8 @@
 
 
         {{-- scripts --}}
+        <script src="{{ asset('JS/admin.js') }}"></script>
+
         <script src="{{ asset('JS/commandList.js') }}"></script>
     </body>
 </html>

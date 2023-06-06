@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Edit menu</title>
+  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
 </head>
 <body>
   <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
@@ -24,29 +24,41 @@
 
     </div>
   </div>
-  
-  <div class="container">
-    <div class="">
-      <h3 class="text-secondary">
-        <i class="fas fa-pen-to-square"></i> Modifier l'article <u>{{ $product->title }}</u>
-      </h3>
-    </div>
-    <hr>
-    <form action="{{ route('products.update', ['product' => $product->id]) }}" method="post">
-      @csrf
-      @method("PUT")
-      <div class="form-group inline">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
+  </div>
+  <div class="content">
+    <div class="container">
+      <div class="">
+        <h3 class="text-secondary">
+          <i class="fas fa-pen-to-square"></i> Modifier l'article <u>{{ $product->title }}</u>
+        </h3>
+      </div>
+      <hr>
+      <form action="{{ route('products.update', ['product' => $product->id]) }}" method="post">
+        @csrf
+        @method("PUT")
+        <div class="form-group inline">
           <div class="form-element">
-              <label for="name">Name:</label>
-              <input type="text" id="title" name="title" placeholder="Titre" value="{{ $product->title }}" required>
+            <label for="name">Name:</label>
+            <input type="text" id="title" name="title" placeholder="Titre" value="{{ $product->title }}" required>
           </div>
           <div class="form-element">
             <label for="category">Category:</label>
             <select id="category" name="category_id" required>
               <option value="">Select a category</option>
-          @foreach ($categories as $category)
-              <option value="{{ $category->id }}">{{ $category->title }}</option>
-          @endforeach
+              @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->title }}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -70,19 +82,22 @@
             </div>
           </div>
         </div>
-      </div>
-      <input type="hidden" name="product" value="{{ $product->id }}">
-      <div class="form-group fix">
-        <input type="submit" value="Modifier">
+        
+        <input type="hidden" name="product" value="{{ $product->id }}">
+        <div class="form-group fix">
+          <input type="submit" value="Modifier">
+        </div>
+      </form>
     </div>
-  </form>
-  
 
     @if (session('success'))
-        <div class="alert alert-success">
-            <strong style="color: rgb(23, 146, 52)">Added successfully!</strong> {{ session('success') }}
-        </div>
+      <div class="alert alert-success">
+        <strong style="color: rgb(23, 146, 52)">Added successfully!</strong> {{ session('success') }}
+      </div>
     @endif
-</div>
+  </div>
+  <script src="{{ asset('JS/admin.js') }}"></script>
+
+
 </body>
 </html>

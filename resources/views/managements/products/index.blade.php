@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Menu</title>
+  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -146,10 +148,23 @@
     </div>
   </div>
   <br><br><br>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
+    <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
+</div>
+  <div class="content">
   <div class="">
     <div class="title">
       <h3 class="text-secondary">
-        <i class="fas fa-table fa-x2"></i> Products
+        <i class="fas fa-burger fa-x2"></i> Products
       </h3>
       <div class="icon">
         <a href="{{ route("ajoutArticle") }}" class="ml-auto">
@@ -202,6 +217,8 @@
 
 
         {{ $products->onEachSide(1)->links() }}
+  </div>
+  <script src="{{ asset('JS/admin.js') }}"></script>
 
 </body>
 </html>

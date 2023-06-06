@@ -24,15 +24,14 @@ class UsersController extends Controller
     protected $redirectTo = '/home';
     
     
-    public function index(Request $request)
-
-    {   
-         $role = $request->input('role');
-        $users = User::where('role', $role)->get(['name']);
-        return view('users', ['users' => $users]);
+    // public function index(Request $request)
+    // {   
+    //     $role = $request->input('role');
+    //     $users = User::where('role', $role)->get(['name']);
+    //     return view('users', ['users' => $users]);
         
 
-    }
+    // }
     public function login(Request $request){
        $name = $request->input('name');
        $users = User::where('name', $name)->get(['name']);;
@@ -72,17 +71,17 @@ class UsersController extends Controller
         }
     }
 
-    public function indexi()
+    public function index()
     {
         //
-        return view("managements.user.index")->with([
-            "user" => User::paginate(5)
+        return view("managements.utilisateurs.index")->with([
+            "users" => User::paginate(5)
         ]);
     }
 
     public function create()
     {
-        return view("managements.user.create");
+        return view("managements.utilisateurs.create");
 
     }
 
@@ -93,8 +92,8 @@ class UsersController extends Controller
     {
         //validation
         $validData = $request->validate([
-            'name' => 'required|unique:tables,name',
-            'email' => 'required|unique',
+            'name' => 'required|unique:users,name',
+            'email' => 'required|unique:users',
             'login' => 'required|',
             'role' => 'required|',
         ]);
@@ -109,7 +108,7 @@ class UsersController extends Controller
         // Clear the form input fields
         $request->session()->flash('success', 'added successfully');
         // Redirect back to the form with an empty form
-        return redirect()->route('user.index');
+        return redirect()->route('utilisateurs.index');
              
     }
 
@@ -127,7 +126,7 @@ class UsersController extends Controller
     public function edit(User $users)
     {
         //
-        return view("managements.user.edit")->with([
+        return view("managements.utilisateurs.edit")->with([
             "users" => $users
         ]);
     }
@@ -152,7 +151,7 @@ class UsersController extends Controller
         $users->delete();
     
         //redirect user
-        return redirect()->route("user.index")->with([
+        return redirect()->route("utilisateurs.index")->with([
             "success" => "deleted successfully"
         ]);
     }

@@ -46,7 +46,6 @@ Route::get('/printForClient', 'App\Http\Controllers\MenuController@printForClien
 
 Route::resource('tables', 'App\Http\Controllers\TablesController');
 Route::put('tables/update/{table}', 'App\Http\Controllers\TablesController@update')->name('tables.update');
-Route::delete('tables/destroy/{table}', 'App\Http\Controllers\TablesController@destroy')->name('tables.destroy');
 Route::post('/insertPayment', 'App\Http\Controllers\MenuController@insertPayment')->name('insertPayment');
 
 Route::resource('products', 'App\Http\Controllers\MenuController');
@@ -55,8 +54,7 @@ Route::put('products/update/{product}', 'App\Http\Controllers\MenuController@upd
 Route::resource('categories', 'App\Http\Controllers\CategoryController');
 Route::put('categories/update/{category}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
 
-Route::resource('user', 'App\Http\Controllers\UsersController');
-Route::get('cloture', 'App\Http\Controllers\ClotureController@index')->name('cloture');
+Route::resource('utilisateurs', 'App\Http\Controllers\UsersController');
 
 Route::put('user/update/{user}', 'App\Http\Controllers\UsersController@update')->name('user.update');
 
@@ -73,5 +71,11 @@ Route::group(['middleware' => 'customAuth'], function () {
     Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
 });
 Route::get('/generatePdf', 'App\Http\Controllers\PdfController@generatePdf')->name('generatePdf');
+Route::get('cloture', 'App\Http\Controllers\ClotureController@index')->name('cloture');
+Route::post('/cloture/store', 'App\Http\Controllers\ClotureController@store')->name('cloture.store');
+
+
+//Route::post('/store', 'App\Http\Controllers\ClotureController@store')->name('store');
+// Route::get('/cloture/create', 'App\Http\Controllers\ClotureController@create')->name('cloture.create');
 
 Route::get('/posts/{id}/{author?}', 'App\Http\Controllers\HomeController@blog')->name('blog-post');

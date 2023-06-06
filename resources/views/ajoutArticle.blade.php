@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Add Article</title>
+  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -21,7 +23,19 @@
  
 
   <br>
-  <hr>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
+      </div>
+      <div class="content">
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
@@ -40,9 +54,9 @@
           <label for="category">Category:</label>
           <select id="category" name="category_id" required>
             <option value="">Select a category</option>
-        @foreach ($categories as $category)
-            <option value="{{ $category->id }}">{{ $category->title }}</option>
-        @endforeach
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->title }}</option>
+            @endforeach
           </select>
         </div>
       </div>
@@ -78,5 +92,6 @@
     </div>
     @endif
   </div>
+</div>
 </body>
 </html>

@@ -3,6 +3,8 @@
 <head>
   <title>Add Category</title>
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
+  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+
 </head>
 <body>
     <div class="navbar"  padding-bottom: 0px; padding-top: 0px;>
@@ -19,7 +21,20 @@
  
 
   <br>
-  <hr>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
+        <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
+      </div>
+      <div class="content">
+
   <div class="container">
     <form  method="POST" action="{{ route('ajoutCategory.store') }}" enctype="multipart/form-data">
       @csrf
@@ -53,5 +68,6 @@
     </div>
     @endif
   </div>
+      </div>
 </body>
 </html>
