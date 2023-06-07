@@ -52,7 +52,6 @@
                 @endforeach
             </div>
             <div style=" display: inline-block;">
-                
                 @foreach ($server as $server)
                 <p>| serveur : {{$server->name}}</p>
                 @endforeach

@@ -102,7 +102,41 @@
         <div class="logo">
             <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
           </div>
-    </div>
+          <div id="timeElement" class="current-time"></div>
+        </div>
+        
+        <script>
+            // Add 'active' class to the current page link
+            var currentPageURL = window.location.href;
+            var links = document.querySelectorAll('.navbar a');
+            for (var i = 0; i < links.length; i++) {
+                if (links[i].href === currentPageURL) {
+                    links[i].classList.add('active');
+                    break;
+                }
+            }
+        
+            // Update the current time
+            function updateTime() {
+                var currentTime = new Date();
+                var hours = currentTime.getHours();
+                var minutes = currentTime.getMinutes();
+                var seconds = currentTime.getSeconds();
+                
+                // Format the time
+                var timeString = hours.toString().padStart(2, '0') + ':' +
+                    minutes.toString().padStart(2, '0') + ':' +
+                    seconds.toString().padStart(2, '0');
+                
+                // Update the time in the HTML element
+                var timeElement = document.getElementById('timeElement');
+                timeElement.innerHTML =  timeString;
+            }
+        
+            // Update the time initially and then every second
+            updateTime();
+            setInterval(updateTime, 1000);
+        </script>
     <br>
     <br>
    

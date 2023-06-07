@@ -152,11 +152,12 @@ class MenuController extends Controller
         $facturee= Factures::where('id',$factureId)->get();
         $server = Serveurs::where('id',$serverId)->get();
         $table = Tables::where('id',$tableId)->get();
-        // dd(($table));
         // dd(($items));
         // $items = Details::where('facture_id', $factureId);
         // dd($items);
+
         $dompdf = new Dompdf();
+        
         
         $html = View::make('ticketForClient', ['items' => $items ,'factureId' => $factureId,'table' => $table,'server' => $server , 'facture' => $facture ,'facturee' => $facturee])->render();
         $dompdf->loadHtml($html);

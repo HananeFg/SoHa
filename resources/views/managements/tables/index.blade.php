@@ -204,6 +204,14 @@
         {{ $tables->onEachSide(1)->links() }}
   </div>
   <script src="{{ asset('JS/admin.js') }}"></script>
-
+  <script>
+    function toggleActive(button) {
+        var sidebarButtons = document.getElementsByClassName("sidebar-button");
+        for (var i = 0; i < sidebarButtons.length; i++) {
+            sidebarButtons[i].classList.remove("active");
+        }
+        button.classList.add("active");
+    }
+  </script>
 </body>
 </html>
