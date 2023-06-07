@@ -13,15 +13,15 @@ body {
     box-sizing: border-box;
     float: left;
     position: fixed;
-    top: 63px;
+    top: 50px;
     box-shadow: 2px 2px 5px rgba(2, 0, 0, 0.3);
 
 }
 
 .sidebar-button {
-  display: block;
+  display: flex;
   width: 100%;
-  padding: 13px;
+  padding: 10px;
   margin-bottom: 10px;
   background-color: #ffcc00;
   border: none;
