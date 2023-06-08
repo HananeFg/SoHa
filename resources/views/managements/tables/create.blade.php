@@ -38,7 +38,6 @@
     <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
     <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
 </div> --}}
-  <div class="content">
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
@@ -74,7 +73,7 @@
         </div>
     @endif
 </div>
-  </div>
+  
   <script src="{{ asset('JS/admin.js') }}"></script>
   <script>
     function toggleActive(button) {

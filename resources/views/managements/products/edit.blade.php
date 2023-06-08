@@ -36,7 +36,7 @@
     <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
     <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
   </div> --}}
-  <div class="content">
+
     <div class="container">
       <div class="">
         <h3 class="text-secondary">
@@ -95,7 +95,7 @@
         <strong style="color: rgb(23, 146, 52)">Added successfully!</strong> {{ session('success') }}
       </div>
     @endif
-  </div>
+
   <script src="{{ asset('JS/admin.js') }}"></script>
   <script>
     function toggleActive(button) {

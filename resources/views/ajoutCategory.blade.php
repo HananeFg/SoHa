@@ -3,7 +3,7 @@
 <head>
   <title>Add Category</title>
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
-  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+  {{-- <link rel="stylesheet" href="{{asset('Css/admin.css')}}"> --}}
 
 </head>
 <body>
@@ -33,7 +33,7 @@
         <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
         <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
       </div> --}}
-      <div class="content">
+
 
   <div class="container">
     <form  method="POST" action="{{ route('ajoutCategory.store') }}" enctype="multipart/form-data">
@@ -68,6 +68,6 @@
     </div>
     @endif
   </div>
-      </div>
+
 </body>
 </html>

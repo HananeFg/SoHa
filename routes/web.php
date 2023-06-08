@@ -70,6 +70,8 @@ Route::group(['middleware' => 'customAuth'], function () {
     Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
     Route::get('/commandList', 'App\Http\Controllers\CommandListController@commandList')->name('commandList');
 });
+Route::get('/command', 'App\Http\Controllers\CommandListController@command')->name('command');
+
 Route::get('/generatePdf', 'App\Http\Controllers\PdfController@generatePdf')->name('generatePdf');
 Route::get('cloture', 'App\Http\Controllers\ClotureController@index')->name('cloture');
 Route::post('/cloture/store', 'App\Http\Controllers\ClotureController@store')->name('cloture.store');

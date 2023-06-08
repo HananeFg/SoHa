@@ -6,7 +6,7 @@ use App\Models\Details;
 use App\Models\Factures;
 use App\Models\Category;
 use App\Models\Cloture;
-
+use App\Models\Serveurs;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -77,19 +77,36 @@ class ClotureController extends Controller
             ->where('payment_type', 'gratuit')
             ->whereDate('datetime_facture', $today)
             ->sum('total_price');
-         $cloture = Cloture::latest()->first();
 
-        return view("cloture")
-            ->with('categoryData', $categoryData)
-            ->with('menuData', $menuData)
-            ->with('totalAmountCash', $totalAmountCash)
-            ->with('totalAmountCard', $totalAmountCard)
-            ->with('totalAmountGratuit', $totalAmountGratuit)
-            ->with('cloture',$cloture);
+            $servers = Serveurs::all();
+            $serverData = [];
+            $totalAmountDay = 0; // Variable to store the total amount of the day
+            
+            foreach ($servers as $server) {
+                $serverTotalAmount = Factures::where('serveur_id', $server->id)
+                    ->whereDate('datetime_facture', $today)
+                    ->sum('total_price');
+            
+                $serverData[] = [
+                    'server' => $server->name,
+                    'totalAmount' => $serverTotalAmount,
+                ];
+                
+                $totalAmountDay += $serverTotalAmount; // Increment the day's total amount
+            }
         
+            $cloture = Cloture::latest()->first();
         
-        
-    }
+            return view("cloture")
+                ->with('categoryData', $categoryData)
+                ->with('menuData', $menuData)
+                ->with('totalAmountCash', $totalAmountCash)
+                ->with('totalAmountCard', $totalAmountCard)
+                ->with('totalAmountGratuit', $totalAmountGratuit)
+                ->with('serverData', $serverData)
+                ->with('totalAmountDay', $totalAmountDay) // Pass the day's total amount to the view
+                ->with('cloture', $cloture);
+        }
         public function store(Request $request)
     {
         $cloture = new Cloture();

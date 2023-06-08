@@ -18,5 +18,11 @@ class CommandListController extends Controller
 
         return view('commandList', compact('factures'));
     }
+    public function command()
+    {
+        $factures = Factures::with('tables','serveurs')->paginate(5);
+
+        return view('command', compact('factures'));
+    }
 
 }

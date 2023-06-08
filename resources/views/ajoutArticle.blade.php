@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Add Article</title>
-  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+  {{-- <link rel="stylesheet" href="{{asset('Css/admin.css')}}"> --}}
 
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,7 +35,7 @@
         <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
         <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
       </div> --}}
-      <div class="content">
+     
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
@@ -92,6 +92,6 @@
     </div>
     @endif
   </div>
-</div>
+
 </body>
 </html>
