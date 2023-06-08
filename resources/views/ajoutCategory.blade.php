@@ -21,7 +21,7 @@
  
 
   <br>
-      <!-- Sidebar -->
+      {{-- <!-- Sidebar -->
       <div class="sidebar">
         <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
         <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
@@ -32,7 +32,7 @@
         <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
         <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
         <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
-      </div>
+      </div> --}}
       <div class="content">
 
   <div class="container">
