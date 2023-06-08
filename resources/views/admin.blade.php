@@ -114,8 +114,6 @@
           <canvas id="topRevenueMenusChart"></canvas>
         </div>
         </div>
-
-
         <div class="orders">
           <h2>Recent Orders</h2>
           <table id="orderTable">
