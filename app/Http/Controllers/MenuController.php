@@ -227,7 +227,9 @@ class MenuController extends Controller
             'serveur_id' => $serverId
         ]);
 
-        
+        Tables::where('id',$tableId)->update([
+            'status' => 1
+        ]);
         // dd(($facteur));
 
         return response()->json(['success' => true]);
@@ -273,8 +275,9 @@ class MenuController extends Controller
             $facture_payment->Montant=$receivedAmount;
             $facture_payment->save(); 
             
-            
-            
+            $tableId = Factures::where('id', $factureId)->value('table_id');
+
+            Tables::where('id', $tableId)->update(['status' => 0]);
             
              
             return response()->json(['success' => true, 'message' => 'Payment inserted successfully']);

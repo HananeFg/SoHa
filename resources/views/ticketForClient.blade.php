@@ -26,16 +26,18 @@
     }
  
     
-    .ticket .footer {
+    /* .ticket .footer {
         text-align: right;
-    }
+    } */
 </style>
 
 </head>
 <body>
     <div class="ticket">
         <div class="header">
-          <H1 style=" font-size: 50px;  margin: 0 auto; font-family: 'Lato', sans-serif;">SoHa</H1>
+            <p style=" font-size: 30px; text-align:center; margin: 0 auto; font-family: 'Lato', sans-serif;">SoHa Restaurant</p>
+            <br>
+            <p style=" font-size: 17px; text-align:center; margin: 0 auto; font-family: 'Lato', sans-serif;">0611743256</p>
         </div>
         <p style="text-align: center;">--------------------------------------------------</p>
         <h3>Ticket N°: {{$factureId}}</h3>
@@ -71,7 +73,17 @@
                 <p style="text-align: center;">--------------------------------------------------</p>
                 @foreach ($facturee as $fact)
                 <span  style=" position:absolute; right: 0px;">Total : {{$fact->total_price}}</span>
+                <br>
+                <br>
+                <br>
+                <span  style=" position:absolute; right: 0px;">Method : {{$fact->payment_type}}</span>
+
                 @endforeach
+                <br>
+                <br>
+                <br>
+                <br>
+                <p>MERCI POUR VOTRE VISITE !</p>
         </div>
     </div>
 </body>

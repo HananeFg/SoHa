@@ -4,6 +4,8 @@
     <title>Restaurant Menu</title>
     <link rel="stylesheet" href="{{asset('Css/menu.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
@@ -29,10 +31,11 @@
         <div class="tables">
             @foreach ($tables as $table)
             <div class="table-item">
-                <label>
-                    <input type="radio" name="tableId" value="{{ $table->id }}"  required>
-                    {{ $table->name }}
-                </label>
+              <label style="background-color: {{ ($table->status == 1) ? 'red' : 'white' }};">
+                <input type="radio" name="tableId" value="{{ $table->id }}" required
+                  {{ ($table->status == 1) ? 'disabled' : '' }}>
+                {{ $table->name }}
+              </label>
             </div>
             @endforeach
         </div>
@@ -188,8 +191,9 @@
             </div>
             <div class="button-container">
                 <button class="submit-button" >SUBMIT</button>
+                @if (!$showPopup)
                 <button class="payer-button" style="width:100px" onclick="openPaymentPopup()">PAYER</button>
-
+                @endif
             </div>
         </div>
     </div>
@@ -248,7 +252,7 @@ menuItems.forEach(item => {
 
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-button');
-   removeButton.innerHTML = '&times;'
+    removeButton.innerHTML = '<i style=" color:#000066;  font-size: 18px;" class="fa-solid fa-trash-can"></i>'
 
     ticketItem.appendChild(ticketItemText);
     ticketItem.appendChild(removeButton);
@@ -449,6 +453,7 @@ function submitForm() {
         console.error('Error:', error);
     });
 
+   
     
 }
 
@@ -461,7 +466,7 @@ function openPaymentPopup() {
 
   function validateFormAndClosePop() {
         var serverSelected = false;
-        var tableSelected = false;
+      
 
         var serverRadios = document.getElementsByName('serverId');
         for (var i = 0; i < serverRadios.length; i++) {
@@ -471,18 +476,10 @@ function openPaymentPopup() {
             }
         }
 
-        var tableRadios = document.getElementsByName('tableId');
-        for (var j = 0; j < tableRadios.length; j++) {
-            if (tableRadios[j].checked) {
-                tableSelected = true;
-                break;
-            }
-        }
-
-        if (serverSelected && tableSelected) {
+        if (serverSelected) {
             closepop();
         } else {
-            alert('Please select a server and a table.');
+            alert('Please select a server ');
         }
     }
 </script>

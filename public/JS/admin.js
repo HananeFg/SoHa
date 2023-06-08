@@ -461,19 +461,35 @@ sidebarButtons.forEach(button => {
             // Logic for Button 9
             contentDiv.innerHTML += `
             <form action="${storeRoute}" method="POST">
-                <input type="hidden" name="_token" value="${csrfToken}">
-                <div class="form-group">
-                    <label for="ouverture">Ouverture:</label>
-                    <input type="datetime-local" name="ouverture" id="ouverture" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="fermeture">Fermeture:</label>
-                    <input type="datetime-local" name="fermeture" id="fermeture" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
-            </form>`;
+            <input type="hidden" name="_token" value="${csrfToken}">
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label for="ouverture" style="display: block; margin-bottom: 5px; font-weight: bold;">Ouverture:</label>
+              <input type="datetime-local" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 40%; box-sizing: border-box;" name="ouverture" id="ouverture" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label for="fermeture" style="display: block; margin-bottom: 5px; font-weight: bold;">Fermeture:</label>
+              <input type="datetime-local" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 40%; box-sizing: border-box;" name="fermeture" id="fermeture" class="form-control" required>
+            </div>
+            <button style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;" type="submit" class="btn btn-primary">Enregistrer</button>
+          </form>`;
             // Add more specific functionality for Button 3
         }
+
+        var ouvertureValue = localStorage.getItem('ouverture');
+        var fermetureValue = localStorage.getItem('fermeture');
+
+        // Set the saved values as the default values for the input fields
+        document.getElementById('ouverture').defaultValue = ouvertureValue;
+        document.getElementById('fermeture').defaultValue = fermetureValue;
+
+        // Save the entered values to local storage when the input fields change
+        document.getElementById('ouverture').addEventListener('change', function() {
+          localStorage.setItem('ouverture', this.value);
+        });
+
+        document.getElementById('fermeture').addEventListener('change', function() {
+          localStorage.setItem('fermeture', this.value);
+        });
 });
               
 });

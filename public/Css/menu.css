@@ -462,7 +462,7 @@ float: left;
         padding: 10px 20px;
         background-color: #fff;
         border: none;
-        color: #ffcc00;
+        color: #000000;
         text-align: center;
         text-decoration: none;
         cursor: pointer;
@@ -479,7 +479,7 @@ float: left;
 
       .server-item label.clicked {
         color: #ffffff;
-        background-color: #ffcc00;
+        background-color: #32CD32;
       }
       
 
@@ -546,6 +546,7 @@ float: left;
         border: none;
         border-radius: 4px;
         color: #fff;
+        width :100px;
         cursor: pointer;
       }
       /* ____________________________________________________________________________________________________________ */
