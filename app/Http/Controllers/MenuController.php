@@ -74,8 +74,12 @@ class MenuController extends Controller
         session(['factureId' => $variable]);
         // dd(($this->factureId));
         // dd($categories, $menus);
+        $tableId = session('tableId');
+        $serverId = session('serverId');
+        $selectedServer = Serveurs::find($serverId);
+        $selectedTable = Tables::find($tableId);
       
-        return view('menu', compact('categories','showPopup','servers','facture', 'menus','tables', 'selectedCategory'));
+        return view('menu', compact('categories','showPopup','servers','facture', 'menus','tables','selectedServer','selectedTable' , 'selectedCategory'));
     }
 
     public function printTicket()
@@ -214,26 +218,33 @@ class MenuController extends Controller
     }
 }
 
-    public function insertData(Request $request)
-    {
-        $factureId = session('factureId');
-        $tableId = $request->input('tableId');
-        $serverId = $request->input('serverId');
-        session(['tableId' =>  $tableId]);
-        session(['serverId' =>  $serverId]);
+public function insertData(Request $request)
+{
+    $factureId = session('factureId');
+    $tableId = $request->input('tableId');
+    $serverId = $request->input('serverId');
+    session(['tableId' => $tableId]);
+    session(['serverId' => $serverId]);
 
-        Factures::where('id', $factureId)->update([
-            'table_id' =>  $tableId,
-            'serveur_id' => $serverId
-        ]);
+    Factures::where('id', $factureId)->update([
+        'table_id' => $tableId,
+        'serveur_id' => $serverId
+    ]);
 
-        Tables::where('id',$tableId)->update([
-            'status' => 1
-        ]);
-        // dd(($facteur));
+    Tables::where('id', $tableId)->update([
+        'status' => 1
+    ]);
 
-        return response()->json(['success' => true]);
-    }
+    $selectedServer = Serveurs::find($serverId);
+    $selectedTable = Tables::find($tableId);
+
+    return response()->json([
+        'success' => true,
+        'selectedServer' => $selectedServer,
+        'selectedTable' => $selectedTable
+    ]);
+}
+
 
     public function insertPayment(Request $request)
     {

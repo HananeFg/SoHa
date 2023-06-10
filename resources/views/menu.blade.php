@@ -12,7 +12,56 @@
 <body>
 
   {{-- --------------------------------------------------------------------------------------------------------- --}}
- 
+  <div id="popPay" style="display: none;">
+    <div id="popupPayment">
+      <form method="POST" action="{{ route('insertPayment') }}" onsubmit="event.preventDefault(); submitForm()">
+          @csrf
+          <div class="total" style="display: flex;
+          justify-content: space-evenly;">
+              <div>
+                  <h1 style="margin-bottom: 0;">{{$facture->total_price}}DH</h1>
+                  <p style="color: rgb(94, 91, 91); margin-top: 0;">Total amount</p>
+              </div>
+              <div>
+                  <h1 id="remainingPrice" style="margin-bottom: 0;">0.00 DH</h1>
+                  <p style="color: rgb(94, 91, 91); margin-top: 0;">Change</p>
+              </div>
+          </div>
+  
+          <div>
+              <p>Cache received</p>
+          </div>
+          <div>
+              <input type="text" class="charge" name="received_amount" value="">
+          </div>
+  
+          <br>
+          <br>
+        <div style="grid-gap: 10px ;display: grid;">
+          <label for="cardOption" class="methodPayment">
+            <input type="radio" style="width: 30px;" id="cardOption" class="methodPayment" name="payment_option" value="card">
+            Card
+          </label>
+      
+          <label for="gratuitOption" class="methodPayment">
+            <input type="radio" style="width: 30px;" id="gratuitOption" class="methodPayment" name="payment_option" value="gratuit">
+            Gratuit
+          </label>
+  
+          <label for="cashOption" class="methodPayment">
+            <input type="radio" style="width: 30px;" id="cashOption" class="methodPayment" name="payment_option" value="cash">
+            Cash
+          </label>
+        </div>
+          <br>
+          <br>
+          <button class="print-button" style="position:absolute; right:130px; width:100px;">PRINT</button>
+          <button type="submit" class="valider" onclick="submitForm()">VALIDER</button>
+      </form>
+  </div>
+  </div>
+  {{-- --------------------------------------------------------------------------------------------------------- --}}
+
   @if ($showPopup)
   <div id="pop" >
   <div id="popup">
@@ -46,65 +95,38 @@
 </div>
 </div>
 @endif
-  {{-- --------------------------------------------------------------------------------------------------------- --}}
-  <div id="pop" style="display: none;">
-  <div id="popupPayment">
-    <form method="POST" action="{{ route('insertPayment') }}" onsubmit="event.preventDefault(); submitForm()">
-        @csrf
-        <div class="total" style="display: flex;
-        justify-content: space-evenly;">
-            <div>
-                <h1 style="margin-bottom: 0;">{{$facture->total_price}}DH</h1>
-                <p style="color: rgb(94, 91, 91); margin-top: 0;">Total amount</p>
-            </div>
-            <div>
-                <h1 id="remainingPrice" style="margin-bottom: 0;">0.00 DH</h1>
-                <p style="color: rgb(94, 91, 91); margin-top: 0;">Change</p>
-            </div>
-        </div>
-
-        <div>
-            <p>Cache received</p>
-        </div>
-        <div>
-            <input type="text" class="charge" name="received_amount" value="">
-        </div>
-
-        <br>
-        <br>
-      <div style="grid-gap: 10px ;display: grid;">
-        <label for="cardOption" class="methodPayment">
-          <input type="radio" style="width: 30px;" id="cardOption" class="methodPayment" name="payment_option" value="card">
-          Card
-        </label>
-    
-        <label for="gratuitOption" class="methodPayment">
-          <input type="radio" style="width: 30px;" id="gratuitOption" class="methodPayment" name="payment_option" value="gratuit">
-          Gratuit
-        </label>
-
-        <label for="cashOption" class="methodPayment">
-          <input type="radio" style="width: 30px;" id="cashOption" class="methodPayment" name="payment_option" value="cash">
-          Cash
-        </label>
-      </div>
-        <br>
-        <br>
-        <button class="print-button" style="position:absolute; right:130px; width:100px;">PRINT</button>
-        <button type="submit" class="valider" onclick="submitForm()">VALIDER</button>
-    </form>
-</div>
-</div>
+ 
     {{-- ------------------------------------------------------------------------------------------------------ --}}
   <div class="navbar">
         <div class="back-button">
-            <a href="{{ route('commandList') }}">        
+            <a href="{{ route('command') }}">        
                 <img src="{{ asset('upload\up-arrow.png') }}" alt="logo Soha" width="50" height="50">
             </a>
         </div>
+        <div class="icon">
+          <a href="{{ route("menu") }}" class="ml-auto">
+              <i class="fas fa-square-plus fa-x2" style="color:#ffcc00" ></i>
+          </a>
+      </div>
         <div class="logo">
             <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
           </div>
+          <div id="dynamic-content-container" style="position: absolute; display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;"></div>
+          {{-- @if ($selectedServer)
+              <div class="selected-info">
+                  <span>Server: </span>
+                  <span>{{ $selectedServer->name }}</span>
+              </div>
+          @endif
+      
+          @if ($selectedTable)
+              <div class="selected-info">
+                  <span>Table: </span>
+                  <span>{{ $selectedTable->name }}</span>
+              </div>
+          @endif --}}
           <div id="timeElement" class="current-time"></div>
         </div>
         
@@ -140,6 +162,8 @@
             updateTime();
             setInterval(updateTime, 1000);
         </script>
+      
+
     <br>
     <br>
    
@@ -191,9 +215,15 @@
             </div>
             <div class="button-container">
                 <button class="submit-button" >SUBMIT</button>
-                @if (!$showPopup)
+       @if (!$showPopup)
                 <button class="payer-button" style="width:100px" onclick="openPaymentPopup()">PAYER</button>
-                @endif
+       @endif
+       @if ($showPopup)
+                <a href="{{ route('menuId', ['variable' => $facture->id]) }}" >
+                <button class="payer-button" style="width:100px" >PAYER</button>
+                </a>
+       @endif
+        
             </div>
         </div>
     </div>
@@ -310,11 +340,9 @@ submitButton.addEventListener('click', () => {
   totalPrice = 0;
   totalPriceContainer.textContent = totalPrice.toFixed(2) + 'DH';
 
-  setTimeout(function() {window.location.href = "/printTicket";},6000);
+  setTimeout(function() {window.location.href = "/printTicket";},5000);
 
-  setTimeout(function() {
-    window.location.href = "/commandList";
-  }, 7050);
+ 
 
   
 });
@@ -346,6 +374,10 @@ submitButton.addEventListener('click', () => {
     });
 
  
+        function closepopPay() {
+          document.getElementById("popPay").style.display = "none";
+          document.body.style.pointerEvents = "initial";
+        }
         function closepop() {
           document.getElementById("pop").style.display = "none";
           document.body.style.pointerEvents = "initial";
@@ -369,7 +401,6 @@ submitButton.addEventListener('click', () => {
     // Get the selected table and server IDs
     var tableId = $('input[name="tableId"]:checked').val();
     var serverId = $('input[name="serverId"]:checked').val();
-    
 
     // Create the data object to send in the AJAX request
     var data = {
@@ -385,10 +416,23 @@ submitButton.addEventListener('click', () => {
       type: 'POST',
       data: data,
       success: function(response) {
+        if (response.success) {
+          var selectedServer = response.selectedServer;
+          var selectedTable = response.selectedTable;
+
+          // Update the selected server and table in the view
+          $('#selected-server').text(selectedServer.name); // Assuming 'name' is the property to display
+          $('#selected-table').text(selectedTable ? selectedTable.name : 'No table selected'); // Assuming 'name' is the property to display, and handling null case
+
+          // Add the dynamic content to the navbar
+          var dynamicContent = '<div class="table_server" > ' + selectedServer.name + '</div>';
+          dynamicContent += '<div class="table_server" > ' + (selectedTable ? selectedTable.name : '') + '</div>';
+          $('#dynamic-content-container').html(dynamicContent);
+        }
         // Handle the success response here
         console.log('Data inserted successfully');
       },
-      error: function(xhr, status, error) {
+       error: function(xhr, status, error) {
         // Handle the error response here
         console.error('Failed to insert data:', error);
       }
@@ -396,7 +440,8 @@ submitButton.addEventListener('click', () => {
   });
 });
 
-        
+
+           
 //------------------------------------------------------------------------------------------------------
 $(document).ready(function() {
   $(".table-item label").click(function() {
@@ -441,9 +486,9 @@ function submitForm() {
     })
     .then(response => {
         if (response.ok) {
-            closepop();
+            closepopPay();
             setTimeout(function() {
-          window.location.href = "/commandList";
+          window.location.href = "/command";
         }, 1050);
         } else {
             console.error('Error:', response.statusText);
@@ -459,7 +504,7 @@ function submitForm() {
 
 
 function openPaymentPopup() {
-    var popup = document.getElementById("pop");
+    var popup = document.getElementById("popPay");
     popup.style.display = "block";
   }
 
