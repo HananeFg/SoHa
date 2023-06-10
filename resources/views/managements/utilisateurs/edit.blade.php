@@ -26,55 +26,50 @@
 
     </div>
   </div>
-  {{-- <!-- Sidebar -->
-  <div class="sidebar">
-    <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
-</div> --}}
-  <div class="content">
+
   
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Ajouter un utilisateur
+        <i class="fas fa-plus"></i> Modifier les information de <u>{{ $user->name }}</u>
       </h3>
     </div>
     <hr>
-    <form method="POST" action="{{ route('utilisateurs.store') }}" enctype="multipart/form-data">
+
+    <form method="POST" action="{{ route('utilisateurs.update', ['user' => $user->id]) }}" enctype="multipart/form-data">
         @csrf
+        @method("PUT")
         <div class="form-group inline">
             <div class="form-element">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder=""  required>
+                <input type="text" id="name" name="name" placeholder="" value="{{ $user->name }}" required>
             </div>
             <div class="form-element">
               <label for="name">email:</label>
-              <input type="text" id="email" name="email" placeholder=""  required>
+              <input type="text" id="email" name="email" placeholder="" value="{{ $user->email }}" required>
+            </div>
+            <div class="form-element">
+              <label for="name">Password:</label>
+              <input type="password" id="password" name="password" placeholder="" value="{{ $user->password }}" required>
+              <i class="far fa-eye" id="togglePassword"></i>
             </div>
             <div class="form-element">
               <label for="name">login:</label>
-              <input type="text" id="name" name="name" placeholder=""  required>
+              <input type="text" id="login" name="login" placeholder="" value="{{ $user->login }}" required>
             </div>
             <div class="form-element">
                 <label for="status">Role:</label>
-                <select id="role" name="role" required>
-                    <option value="">Choisir un role</option>
+                <select id="role" name="role"  required>
+                    <option value="{{ $user->role }}">Choisir un role</option>
                     <option value="admin">Admin</option>
                     <option value="serveur">Serveur</option>
                     <option value="caissier">Caissier</option>
                 </select>
             </div>
         </div>
-
+        <input type="hidden" name="user" value="{{ $user->id }}">
         <div class="form-group fix">
-            <input type="submit" value="Valider">
+            <input type="submit" value="Modifier">
         </div>
     </form>
 
@@ -84,7 +79,20 @@
         </div>
     @endif
 </div>
-  </div>
+<script>
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password');
+
+  togglePassword.addEventListener('click', function () {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+
+      // Change the eye icon based on the password visibility
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+  });
+</script>
+
   <script src="{{ asset('JS/admin.js') }}"></script>
   <script>
     function toggleActive(button) {

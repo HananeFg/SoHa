@@ -266,11 +266,12 @@ menuItems.forEach(item => {
     const menuItemTitle = item.textContent;
     const menuItemPrice = parseFloat(item.getAttribute('data-price'));
 
-      if (productQuantities[menuItemId]) {
+    if (productQuantities[menuItemId]) {
       productQuantities[menuItemId]++;
     } else {
       productQuantities[menuItemId] = 1;
     }
+
     // Create ticket item and update total price
     const ticketItem = document.createElement('div');
     ticketItem.classList.add('ticket-item');
@@ -282,10 +283,47 @@ menuItems.forEach(item => {
 
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-button');
-    removeButton.innerHTML = '<i style=" color:#000066;  font-size: 18px;" class="fa-solid fa-trash-can"></i>'
+    removeButton.innerHTML = '<i style="color: #000066; font-size: 18px;" class="fa-solid fa-trash-can"></i>';
 
+    const addButton = document.createElement('button');
+    addButton.classList.add('add-button');
+    addButton.innerHTML = '<i style="color: #000066; font-size: 18px;" class="fa-solid fa-plus"></i>';
+
+    // Add event listener to the addButton
+    addButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // Stop the click event from propagating to the document
+
+      const input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.classList.add('product-input');
+      ticketItem.appendChild(input);
+      ticketItem.style.display = 'block'; // Show the ticketItem container
+      addButton.style.display = 'none';
+
+      // Add event listener to save input value and close input field when clicked outside
+      const saveInputValue = (event) => {
+        const inputValue = input.value.trim();
+        if (inputValue !== '') {
+          ticketItemText.textContent += ' - ' + inputValue;
+        }
+        document.removeEventListener('click', saveInputValue);
+        input.remove();
+        addButton.style.display = 'block';
+        ticketItem.style.display = 'flex'; // Set the display property back to 'flex'
+      };
+
+      // Prevent the saveInputValue function from being triggered immediately
+      setTimeout(() => {
+        document.addEventListener('click', saveInputValue);
+      }, 0);
+    });
+
+    // Append elements to the ticketItem
     ticketItem.appendChild(ticketItemText);
     ticketItem.appendChild(removeButton);
+    ticketItem.appendChild(addButton);
+
+    // Append the ticketItem to the ticketItemsContainer
     ticketItemsContainer.appendChild(ticketItem);
 
     totalPrice += menuItemPrice;
@@ -298,6 +336,7 @@ menuItems.forEach(item => {
     });
   });
 });
+
 
 
 

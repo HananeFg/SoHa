@@ -25,6 +25,7 @@ body {
   margin-bottom: 10px;
   background-color: #ffcc00;
   border: none;
+  grid-gap: 10px;
   text-align: left;
   font-weight: bold;
   color: white;

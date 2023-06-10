@@ -7,6 +7,14 @@
         HEIGHT: 70vh;
     }
 
+    .add-button {
+      display: inline-block;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
     .current-time {
       display: flex;
       align-items: stretch;

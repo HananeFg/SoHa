@@ -26,19 +26,7 @@
 
     </div>
   </div>
-  {{-- <!-- Sidebar -->
-  <div class="sidebar">
-    <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
-    <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
-</div> --}}
-  <div class="content">
+
   
   <div class="container">
     <div class="">
@@ -59,8 +47,12 @@
               <input type="text" id="email" name="email" placeholder=""  required>
             </div>
             <div class="form-element">
+              <label for="name">Password:</label>
+              <input type="password" id="password" name="password" placeholder=""  required>
+            </div>
+            <div class="form-element">
               <label for="name">login:</label>
-              <input type="text" id="name" name="name" placeholder=""  required>
+              <input type="text" id="login" name="login" placeholder=""  required>
             </div>
             <div class="form-element">
                 <label for="status">Role:</label>
@@ -84,7 +76,7 @@
         </div>
     @endif
 </div>
-  </div>
+
   <script src="{{ asset('JS/admin.js') }}"></script>
   <script>
     function toggleActive(button) {

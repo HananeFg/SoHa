@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreTablesRequest;
-use App\Http\Requests\UpdateTablesRequest;
+use App\Http\Requests\StoreusersRequest;
+use App\Http\Requests\UpdateusersRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\support\Facades\DB;
 use Illuminate\support\Facades\Auth;
@@ -93,8 +93,9 @@ class UsersController extends Controller
         //validation
         $validData = $request->validate([
             'name' => 'required|unique:users,name',
-            'email' => 'required|unique:users',
-            'login' => 'required|',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'login' => 'required|unique:users',
             'role' => 'required|',
         ]);
         // Create a new table instance
@@ -103,6 +104,7 @@ class UsersController extends Controller
         $user->email = $validData['email'];
         $user->login = $validData['login'];
         $user->role = $validData['role'];
+        $user->password = bcrypt($request->password);
         // save instance
         $user->save();
         // Clear the form input fields
@@ -123,33 +125,51 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $users)
+    public function edit(User $user)
     {
         //
         return view("managements.utilisateurs.edit")->with([
-            "users" => $users
+            "user" => $user
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, $user)
     {   
+        $users = User::find($user);
 
+        $validData = $request->validate([
+            'name' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'login' => 'required|unique:users',
+            'role' => 'required',
+        ]);
+
+        $users->update([
+            "name" => $validData['name'],
+            "email" => $validData['email'],
+            "password" => bcrypt($request->password),
+            "login" => $validData['login'],
+            "role" => $validData['role'],
+        ]);
+    
+
+
+        $request->session()->flash('success', 'user updated successfully');
+        return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $user = $request->user;
-    
-        //delete table
-        $users = User::find($user);
-        $users->delete();
-    
+        //delete user
+        $user = User::find($id);
+        $user->delete();
         //redirect user
         return redirect()->route("utilisateurs.index")->with([
             "success" => "deleted successfully"

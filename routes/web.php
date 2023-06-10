@@ -55,8 +55,7 @@ Route::resource('categories', 'App\Http\Controllers\CategoryController');
 Route::put('categories/update/{category}', 'App\Http\Controllers\CategoryController@update')->name('categories.update');
 
 Route::resource('utilisateurs', 'App\Http\Controllers\UsersController');
-
-Route::put('user/update/{user}', 'App\Http\Controllers\UsersController@update')->name('user.update');
+Route::put('utilisateurs/update/{user}', 'App\Http\Controllers\UsersController@update')->name('utilisateurs.update');
 
 Route::resource('clients', 'App\Http\Controllers\ClientsController');
 Route::put('clients/update/{client}', 'App\Http\Controllers\ClientsController@update')->name('clients.update');

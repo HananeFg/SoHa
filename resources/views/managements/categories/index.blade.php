@@ -146,18 +146,18 @@
         <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
     </div>
   </div>
-  <br><br><br>
+  <br><br>
     <!-- Sidebar -->
     <div class="sidebar">
-      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-list fa-x2"></i>Dashboard</button>
+      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-chart-line fa-x2"></i>Dashboard</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-burger fa-x2"></i>Products</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-list fa-x2"></i> Categories</button>
-      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-list fa-x2"></i>Sales</button>
+      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-cash-register fa-x2"></i>Sales</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-users fa-x2"></i>Clients</button>
-      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-files fa-x2"></i>Rapports</button>
+      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-file fa-x2"></i>Rapports</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-user fa-x2"></i>Users</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-table fa-x2"></i>Tables</button>
-      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-list fa-x2"></i>Settings</button>
+      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-gear fa-x2"></i>Settings</button>
     </div>
     <div class="content">
   <div class="">
