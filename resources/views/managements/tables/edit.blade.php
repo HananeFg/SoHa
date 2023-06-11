@@ -31,7 +31,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-pen-to-square"></i> Modifier la <u>{{ $table->name }}</u>
+        <i class="fas fa-pen-to-square"></i> Update <u>{{ $table->name }}</u>
       </h3>
     </div>
     <hr>

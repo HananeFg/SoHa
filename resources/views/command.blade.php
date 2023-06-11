@@ -138,7 +138,7 @@
   
         <div class="title">
             <h3 class="text-secondary">
-              <i class="fas fa-list fa-x2"></i> Liste de commandes
+              <i class="fas fa-list fa-x2"></i> Commande list
             </h3><span class="currentDate" id="currentDate" style="float: right"></span>
             <div class="icon">
                 <a href="{{ route("menu") }}" class="ml-auto">

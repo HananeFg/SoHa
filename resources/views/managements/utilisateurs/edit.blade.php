@@ -31,7 +31,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i> Modifier les information de <u>{{ $user->name }}</u>
+        <i class="fas fa-plus"></i> Update  <u>{{ $user->name }}</u>'s informations
       </h3>
     </div>
     <hr>

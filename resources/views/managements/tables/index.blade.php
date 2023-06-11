@@ -163,8 +163,8 @@
   <table>
     <tr>
         <th>id</th>
-        <th>Nom</th>
-        <th>Disponible</th>
+        <th>Name</th>
+        <th>Available</th>
         <th>Action</th>
     </tr>
     @foreach ($tables as $table)

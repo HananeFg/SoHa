@@ -42,7 +42,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Ajouter une table
+        <i class="fas fa-plus"></i>Add table
       </h3>
     </div>
     <hr>

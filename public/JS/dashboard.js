@@ -21,7 +21,7 @@ sidebarButtons.forEach(button => {
             // Logic for Button 1
             contentDiv.innerHTML += `
               <div class="dashboard">
-                  <h1>Restaurant Management Dashboard</h1>
+                 
       
          
                   <div class="statistics">

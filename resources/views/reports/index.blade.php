@@ -171,7 +171,7 @@
         <div class="container">
         <div class="title">
             <h3 class="text-secondary">
-              <i class="fas fa-file fa-x2"></i> Rapports
+              <i class="fas fa-file fa-x2"></i> Reports
             </h3>
             {{-- <span class="currentDate" id="currentDate" style="float: right"></span> --}}
             {{-- <div class="icon"> --}}
@@ -186,16 +186,16 @@
                 <form action="{{ route("reports.generate") }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="from">date début</label>
+                        <label for="from">Start date</label>
                         <input type="date" name="from" placeholder="date debut" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="from">date fin</label>
+                        <label for="from">end date</label>
                         <input type="date" name="to" placeholder="date fin"  class="form-control">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-primary">
-                            Afficher le rapport
+                            View report
                         </button>
                     </div>
                 </form>
@@ -203,7 +203,7 @@
           </div>
             <h4 class="text-secondary font-weight-bold">
                 @isset($startDate, $endDate)
-                    Rapport de {{ $startDate }} à {{ $endDate }}
+                    From {{ $startDate }} to {{ $endDate }}
                 @endisset
             </h4>
         
@@ -218,10 +218,10 @@
         <th>Server</th>
         <th>Table</th>
         <th>Details</th>
-        <th>Prix</th>
-        <th>Quantité</th>
+        <th>Price</th>
+        <th>Quantity</th>
         <th>Total TTC</th>
-        <th>Mode  de paiment</th>
+        <th>Payment type</th>
         
     </tr>
     @foreach ($factures as $facture)
