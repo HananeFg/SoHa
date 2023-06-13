@@ -29,6 +29,7 @@ Route::get('/printTicket', 'App\Http\Controllers\MenuController@printTicket')->n
 Route::get('/menuId/{variable}', 'App\Http\Controllers\MenuController@menuId')->name('menuId');
 Route::get('/printForClient', 'App\Http\Controllers\MenuController@printForClient')->name('printForClient');
 Route::post('/insertPayment', 'App\Http\Controllers\MenuController@insertPayment')->name('insertPayment');
+Route::get('/menu.destroyFact', 'App\Http\Controllers\MenuController@destroyFact')->name('menu.destroyFact');
 Route::get('/menu', 'App\Http\Controllers\MenuController@menu')->name('menu');
 Route::get('/command', 'App\Http\Controllers\CommandListController@command')->name('command');
 Route::get('/generatePdf', 'App\Http\Controllers\PdfController@generatePdf')->name('generatePdf');

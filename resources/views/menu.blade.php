@@ -216,14 +216,16 @@
             <div class="button-container">
                 <button class="submit-button" >SUBMIT</button>
        @if (!$showPopup)
-                <button class="payer-button" style="width:100px" onclick="openPaymentPopup()">PAYER</button>
+                <button  class="payer-button" style="width:100px " onclick="openPaymentPopup()">PAYER</button>
        @endif
        @if ($showPopup)
-                <a href="{{ route('menuId', ['variable' => $facture->id]) }}" >
-                <button class="payer-button" style="width:100px" >PAYER</button>
+                <a href="{{ route('menuId', ['variable' => $facture->id]) }}"  style="text-decoration: none;">
+                <button  id="submitButton" class="payer-button" style="width:100px ;display: none;" >PAYER</button>
                 </a>
-       @endif
-        
+                <a href="{{ route('menu.destroyFact')}}"  style="text-decoration: none;">
+                 <button id="annuleButton" class="annule-button" style="width:100px; ">ANNULER</button>
+                </a>
+      @endif
             </div>
         </div>
     </div>
@@ -238,6 +240,11 @@ const printButton = document.querySelector('.print-button');
 const submitButton = document.querySelector('.submit-button');
 let totalPrice = 0;
 const productQuantities = {};
+
+
+  const payerButton = document.getElementById('submitButton');
+  const annuleButton = document.getElementById('annuleButton');
+
 
 
 categoryItems.forEach(item => {
@@ -284,44 +291,56 @@ menuItems.forEach(item => {
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove-button');
     removeButton.innerHTML = '<i style="color: #000066; font-size: 18px;" class="fa-solid fa-trash-can"></i>';
+// -----------------------------------------------------------------
 
-    const addButton = document.createElement('button');
-    addButton.classList.add('add-button');
-    addButton.innerHTML = '<i style="color: #000066; font-size: 18px;" class="fa-solid fa-plus"></i>';
 
-    // Add event listener to the addButton
-    addButton.addEventListener('click', (event) => {
-      event.stopPropagation(); // Stop the click event from propagating to the document
 
-      const input = document.createElement('input');
-      input.setAttribute('type', 'text');
-      input.classList.add('product-input');
-      ticketItem.appendChild(input);
-      ticketItem.style.display = 'block'; // Show the ticketItem container
-      addButton.style.display = 'none';
 
-      // Add event listener to save input value and close input field when clicked outside
-      const saveInputValue = (event) => {
-        const inputValue = input.value.trim();
-        if (inputValue !== '') {
-          ticketItemText.textContent += ' - ' + inputValue;
-        }
-        document.removeEventListener('click', saveInputValue);
-        input.remove();
-        addButton.style.display = 'block';
-        ticketItem.style.display = 'flex'; // Set the display property back to 'flex'
-      };
 
-      // Prevent the saveInputValue function from being triggered immediately
-      setTimeout(() => {
-        document.addEventListener('click', saveInputValue);
-      }, 0);
+
+const addButton = document.createElement('button');
+addButton.classList.add('add-button');
+addButton.innerHTML = '<i style="color: #000066; font-size: 18px;" class="fa-solid fa-plus"></i>';
+
+let input; // Declare the input variable outside the addButton click event listener
+
+// Add event listener to the addButton
+addButton.addEventListener('click', (event) => {
+  input = document.createElement('input'); // Assign the input element to the previously declared input variable
+  input.setAttribute('type', 'text');
+  input.classList.add('product-input');
+  ticketItem.appendChild(input);
+  ticketItem.style.display = 'block';
+  addButton.style.display = 'none';
+
+  setTimeout(() => {
+    input.addEventListener('click', (event) => {
+      event.stopPropagation(); // Stop the click event from propagating to the document click event listener
     });
+    input.addEventListener('blur', saveInputValue); // Add blur event listener to handle losing focus
+  }, 0);
+});
 
-    // Append elements to the ticketItem
+const saveInputValue = (event) => {
+  if (input) {
+    const inputValue = input.value.trim();
+    if (inputValue !== '') {
+      ticketItemText.textContent += ' - ' + inputValue;
+    }
+    input.removeEventListener('blur', saveInputValue); // Remove the blur event listener
+    input.remove();
+    addButton.style.display = 'block';
+    ticketItem.style.display = 'flex';
+    input = null; // Reset the input variable after removing the input element
+  }
+};
+
+// Append elements to the ticketItem
+ticketItem.appendChild(addButton);
+    // ------------------------------------------------------------------------------------
     ticketItem.appendChild(ticketItemText);
     ticketItem.appendChild(removeButton);
-    ticketItem.appendChild(addButton);
+    
 
     // Append the ticketItem to the ticketItemsContainer
     ticketItemsContainer.appendChild(ticketItem);
@@ -343,6 +362,10 @@ menuItems.forEach(item => {
 
 
 submitButton.addEventListener('click', () => {
+
+  payerButton.style.display = 'block';
+  annuleButton.style.display = 'none';
+
   const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
   // Retrieve necessary data from the ticket items
@@ -350,7 +373,7 @@ submitButton.addEventListener('click', () => {
   const items = Array.from(ticketItems).map(item => ({
     menuItemId: item.getAttribute('data-id'),
     menuItemPrice: parseFloat(item.getAttribute('data-price')),
-    quantity: productQuantities[item.getAttribute('data-id')]
+    quantity: productQuantities[item.getAttribute('data-id')],
   }));
 
 
@@ -566,6 +589,9 @@ function openPaymentPopup() {
             alert('Please select a server ');
         }
     }
+
+    // const submitButton = document.getElementById('submitButton');
+   
 </script>
 </body>
 </html>

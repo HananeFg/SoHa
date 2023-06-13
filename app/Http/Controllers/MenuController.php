@@ -87,6 +87,7 @@ class MenuController extends Controller
     $tableId = session('tableId');
     $serverId = session('serverId');
     $factureId = session('factureId');
+    
     try {
          $item = Details::join('menus', function ($join) {
                 $join->on('details.produit_id', '=', 'menus.id');
@@ -299,8 +300,24 @@ public function insertData(Request $request)
             return response()->json(['success' => false, 'message' => 'An error occurred while processing the payment.']);
         }
     }
-    
-    
+    public function destroyFact()
+    {
+        $factureId = session('factureId');
+        
+        try {
+            $facture = Factures::find($factureId);
+            
+            if (!$facture) {
+                return response()->json(['success' => false, 'message' => 'Facture not found']);
+            }
+            
+            $facture->delete();
+            
+            return redirect()->route('command')->with('success', 'Facture deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('command')->with('error', $e->getMessage());
+        }
+    }
 
     public function index()
     {

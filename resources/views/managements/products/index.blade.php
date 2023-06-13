@@ -239,7 +239,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Are you sure you want to delete this item?
+          Voulez-vous vraiment supprimer ce produit ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

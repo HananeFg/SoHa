@@ -106,7 +106,8 @@
   }
 
   .currentDate {
-    margin-left: 5%;  
+    margin-left: 55%;
+    font-size: 17px;
   }
   .icon {
       

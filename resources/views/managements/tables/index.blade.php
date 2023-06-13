@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
   <style>
     /* Add some basic styling for the table */
@@ -183,13 +182,12 @@
               @endif
             </td>
             <td>
-              <form action="{{route('tables.destroy', $table->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer la catégorie du {{ $table->name }} ?');" method="post">
-
+              <form id="deleteForm-{{ $table->id }}" action="{{route('tables.destroy', $table->id)}}"  method="post">
                   {{ csrf_field() }} {{ method_field('DELETE') }}
                   <a href="{{ route('tables.edit', $table->id) }}" class="btn btn-warning">
                           <i class="fas fa-edit fa-x2"></i>
                   </a>
-                  <button  class="btn btn-danger" type="submit">
+                  <button  class="btn btn-danger"  type="button" data-toggle="modal" data-target="#confirmationModal" data-form-id="deleteForm-{{ $table->id }}">
                       <i class="fas fa-trash fa-x2"></i>
                   </button>
               </form>
@@ -198,11 +196,53 @@
     @endforeach
   </table>
 
-<!-- ... -->
-
 
         {{ $tables->onEachSide(1)->links() }}
   </div>
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Voulez-vous vraiment supprimer ce tableau ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="{{ asset('JS/admin.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      var formIdToDelete;
+  
+      // Handle the click event of the confirmation button
+      $('#confirmDeleteBtn').on('click', function() {
+        if (formIdToDelete) {
+          $('#' + formIdToDelete).submit(); // Submit the form
+        }
+      });
+  
+      // Set the form ID to delete when the confirmation modal is shown
+      $('#confirmationModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        formIdToDelete = button.data('form-id');
+      });
+    });
+  </script>
+
   <script src="{{ asset('JS/admin.js') }}"></script>
   <script>
     function toggleActive(button) {
