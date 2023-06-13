@@ -193,7 +193,7 @@
                 @endif
             </td>
             
-            <<td>
+            <td>
                 @if ($facture->payment_status == 'paid')
                   <button class="btn btn-danger btn-sm" disabled>{{ $facture->payment_status }}</button>
                 @else
