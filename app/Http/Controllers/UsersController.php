@@ -39,10 +39,10 @@ class UsersController extends Controller
       
       
     }
-    public function username()
-    {
-        return 'name';
-    }
+    // public function username()
+    // {
+    //     return 'name';
+    // }
 
 
     public function authenticate(LoginRequest $request): RedirectResponse
@@ -70,7 +70,8 @@ class UsersController extends Controller
             ]);
         }
     }
-
+    
+//Users  list 
     public function index()
     {
         //
@@ -141,7 +142,7 @@ class UsersController extends Controller
         $users = User::find($user);
 
         $validData = $request->validate([
-            'name' => 'required|unique:users,name',
+            'name' => 'required|unique:users,name,'.$users->id,
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'login' => 'required|unique:users',
@@ -155,11 +156,9 @@ class UsersController extends Controller
             "login" => $validData['login'],
             "role" => $validData['role'],
         ]);
-    
-
-
+  
         $request->session()->flash('success', 'user updated successfully');
-        return redirect()->route('users.index');
+        return redirect()->route('utilisateurs.index');
     }
 
     /**

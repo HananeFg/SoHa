@@ -36,6 +36,12 @@
 
 
   <div class="container">
+    <div class="">
+      <h3 class="text-secondary">
+        <i class="fas fa-plus"></i>Add Category
+      </h3>
+    </div>
+    <hr>
     <form  method="POST" action="{{ route('ajoutCategory.store') }}" enctype="multipart/form-data">
       @csrf
       <div class="form-group inline">

@@ -39,7 +39,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i>Ajouter un article
+        <i class="fas fa-plus"></i>Add article
       </h3>
     </div>
     <hr>

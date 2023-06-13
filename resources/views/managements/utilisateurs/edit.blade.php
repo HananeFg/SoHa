@@ -36,7 +36,7 @@
     </div>
     <hr>
 
-    <form method="POST" action="{{ route('utilisateurs.update', ['user' => $user->id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('utilisateurs.update', ['user' => $user->id]) }}" >
         @csrf
         @method("PUT")
         <div class="form-group inline">

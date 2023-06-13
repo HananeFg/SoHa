@@ -99,8 +99,6 @@ class TablesController extends Controller
             "status" => $validData['status'],
         ]);
     
-
-
         $request->session()->flash('success', 'Table updated successfully');
         return redirect()->route('tables.index');
     }

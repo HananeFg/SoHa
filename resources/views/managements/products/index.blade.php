@@ -151,7 +151,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-chart-line fa-x2"></i>Dashboard</button>
-    <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-burger fa-x2"></i>Products</button>
+    <button class="sidebar-button" onclick="toggleActive(this)" style="background-color: #fcdc5b"><i class="fas fa-burger fa-x2"></i>Products</button>
     <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-list fa-x2"></i> Categories</button>
     <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-cash-register fa-x2"></i>Sales</button>
     <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-users fa-x2"></i>Clients</button>
