@@ -26,17 +26,7 @@
     </div>
   </div>
     <!-- Sidebar -->
-    <div class="sidebar">
-      <button class="sidebar-button" onclick="toggleActive(this)">Dashboard</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Products</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Categories</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Sales</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Clients</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Rapports</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Users</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Tables</button>
-      <button class="sidebar-button" onclick="toggleActive(this)">Settings</button>
-    </div>
+    
     <div class="content">
   <div class="container">
     <div class="">

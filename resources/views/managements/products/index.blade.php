@@ -134,6 +134,17 @@
       
     }
 
+    .modal-header .close {
+      margin-top: -28px;
+      margin-right: 1px;
+      font-size:28px; 
+    }
+
+    h5, .h5 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
   </style>
 </head>
 <body>
@@ -187,38 +198,79 @@
     </tr>
     @foreach ($products as $product)
         <tr>
-            <td>{{ $product->id }}</td>
-            <td>{{ $product->title }}</td>
-            <td>{{ $product->category_id }}</td>
-            <td>{{ $product->unit_price }}</td>
-            <td>{{ $product->TVA }}</td>
-            <td>{{ $product->TTC_price }}</td>
-            <td>
-              <div class="category-item" data-category="{{ $product->id }}">
-                <img src="{{ $product->image }}" alt="{{ $product->title }}" class="category-image">
-              </div>
-            </td>
-            <td>
-              <form action="{{route('products.destroy', $product->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $product->title }} ?');" method="post">
-                  {{ csrf_field() }} {{ method_field('DELETE') }}
-                  <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
-                    <i class="fas fa-edit fa-x2"></i>
-                  </a>
-                  <button  class="btn btn-danger" type="submit">
-                    <i class="fas fa-trash fa-x2"></i>
-                  </button>
-              </form>
-            </td>
+          <td>{{ $product->id }}</td>
+          <td>{{ $product->title }}</td>
+          <td>{{ $product->category_id }}</td>
+          <td>{{ $product->unit_price }}</td>
+          <td>{{ $product->TVA }}</td>
+          <td>{{ $product->TTC_price }}</td>
+          <td>
+            <div class="category-item" data-category="{{ $product->id }}">
+              <img src="{{ $product->image }}" alt="{{ $product->title }}" class="category-image">
+            </div>
+          </td>
+          <td>
+            <form id="deleteForm-{{ $product->id }}" action="{{ route('products.destroy', $product->id) }}" method="post">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+              <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">
+                <i class="fas fa-edit fa-x2"></i>
+              </a>
+              <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmationModal" data-form-id="deleteForm-{{ $product->id }}">
+                <i class="fas fa-trash fa-x2"></i>
+              </button>
+            </form>
+          </td>
         </tr>
-    @endforeach
+      @endforeach
   </table>
 
 <!-- ... -->
-
-
         {{ $products->onEachSide(1)->links() }}
   </div>
-  <script src="{{ asset('JS/admin.js') }}"></script>
+
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this item?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{ asset('JS/admin.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    var formIdToDelete;
+
+    // Handle the click event of the confirmation button
+    $('#confirmDeleteBtn').on('click', function() {
+      if (formIdToDelete) {
+        $('#' + formIdToDelete).submit(); // Submit the form
+      }
+    });
+
+    // Set the form ID to delete when the confirmation modal is shown
+    $('#confirmationModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget);
+      formIdToDelete = button.data('form-id');
+    });
+  });
+</script>
   <script>
     function toggleActive(button) {
         var sidebarButtons = document.getElementsByClassName("sidebar-button");
