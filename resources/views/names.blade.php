@@ -5,7 +5,7 @@
 <div class="role">
   @foreach ($users as $user)
     <div class="rectangle">
-        <a href="{{ route('users.login', ['name' => $user->name]) }}">
+        <a href="{{ route('users.login', ['name' => $user->name]) }}" style="text-decoration: none;">
       <h1>{{ $user->name }}</h1>
         </a>
     </div>

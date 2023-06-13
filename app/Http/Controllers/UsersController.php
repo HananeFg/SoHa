@@ -24,14 +24,14 @@ class UsersController extends Controller
     protected $redirectTo = '/home';
     
     
-    // public function index(Request $request)
-    // {   
-    //     $role = $request->input('role');
-    //     $users = User::where('role', $role)->get(['name']);
-    //     return view('users', ['users' => $users]);
+    public function names(Request $request)
+    {   
+        $role = $request->input('role');
+        $users = User::where('role', $role)->get(['name']);
+        return view('names', ['users' => $users]);
         
 
-    // }
+    }
     public function login(Request $request){
        $name = $request->input('name');
        $users = User::where('name', $name)->get(['name']);;
