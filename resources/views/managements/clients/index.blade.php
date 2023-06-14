@@ -141,7 +141,7 @@
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-list fa-x2"></i> Categories</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-cash-register fa-x2"></i>Sales</button>
       <button class="sidebar-button" onclick="toggleActive(this)" style="background-color: #fcdc5b"><i class="fas fa-users fa-x2"></i>Clients</button>
-      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-file fa-x2"></i>Rapports</button>
+      <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-file fa-x2"></i>Reports</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-user fa-x2"></i>Users</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-table fa-x2"></i>Tables</button>
       <button class="sidebar-button" onclick="toggleActive(this)"><i class="fas fa-gear fa-x2"></i>Settings</button>
@@ -165,7 +165,7 @@
   <table>
     <tr>
         <th>id</th>
-        <th>Nom</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Tel</th>
         <th>Adresse</th>

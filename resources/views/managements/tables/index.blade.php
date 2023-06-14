@@ -174,11 +174,11 @@
             <td>
               @if ($table->status)
                 <span>
-                 Non
+                 No
                 </span>
               @else 
                 <span>
-                  Oui
+                  Yes
                 </span>
               @endif
             </td>

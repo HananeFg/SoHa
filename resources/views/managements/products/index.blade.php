@@ -188,9 +188,9 @@
   <table>
     <tr>
         <th>id</th>
-        <th>Nom</th>
-        <th>Categorie</th>
-        <th>Prix unitaire</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Unit Price</th>
         <th>TVA</th>
         <th>TTC</th>
         <th>Image</th>

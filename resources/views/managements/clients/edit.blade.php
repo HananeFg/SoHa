@@ -42,7 +42,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i> Modifier le client <u>{{ $client->name }}</u>
+        <i class="fas fa-plus"></i> Change client <u>{{ $client->name }}</u>
       </h3>
     </div>
     <hr>
@@ -52,7 +52,7 @@
         <div class="form-group inline flex-col">
           <div class="flex-row">
             <div class="form-element">
-                <label for="name">Nom:</label>
+                <label for="name">Name:</label>
                 <input type="text" id="name" name="name" value="{{ $client->name }}"  required>
             </div>
             <div class="form-element">

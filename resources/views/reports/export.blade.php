@@ -188,7 +188,7 @@
 <table>
     <tr>
         <th>N°Ticket</th>
-        <th>Server</th>
+        <th>Serveur</th>
         <th>Table</th>
         <th>Details</th>
         <th>Prix</th>

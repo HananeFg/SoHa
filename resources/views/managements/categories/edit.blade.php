@@ -31,7 +31,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-pen-to-square"></i> Modifier la categorie <u>{{ $category->title }}</u>
+        <i class="fas fa-pen-to-square"></i> Change category <u>{{ $category->title }}</u>
       </h3>
     </div>
     <hr>
