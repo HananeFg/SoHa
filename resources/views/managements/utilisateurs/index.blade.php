@@ -175,13 +175,13 @@
             <td>{{ $user->email }}</td>
             <td>{{ $user->role }}</td>
             <td>
-              <form action="{{route('utilisateurs.destroy', $user->id)}}" onsubmit="return confirm('Voulez vous vraiment supprimer l\'article du {{ $user->name }} ?');" method="post">
+              <form action="{{route('utilisateurs.destroy', $user->id)}}" id="deleteForm-{{ $user->id }}" method="post">
 
                   {{ csrf_field() }} {{ method_field('DELETE') }}
                   <a href="{{ route('utilisateurs.edit', $user) }}" class="btn btn-warning">
                           <i class="fas fa-edit fa-x2"></i>
                   </a>
-                  <button  class="btn btn-danger" type="submit">
+                  <button  class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmationModal" data-form-id="deleteForm-{{ $user->id }}">
                       <i class="fas fa-trash fa-x2"></i>
                   </button>
               </form>
@@ -195,7 +195,50 @@
 
         {{ $users->onEachSide(1)->links() }}
       </div>
-      <script src="{{ asset('JS/admin.js') }}"></script>
+
+      <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Voulez-vous vraiment supprimer cet utilisateur ?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ asset('JS/admin.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        var formIdToDelete;
+    
+        // Handle the click event of the confirmation button
+        $('#confirmDeleteBtn').on('click', function() {
+          if (formIdToDelete) {
+            $('#' + formIdToDelete).submit(); // Submit the form
+          }
+        });
+    
+        // Set the form ID to delete when the confirmation modal is shown
+        $('#confirmationModal').on('show.bs.modal', function(event) {
+          var button = $(event.relatedTarget);
+          formIdToDelete = button.data('form-id');
+        });
+      });
+    </script>
+
       <script>
         function toggleActive(button) {
             var sidebarButtons = document.getElementsByClassName("sidebar-button");
