@@ -182,9 +182,9 @@
             </td>
             <td>
                 @if ($facture->payment_status == 'paid')
-                  <button class="btn btn-danger btn-sm" disabled>{{ $facture->payment_status }}</button>
-                @else
                   <button class="btn btn-success btn-sm" disabled>{{ $facture->payment_status }}</button>
+                @else
+                  <button class="btn btn-danger btn-sm" disabled>{{ $facture->payment_status }}</button>
                 @endif
               </td>
             <td>
