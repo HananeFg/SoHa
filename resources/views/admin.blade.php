@@ -131,10 +131,7 @@
           </a>
 
         </div>
-        <div class="back-button logo d-flex flex-row justify-content-center align-item-center " >
-          <a href="{{ route("commandList") }}" ><button type="button" class="btn btn-light">POS</button>
-          </a>
-        </div>
+       
         <div class="logo">
           <img src="{{ asset('upload\1.png') }}" alt="logo SoHa" width="50" height="50" style="padding-right: 15px">
   

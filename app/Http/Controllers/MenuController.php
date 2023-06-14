@@ -323,7 +323,8 @@ public function insertData(Request $request)
     {
         //
         return view("managements.products.index")->with([
-            "products" => Menu::paginate(5)
+            "products" => Menu::paginate(5),
+            "categories" => Category::all()
         ]);
     }
 
