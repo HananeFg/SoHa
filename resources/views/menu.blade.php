@@ -80,7 +80,7 @@
         <div class="tables">
             @foreach ($tables as $table)
             <div class="table-item">
-              <label style="background-color: {{ ($table->status == 1) ? 'red' : 'white' }};">
+              <label style="{{ ($table->status == 1) ? 'background-color: red' : '' }}">
                 <input type="radio" name="tableId" value="{{ $table->id }}" required
                   {{ ($table->status == 1) ? 'disabled' : '' }}>
                 {{ $table->name }}
