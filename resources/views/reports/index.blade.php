@@ -190,7 +190,7 @@
                         <input type="date" name="from" placeholder="date debut" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="from">end date</label>
+                        <label for="from">End date</label>
                         <input type="date" name="to" placeholder="date fin"  class="form-control">
                     </div>
                     <div class="form-group">

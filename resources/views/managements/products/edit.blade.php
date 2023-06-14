@@ -40,7 +40,7 @@
     <div class="container">
       <div class="">
         <h3 class="text-secondary">
-          <i class="fas fa-pen-to-square"></i> Modifier l'article <u>{{ $product->title }}</u>
+          <i class="fas fa-pen-to-square"></i> Change Article <u>{{ $product->title }}</u>
         </h3>
       </div>
       <hr>

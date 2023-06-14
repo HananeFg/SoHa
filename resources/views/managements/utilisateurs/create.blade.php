@@ -37,7 +37,7 @@
     <hr>
     <form method="POST" action="{{ route('utilisateurs.store') }}" enctype="multipart/form-data">
         @csrf
-        <div class="form-group inline">
+        <div class="form-group inline flex-col">
             <div class="form-element">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder=""  required>

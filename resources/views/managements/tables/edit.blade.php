@@ -46,9 +46,9 @@
           <div class="form-element">
               <label for="status">Status:</label>
               <select id="status" name="status" required>
-                  <option value="">Disponible</option>
-                  <option value="1">Non</option>
-                  <option value="0">Oui</option>
+                  <option value="">Available</option>
+                  <option value="1">No</option>
+                  <option value="0">Yes</option>
               </select>
           </div>
       </div>

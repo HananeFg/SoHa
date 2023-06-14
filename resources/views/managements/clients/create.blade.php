@@ -41,7 +41,7 @@
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
-        <i class="fas fa-plus"></i> Ajouter un client
+        <i class="fas fa-plus"></i> Add client
       </h3>
     </div>
     <hr>
@@ -50,7 +50,7 @@
         <div class="form-group inline flex-col">
           <div class="flex-row">
             <div class="form-element">
-                <label for="name">Nom:</label>
+                <label for="name">Name:</label>
                 <input type="text" id="name" name="name" placeholder="Nom du client"  required>
             </div>
             <div class="form-element">
@@ -65,7 +65,7 @@
                 <input type="tel" id="tel" name="tel" placeholder="du client"  required>
             </div>
             <div class="form-element">
-                <label for="name">Adresse:</label>
+                <label for="name">Address:</label>
                 <input type="text" id="address" name="address" placeholder="du client"  required>
             </div>
           </div>  
