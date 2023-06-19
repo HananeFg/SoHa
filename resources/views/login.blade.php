@@ -28,7 +28,7 @@
                   Remember me
                 </label>
               </p>
-              <p class="submit" "><input type="submit" name="commit" value="Login"></p>
+              <p class="submit" ><input type="submit" name="commit" value="Login"></p>
                   @if($errors->has('message'))
                     <div class="alert alert-danger">
                        <p style="color: red" >{{ $errors->first('message') }} <p>

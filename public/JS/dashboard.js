@@ -67,11 +67,11 @@ sidebarButtons.forEach(button => {
                 <div class="graph-container">
 
                 <div class="statistic">
-                  <h2>Revenue par categorie</h2>
+                  <h2>Revenue by category</h2>
                   <canvas id="categoryRevenueChart"></canvas>
                 </div>
                 <div class="statistic">
-                  <h2>Produits les plus vendus</h2>
+                  <h2>Best Selling Products</h2>
                   <canvas id="topRevenueMenusChart"></canvas>
                 </div>
                 </div>

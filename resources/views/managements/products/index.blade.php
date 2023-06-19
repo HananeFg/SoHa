@@ -200,7 +200,7 @@
         <tr>
           <td>{{ $product->id }}</td>
           <td>{{ $product->title }}</td>
-          <td>{{ $product->categories->title }}</td>
+          <td>{{ $product->category->title }}</td>
           <td>{{ $product->unit_price }}</td>
           <td>{{ $product->TVA }}</td>
           <td>{{ $product->TTC_price }}</td>

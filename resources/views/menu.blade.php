@@ -223,7 +223,7 @@
                 <button  id="submitButton" class="payer-button" style="width:100px ;display: none;" >PAYER</button>
                 </a>
                 <a href="{{ route('menu.destroyFact')}}"  style="text-decoration: none;">
-                 <button id="annuleButton" class="annule-button" style="width:100px; ">ANNULER</button>
+                 <button id="annuleButton" class="annule-button" style="width:100px; ">CANCEL</button>
                 </a>
       @endif
             </div>

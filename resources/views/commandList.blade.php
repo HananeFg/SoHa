@@ -151,7 +151,7 @@
       <div class="content">
         <div class="title">
             <h3 class="text-secondary">
-              <i class="fas fa-list fa-x2"></i> Liste de commandes
+              <i class="fas fa-list fa-x2"></i> Command List
             </h3><span class="currentDate" id="currentDate" style="float: right"></span>
             <div class="icon">
                 <a href="{{ route("menu") }}" class="ml-auto">
@@ -195,9 +195,9 @@
             
             <td>
                 @if ($facture->payment_status == 'paid')
-                  <button class="btn btn-danger btn-sm" disabled>{{ $facture->payment_status }}</button>
-                @else
                   <button class="btn btn-success btn-sm" disabled>{{ $facture->payment_status }}</button>
+                @else
+                  <button class="btn btn-danger btn-sm" disabled>{{ $facture->payment_status }}</button>
                 @endif
               </td>
             <td>

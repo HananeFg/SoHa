@@ -222,7 +222,7 @@
             </button>
           </div>
           <div class="modal-body">
-            Voulez-vous vraiment supprimer cette catégorie ?
+            Are you sure you want to delete this category ?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

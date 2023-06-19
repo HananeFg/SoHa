@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Edit Category</title>
-  <link rel="stylesheet" href="{{asset('Css/admin.css')}}">
+
   <link rel="stylesheet" href="{{asset('Css/ajout.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css">
@@ -27,7 +27,7 @@
   </div>
     <!-- Sidebar -->
     
-    <div class="content">
+
   <div class="container">
     <div class="">
       <h3 class="text-secondary">
@@ -70,7 +70,7 @@
         </div>
     @endif
 </div>
-    </div>
+
     <script src="{{ asset('JS/admin.js') }}"></script>
     <script>
       function toggleActive(button) {
